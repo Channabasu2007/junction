@@ -19,6 +19,14 @@
   background-color: #f97316; /* Tailwind orange-500 */
   border-radius: 9999px;
 }
+/* in tailwind.config.js or global CSS if not available */
+.perspective {
+  perspective: 1000px;
+}
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}
+
 
 
 @theme inline {

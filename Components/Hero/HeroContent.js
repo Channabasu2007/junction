@@ -1,22 +1,23 @@
-import React from 'react'
-import LeftSide from './LeftSide'
-import RightSide from './RightSide'
-
+import React from 'react';
+import LeftSide from './LeftSide';
+import RightSide from './RightSide';
 
 const HeroContent = () => {
   return (
-    <div className=' flex flex-col-reverse md:flex-row  w-[100%] h-[92.56%] md:h-[92%] lg:h-[89%]'>
-
-      <div className='w-full md:w-1/2 h-full flex flex-col items-start justify-center pl-20 '>
-        <LeftSide/>
+    <div className="w-full h-[95dvh] flex flex-col-reverse md:grid md:grid-cols-2">
+      
+      {/* LeftSide */}
+      <div className="flex items-center justify-center md:justify-start md:items-center pl-6 md:pl-16 lg:pl-20 py-8">
+        <LeftSide />
       </div>
 
-      <div className='w-full md:w-1/2 h-full  flex items-center justify-center'>
-        <RightSide/>
+      {/* RightSide */}
+      <div className="flex items-center justify-center h-[90%]">
+        <RightSide />
       </div>
 
     </div>
-  )
-}
+  );
+};
 
-export default HeroContent
+export default HeroContent;

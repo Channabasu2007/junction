@@ -38,7 +38,7 @@ const LeftSide = () => {
 
     return (
         <motion.div
-            className="flex flex-col justify-center items-start h-full p-4" // Ensure the div takes up space
+            className="flex flex-col justify-start items-start h-full p-4  " // Ensure the div takes up space
             variants={containerVariants}
             initial="hidden"
             animate="visible"
