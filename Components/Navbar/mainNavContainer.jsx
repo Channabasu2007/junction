@@ -25,9 +25,9 @@ const MainNavContainer = () => {
     <header className="w-full bg-zinc-50 dark:bg-zinc-950">
       <nav className="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto text-zinc-900 dark:text-zinc-100">
         {/* Logo */}
-        <div className="text-3xl font-extrabold tracking-tight text-orange-600 select-none">
+        <Link href={"/"} className="text-3xl font-extrabold tracking-tight text-orange-600 select-none">
           JUNCTION
-        </div>
+        </Link>
 
         {/* Desktop Nav */}
         <ul className="hidden md:flex gap-8 text-sm font-medium tracking-wide">

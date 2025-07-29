@@ -1,9 +1,13 @@
 import React from 'react'
-
-const page = () => {
+import AuthNav from '@/Components/Auth/AuthNav'
+import SignUp from '@/Components/Auth/SignUp'
+const signUp = () => {
   return (
-    <div>page</div>
+    <>
+    <AuthNav />
+    <SignUp />
+    </>
   )
 }
 
-export default page
+export default signUp
