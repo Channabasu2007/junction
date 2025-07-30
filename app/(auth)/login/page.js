@@ -1,9 +1,14 @@
 import React from 'react'
+import AuthNav from '@/Components/Auth/AuthNav'
+import Login from '@/Components/Auth/Login'
 
-const page = () => {
+const login = () => {
   return (
-    <div>page</div>
+    <>
+      <AuthNav/>
+      <Login/>
+    </>
   )
 }
 
-export default page
+export default login

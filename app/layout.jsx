@@ -33,7 +33,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
-           <ToastContainer />
+           <ToastContainer richColors position="top-center" />
         </ThemeProvider>
       </body>
     </html>
