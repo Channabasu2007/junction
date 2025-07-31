@@ -9,6 +9,7 @@ import { FaGoogle } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager'
 import { SignUpSchema } from "@/helpers/SignUpSchema"
+import Loader from "../Workers/Loader";
 
 const SignUp = () => {
   const router = useRouter();
@@ -17,13 +18,14 @@ const SignUp = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
-
+  const [pageLoading, setPageLoading] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setPageLoading(true)
     const result = await SignUpSchema.safeParse({
       firstname,
       email,
@@ -35,20 +37,51 @@ const SignUp = () => {
       const issues = result.error.issues;
       const errorMessages = issues.map((issue, i) => (issue.message))
       errorMessages.map((message, idx) => (
-      showError(message)
-    ))
-    return;
+        showError(message)
+      ))
+      setPageLoading(false)
+      return;
     }
+
     try {
-      console.log(result.data)
-      // Sending the user to the verification page, after successfull entry of the data in backend.
-      router.push(`/verification?firstname=${firstname}&email=${email}`)
-    } catch (error) {
-      showError("dont know")
+      const user = {
+        firstname,
+        email,
+        password,
+        confirmPassword,
+        lastname
+      }
+      const response = await fetch('/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+      })
+      if (!response.ok) {
+        const { error } = await response.json();
+        showError(error || 'Signup failed');
+        setPageLoading(false)
+        return;
+
+      } else {
+        showSuccess('Your account has been registered please verify email to activate it.')
+        sessionStorage.setItem("signupData", JSON.stringify({
+          email: email,
+          firstname: firstname,
+          password: password
+        }));
+        setPageLoading(false)
+        router.push(`/verification`)
+      }
+    }
+    catch (error) {
+      setPageLoading(false)
+      showError('Something went wrong, please try again.')
     }
   };
 
-
+if(pageLoading){
+  return <Loader/>
+}
 
   return (
     <div className="min-h-fit flex items-center justify-center bg-gray-50 dark:bg-zinc-950 px-4 py-8">
@@ -148,19 +181,7 @@ const SignUp = () => {
           </Button>
         </form>
 
-        <div className="relative flex items-center justify-center my-6">
-          <div className="absolute inset-x-0 h-px bg-zinc-300 dark:bg-zinc-600" />
-          <span className="relative z-10 bg-white dark:bg-zinc-800 px-3 text-sm text-zinc-500 dark:text-zinc-400">
-            OR
-          </span>
-        </div>
 
-        <Button
-          variant="outline" // Corrected prop to 'variant'
-          className="w-full bg-white dark:bg-zinc-800 cursor-pointer text-orange-600 border border-orange-600 py-2 rounded-md hover:bg-orange-50 dark:hover:bg-zinc-700 transition-colors duration-300 flex items-center justify-center gap-2"
-        >
-          <FaGoogle className="text-lg" /> Sign Up with Google
-        </Button>
 
         <div className="mt-6 text-center text-sm text-zinc-500 dark:text-zinc-400">
           Already have an account?{" "}

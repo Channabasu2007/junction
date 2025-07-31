@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
-import { motion } from "framer-motion"
-import React from "react"
+import React from "react";
+import { motion } from "framer-motion";
+// assuming Grid and GridPattern are in the same folder
 
 const Allfeatures = () => {
   const features = [
@@ -55,40 +56,36 @@ const Allfeatures = () => {
       description:
         "All transactions are handled securely using Razorpay, ensuring fast and trusted payments.",
     },
-  ]
+  ];
 
   return (
-    <section className="w-full px-4 md:px-16 py-16 bg-white dark:bg-zinc-950">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-zinc-900 dark:text-white">
-          <span className="text-orange-500 italic font-semibold">
-            Smart Features{" "}
-          </span>
-          <span>to Boost Your Web Presence</span>
-        </h2>
-      </div>
+    <section className="w-full py-24 bg-background">
+      <div className="mx-auto max-w-6xl px-6 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold mb-6">What Makes Our Platform Stand Out?</h2>
+        <p className="text-muted-foreground mb-12 max-w-2xl mx-auto">
+          Our modern web tools are built to make your online presence more powerful, efficient, and beautiful — all with a simple interface and fast performance.
+        </p>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 justify-center items-center ">
-        {features.map((feature, index) => (
-          <motion.div
-            key={index}
-            className="bg-white dark:bg-zinc-900 border border-orange-100 dark:border-zinc-800 rounded-xl p-4 shadow hover:shadow-md transition duration-200 h-full flex flex-col"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.05 }}
-          >
-            <h3 className="text-md font-semibold text-orange-600 dark:text-orange-400 mb-2">
-              {feature.title}
-            </h3>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400">
-              {feature.description}
-            </p>
-          </motion.div>
-        ))}
-      </div>
-    </section>
-  )
-}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
 
-export default Allfeatures
+          {features.map((feature, id) => (
+            <div key={id} className="bg-card border rounded-2xl p-6 shadow-sm hover:shadow-md transition">
+              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+              <p className="text-sm text-muted-foreground">
+                {feature.description}
+              </p>
+            </div>))}
+
+
+
+
+
+     
+      </div>
+    </div>
+</section >
+
+  );
+};
+
+export default Allfeatures;

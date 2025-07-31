@@ -8,21 +8,38 @@ import { Button } from "@/Components/ui/button";
 import { FaGoogle } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager'
+import { signIn } from "next-auth/react";
+import Loader from "../Workers/Loader";
+
 
 const Login = () => {
-
+    const router = useRouter();
+    const [pageLoading, setPageLoading] = useState(false);
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false)
 
-    const handleLoginSubmit = (e) => {
+    const handleLoginSubmit = async (e) => {
         e.preventDefault()
-        console.log("The credentials given", {
-            "Email": email,
-            "Password": password
-        })
-    }
+        setPageLoading(true)
 
+        const res = await signIn("credentials", {
+            redirect: false,
+            email: email,
+            password: password,
+        });
+        if (res.error) {
+            setPageLoading(false)
+            showError(res.error);
+        } else {
+            setPageLoading(false)
+            showSuccess("Login successful");
+            router.push("/Dashboard");
+        }
+    }
+if(pageLoading){
+    return <Loader />
+}
     return (
         <>
             <div className="min-h-fit flex items-center justify-center bg-gray-50 dark:bg-zinc-950 px-4 py-8 " >
