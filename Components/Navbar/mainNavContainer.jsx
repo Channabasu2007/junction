@@ -6,10 +6,12 @@ import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import ModeToggle from "../Workers/ModeToggle";
 import { AnimatePresence, motion } from "framer-motion";
+import { useSession, signOut } from "next-auth/react";
 
 const MainNavContainer = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const { data: session, status } = useSession();
 
   const Navs = [
     { name: "Home", link: "/" },
@@ -37,11 +39,10 @@ const MainNavContainer = () => {
               <li key={index}>
                 <Link
                   href={nav.link}
-                  className={`relative px-2 py-1 transition-all duration-200 rounded-md focus-visible:outline-none ${
-                    isActive
+                  className={`relative px-2 py-1 transition-all duration-200 rounded-md focus-visible:outline-none ${isActive
                       ? "text-orange-600 dark:text-orange-400 font-semibold"
                       : "text-zinc-700 dark:text-zinc-300 hover:text-orange-500"
-                  }`}
+                    }`}
                 >
                   {nav.name}
                   {isActive && (
@@ -55,21 +56,21 @@ const MainNavContainer = () => {
 
         {/* Desktop Actions */}
         <div className="hidden md:flex items-center gap-4">
-          <Link
-            href="/login"
-            className="text-sm font-medium border border-orange-500 text-orange-500 px-4 py-1.5 rounded-md hover:bg-orange-500 hover:text-white transition-colors"
-          >
-            Login
-          </Link>
-
-          <Link
-            href="/signup"
-            className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-1.5 text-sm font-medium rounded-md shadow-md transition-all"
-          >
-            Sign Up
-          </Link>
-
+          {!session ? (
+            <>
+              <Link href="/login" className="text-sm font-medium border border-orange-500 text-orange-500 px-4 py-1.5 rounded-md hover:bg-orange-500 hover:text-white transition-colors">Login</Link>
+              <Link href="/signup" className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-1.5 text-sm font-medium rounded-md shadow-md transition-all">Sign Up</Link>
+            </>
+          ) : (
+            <button
+              onClick={() => signOut({ callbackUrl: "/" })}
+              className="text-sm font-medium cursor-pointer border border-orange-500 text-orange-500 px-4 py-1.5 rounded-md hover:bg-orange-500 hover:text-white transition-colors"
+            >
+              Logout
+            </button>
+          )}
           <ModeToggle />
+
         </div>
 
         {/* Hamburger */}
@@ -99,11 +100,10 @@ const MainNavContainer = () => {
                     key={index}
                     href={nav.link}
                     onClick={() => setIsOpen(false)}
-                    className={`text-2xl transition-colors ${
-                      isActive
+                    className={`text-2xl transition-colors ${isActive
                         ? "text-orange-600 dark:text-orange-400 font-semibold"
                         : "hover:text-orange-500"
-                    }`}
+                      }`}
                   >
                     {nav.name}
                   </Link>
@@ -111,21 +111,23 @@ const MainNavContainer = () => {
               })}
 
               <div className="flex gap-4 pt-8">
-                <Link
-                  href="/login"
-                  onClick={() => setIsOpen(false)}
-                  className="text-md font-medium border border-orange-500 text-orange-500 px-4 py-2 rounded-md hover:bg-orange-500 hover:text-white transition"
-                >
-                  Login
-                </Link>
+                {!session ? (
+                  <div className="flex gap-4 pt-8">
+                    <Link href="/login" onClick={() => setIsOpen(false)} className="text-md font-medium border border-orange-500 text-orange-500 px-4 py-2 rounded-md hover:bg-orange-500 hover:text-white transition">Login</Link>
+                    <Link href="/signup" onClick={() => setIsOpen(false)} className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 text-md font-medium rounded-md shadow-md transition">Sign Up</Link>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => {
+                      setIsOpen(false);
+                      signOut({ callbackUrl: "/" });
+                    }}
+                    className="text-md font-medium border cursor-pointer border-orange-500 text-orange-500 px-4 py-2 rounded-md hover:bg-orange-500 hover:text-white transition"
+                  >
+                    Logout
+                  </button>
+                )}
 
-                <Link
-                  href="/signup"
-                  onClick={() => setIsOpen(false)}
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 text-md font-medium rounded-md shadow-md transition"
-                >
-                  Sign Up
-                </Link>
               </div>
 
               <div className="pt-4">

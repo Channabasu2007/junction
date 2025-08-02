@@ -1,7 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/Components/Themes/theme-provider";
-import { ToastContainer } from 'react-toastify';
+import Providers from "@/Components/Themes/providers"; // Import the new Providers component
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -26,18 +26,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <Providers>
           {children}
-           <ToastContainer richColors position="top-center" />
-        </ThemeProvider>
+        </Providers>
       </body>
     </html>
   );
 }
-
-

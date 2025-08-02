@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
+import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions = {
   providers: [
@@ -13,7 +14,6 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-         console.log("AUTHORIZATION RUNNING");
         await dbConnect();
         const user = await User.findOne({ email: credentials.email });
 
@@ -26,10 +26,12 @@ export const authOptions = {
         );
         if (!isPasswordCorrect) throw new Error("Invalid credentials");
 
-        return {
-         user
-        };
+        return user;
       },
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
   ],
   pages: {
@@ -40,7 +42,22 @@ export const authOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async signIn({ user, account, profile, email }) {
+      if (account.provider === "google") {
+        await dbConnect();
+        
+        const existingUser = await User.findOne({ email: user.email });
+        if (!existingUser) {
+          throw new Error("No user found, please signup first.");
+          return false;
+        }
+      }
+      
+      return true;
+    },
+
+    async jwt({ token, user, account }) {
+    
       if (user) {
         token.id = user._id;
         token.email = user.email;
@@ -49,6 +66,7 @@ export const authOptions = {
       }
       return token;
     },
+
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id;

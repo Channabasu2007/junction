@@ -72,9 +72,14 @@ const Verification = () => {
         setPageLoading(false);
         showError(res.error);
       } else {
+        sessionStorage.clear();
         setPageLoading(false);
         showSuccess("Login successful");
-        router.push("/SetPageName");
+        if(data.userName === ""){
+          router.push("/SetPageName");
+        }else{
+          router.push("/Dashboard");
+        }
       }
     } catch (error) {
       setPageLoading(false);

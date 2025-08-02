@@ -17,7 +17,12 @@ const VerificationEmail = ({ otp, username }) => {
       <Preview>Junction Verification Code</Preview>
       <Body style={main}>
         <Container style={container}>
-          <Section style={logoSection}>
+          {/* Header section with the Junction text */}
+          <Section style={headerSection}>
+            <Text style={junctionText}>Junction</Text>
+          </Section>
+          {/* Main content section */}
+          <Section style={{ textAlign: "center", padding: "20px 40px" }}>
             <Heading style={heading}>Welcome to Junction, {username}!</Heading>
             <Text style={paragraph}>
               Please use the following OTP to verify your email:
@@ -37,49 +42,70 @@ const VerificationEmail = ({ otp, username }) => {
 
 export default VerificationEmail;
 
+// All styles are defined here.
 const main = {
-  backgroundColor: "#f6f6f6",
-  fontFamily: "Helvetica, Arial, sans-serif",
+  backgroundColor: "#f0f4f8",
+  fontFamily: "Inter, Helvetica, Arial, sans-serif",
+  padding: "40px",
 };
 
 const container = {
   backgroundColor: "#ffffff",
-  margin: "40px auto",
-  padding: "40px",
-  borderRadius: "8px",
+  margin: "0 auto",
+  padding: "0",
+  borderRadius: "16px",
   maxWidth: "500px",
+  overflow: "hidden",
+  boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
 };
 
-const logoSection = {
-  textAlign: "center",
+const headerSection = {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  backgroundColor: "#fff7ed",
+  padding: "30px",
+  borderBottom: "2px solid #f97316",
+};
+
+const junctionText = {
+  fontSize: "32px",
+  color: "#f97316", // Orange-500
+  fontWeight: "bold",
+  letterSpacing: "2px",
 };
 
 const heading = {
-  fontSize: "24px",
-  marginBottom: "20px",
-  color: "#333333",
+  fontSize: "28px",
+  marginBottom: "16px",
+  color: "#1f2937",
+  fontWeight: "600",
 };
 
 const paragraph = {
   fontSize: "16px",
-  color: "#555555",
-  marginBottom: "20px",
+  color: "#4b5563",
+  marginBottom: "16px",
+  lineHeight: "1.5",
 };
 
 const otpBox = {
-  fontSize: "30px",
+  fontSize: "36px",
   fontWeight: "bold",
-  backgroundColor: "#f0f0f0",
-  padding: "12px 24px",
-  borderRadius: "6px",
+  backgroundColor: "#fef3c7",
+  padding: "16px 32px",
+  borderRadius: "12px",
   display: "inline-block",
-  letterSpacing: "4px",
-  color: "#000",
-  marginBottom: "20px",
+  letterSpacing: "8px",
+  color: "#f97316",
+  marginBottom: "24px",
+  userSelect: "none",
 };
 
 const footer = {
   fontSize: "14px",
-  color: "#999999",
+  color: "#9ca3af",
   marginTop: "30px",
+  borderTop: "1px solid #e5e7eb",
+  paddingTop: "20px",
 };
