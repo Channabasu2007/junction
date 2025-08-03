@@ -75,7 +75,7 @@ const Verification = () => {
         sessionStorage.clear();
         setPageLoading(false);
         showSuccess("Login successful");
-        if(data.userName === ""){
+        if(!data.userName){
           router.push("/SetPageName");
         }else{
           router.push("/Dashboard");

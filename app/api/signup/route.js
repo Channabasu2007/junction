@@ -34,7 +34,7 @@ export async function POST(req) {
       existingUser.verified = false;
       existingUser.otp = otp;
       existingUser.otpExpires = otpExpires;
-      existingUser.userName = "";
+      existingUser.userName = null;
       existingUser.password = hashedPassword;
       existingUser.verificationTries = 0
       await existingUser.save();
@@ -47,8 +47,8 @@ export async function POST(req) {
       password: hashedPassword,
       otp,
       otpExpires,
+      userName:null,
       verified: false,
-      userName : "",
       createdAt: new Date(),
       verificationTries : 0
     });

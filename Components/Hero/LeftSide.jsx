@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion'; // Ensure this import is correct
+import Link from 'next/link';
 
 const LeftSide = () => {
     // Parent container variant for stagger effect
@@ -76,7 +77,9 @@ const LeftSide = () => {
                 className="mt-3 px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-xl text-sm sm:text-base font-semibold transition"
                 variants={buttonVariants}
             >
+                <Link href={"/signup"}>
                 Create Your Junction
+                </Link>
             </motion.button>
         </motion.div>
     );

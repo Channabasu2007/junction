@@ -63,6 +63,7 @@ export const authOptions = {
         token.email = user.email;
         token.firstname = user.firstname;
         token.lastname = user.lastname;
+        token.userName = user.userName;
       }
       return token;
     },

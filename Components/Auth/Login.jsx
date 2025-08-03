@@ -34,6 +34,7 @@ const Login = () => {
         } else {
             setPageLoading(false)
             showSuccess("Login successful");
+            
             router.push("/Dashboard");
         }
     }

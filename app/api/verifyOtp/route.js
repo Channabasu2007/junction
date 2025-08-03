@@ -44,6 +44,7 @@ export async function POST(req) {
 
     return NextResponse.json(
       {
+        user: user,
         message: "Verification successful",
       },
       { status: 200 }
