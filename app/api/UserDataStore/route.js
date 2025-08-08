@@ -1,6 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
-import { error } from "console";
 import { NextResponse } from "next/server";
 
 export async function GET(req) {

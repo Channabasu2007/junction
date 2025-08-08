@@ -6,18 +6,28 @@ import { showError, showSuccess, showInfo } from "@/helpers/ToastManager";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-const SetPageNameCompo = ({ user }) => {
+/**
+ * A component to set a unique page name for the user's public URL.
+ * It now accepts an `onSuccess` prop to handle post-submission actions.
+ *
+ * @param {Object} props - Component props.
+ * @param {Object} props.user - The user data object.
+ * @param {Function} props.onSuccess - Callback function to execute on successful name submission.
+ */
+const SetPageNameCompo = ({ user, onSuccess }) => {
     const router = useRouter()
 
-    const userData = user?.user || {};
+    const userData = user?.user || user;
     const [inputValue, setInputValue] = useState('');
     const [isChecking, setIsChecking] = useState(false);
     const [message, setMessage] = useState('');
+    const [isSuccess, setIsSuccess] = useState(false); // New state to track success
 
     const firstName = userData?.firstname || '';
     const lastName = userData?.lastname || '';
     const name = `${firstName} ${lastName}`.trim();
 
+    // Debounce function to delay API calls
     const debounce = (func, delay) => {
         let timer;
         return (...args) => {
@@ -26,8 +36,13 @@ const SetPageNameCompo = ({ user }) => {
         };
     };
 
+    // This function now handles both the check and the potential success action
     const checkAndSubmitName = async (value) => {
+        if (!value) return; // Prevent API call on empty value
         setIsChecking(true);
+        setIsSuccess(false); // Reset success state on new input
+        setMessage('');
+
         try {
             const res = await fetch('/api/UserDataStore', {
                 method: 'POST',
@@ -41,8 +56,9 @@ const SetPageNameCompo = ({ user }) => {
             const result = await res.json();
 
             if (res.ok && result.success) {
-
                 setMessage("✅ Page name set successfully.");
+                setIsSuccess(true); // Set success state to true
+                showSuccess("Page name set successfully!");
             } else if (result.exists) {
                 showError("This page name is already taken.");
                 setMessage("❌ Page name already exists.");
@@ -59,28 +75,28 @@ const SetPageNameCompo = ({ user }) => {
         }
     };
 
+    // Use a ref for the debounced function
     const debouncedSubmit = useRef(debounce(checkAndSubmitName, 500)).current;
 
     const handleChange = (e) => {
-        const value = e.target.value.trim();
+        const value = e.target.value.split(" ").join("").toLowerCase();
         setInputValue(value);
-        setMessage('');
-        if (value) {
-            debouncedSubmit(value);
-        }
+        debouncedSubmit(value);
     };
 
-    const GoToDashboard = () => {
-        router.push("/Dashboard")
-    }
+    // This new function now calls the onSuccess prop
+    const handleProceed = () => {
+        if (isSuccess && onSuccess) {
+            onSuccess();
+        } else {
+            showInfo("Please choose a valid page name first.");
+        }
+    };
 
     return (
         <div className="flex items-center justify-center h-[89vh] p-4 bg-zinc-50 dark:bg-zinc-950 transition-colors duration-300">
             <div className="p-6 sm:p-8 rounded-xl shadow-2xl transition-colors duration-300 w-full max-w-sm bg-white dark:bg-zinc-800 text-zinc-800 dark:text-white">
 
-                {/* The theme toggle is handled by your external provider, so it's not needed here */}
-
-                {/* Header */}
                 <h1 className="text-2xl font-bold text-center sm:text-3xl text-orange-500">
                     Welcome, {name} 👋
                 </h1>
@@ -88,7 +104,6 @@ const SetPageNameCompo = ({ user }) => {
                     Choose a unique name for your public URL.
                 </p>
 
-                {/* Input and Button */}
                 <div className="mt-6 flex flex-col gap-3">
                     <div className="relative">
                         <input
@@ -97,22 +112,21 @@ const SetPageNameCompo = ({ user }) => {
                             onChange={handleChange}
                             placeholder="Enter your page name"
                             className="w-full py-2 px-3 text-sm rounded-lg border focus:outline-none focus:ring-2 focus:ring-orange-500 transition-colors duration-300
-                         bg-zinc-50 dark:bg-zinc-700 text-zinc-800 dark:text-white border-zinc-300 dark:border-zinc-600 placeholder-zinc-400 dark:placeholder-zinc-500"
+                            bg-zinc-50 dark:bg-zinc-700 text-zinc-800 dark:text-white border-zinc-300 dark:border-zinc-600 placeholder-zinc-400 dark:placeholder-zinc-500"
                         />
                     </div>
 
                     <button
-                        onClick={GoToDashboard}
-                        className="w-full bg-orange-500 hover:bg-orange-600 text-white text-sm  py-2.5 rounded-lg shadow-md transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center font-bold"
-                        disabled={isChecking || inputValue.length === 0}
+                        onClick={handleProceed}
+                        className="w-full bg-orange-500 hover:bg-orange-600 text-white text-sm py-2.5 rounded-lg shadow-md transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center font-bold"
+                        disabled={!isSuccess} // Button is only enabled on success
                     >
                         {isChecking ? 'Checking...' : 'Proceed'}
                     </button>
                 </div>
 
-                {/* Message and URL Preview */}
                 {message && inputValue !== "" && (
-                    <p className={`mt-3 text-sm text-center ${message.includes("Page name set successfully.") ? 'text-green-500' : 'text-red-500'}`}>
+                    <p className={`mt-3 text-sm text-center ${isSuccess ? 'text-green-500' : 'text-red-500'}`}>
                         {message}
                     </p>
                 )}

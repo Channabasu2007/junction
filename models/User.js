@@ -17,6 +17,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, "Password is required"],
   },
+  businessEmail: String,
+  phone: String,
+  bio: String,
   otp: {
     type: String,
   },
@@ -35,12 +38,17 @@ const UserSchema = new mongoose.Schema({
   userName: {
     type: String,
   },
+  isPremium : {
+    type : Boolean,
+    default : false
+  },
   createdAt: {
     type: Date,
     required: [true, "Created at date is required"],
     default: Date.now,
   },
-  
+  profileUrl: String,
+  bannerUrl: String 
 });
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);

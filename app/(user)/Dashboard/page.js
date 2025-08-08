@@ -2,7 +2,18 @@
 import React from "react";
 import Navbar from "@/Components/Navbar/mainNavContainer";
 import { Settings, BarChart2, Smartphone } from "lucide-react";
-import { ChartNoAxesColumnIncreasing, User, Globe, Video, CreditCard, MessageCircle, LayoutGrid, Image, Search, Lock } from "lucide-react";
+import {
+  ChartNoAxesColumnIncreasing,
+  User,
+  Globe,
+  Video,
+  CreditCard,
+  MessageCircle,
+  LayoutGrid,
+  Image,
+  Search,
+  Lock,
+} from "lucide-react";
 import {
   Drawer,
   DrawerTrigger,
@@ -13,7 +24,7 @@ import {
   DrawerFooter,
   DrawerClose,
 } from "@/Components/ui/drawer";
-import { useSwipeable } from 'react-swipeable';
+import { useSwipeable } from "react-swipeable";
 import {
   Sheet,
   SheetTrigger,
@@ -27,15 +38,15 @@ import { useSession } from "next-auth/react";
 import Loader from "@/Components/Workers/Loader";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Main from "@/Components/DashboardMiddle/Main"
+import Main from "@/Components/DashboardMiddle/Main";
 
 const Page = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [pageLoading, setPageLoading] = useState(true); // default true
-  const [component, setComponent] = useState("General Info")
+  const [component, setComponent] = useState("General Info");
   const [open, setOpen] = useState(false);
-  const [previewOpen, setPreviewOpen] = useState(false)
+  const [previewOpen, setPreviewOpen] = useState(false);
 
   const handlers = useSwipeable({
     onSwipedRight: () => setPreviewOpen(false),
@@ -44,18 +55,13 @@ const Page = () => {
   });
 
   useEffect(() => {
-    if (status === "loading") return; // wait until session is resolved
-    if (status === "authenticated" && session?.user?.email) {
-      fetchData();
-    } else if (status === "unauthenticated") {
+    if (status === "loading")
+      return; // wait until session is resolved
+    else if (status === "unauthenticated") {
       router.push("/login");
     }
     setPageLoading(false);
   }, [status, session]);
-
-  const fetchData = async () => {
-    console.log("hello");
-  };
 
   const drawerItems = [
     { icon: <User size={18} />, label: "General Info" },
@@ -66,20 +72,19 @@ const Page = () => {
     { icon: <LayoutGrid size={18} />, label: "Page Layout" },
     { icon: <Image size={18} />, label: "Thumbnail" },
     { icon: <Search size={18} />, label: "SEO" },
-
   ];
 
   const HandleCompoChange = (item) => {
-    setOpen(false)
-    setComponent(item)
-  }
+    setOpen(false);
+    setComponent(item);
+  };
   const handleAccountChange = () => {
-    setOpen(false)
-    setComponent("Account")
-  }
+    setOpen(false);
+    setComponent("Account");
+  };
 
   if (pageLoading || status === "loading") {
-    return <Loader />
+    return <Loader />;
   }
 
   return (
@@ -89,7 +94,6 @@ const Page = () => {
       {/* Desktop Layout */}
       <div className="lg:flex hidden">
         <div className="flex flex-col justify-between border-r w-[20vw] h-[89vh] bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100 shadow-md">
-
           {/* Navigation Items */}
           <div className="flex flex-col gap-2 mt-4 px-4">
             {drawerItems.map((item, index) => (
@@ -104,26 +108,31 @@ const Page = () => {
             ))}
           </div>
 
-
-
           {/* Account & Analytics Button at Bottom */}
           <div className="px-4 py-4 border-t dark:border-zinc-700">
-            <button onClick={() => (router.push("/Analytics"))} className="w-full mb-4 flex items-center gap-3 px-4 py-2 rounded-md bg-orange-100 text-orange-700 hover:bg-orange-200 dark:bg-orange-900 dark:text-orange-200 dark:hover:bg-orange-800 font-medium transition-colors">
+            <button
+              onClick={() => router.push("/Analytics")}
+              className="w-full mb-4 flex items-center gap-3 px-4 py-2 rounded-md bg-orange-100 text-orange-700 hover:bg-orange-200 dark:bg-orange-900 dark:text-orange-200 dark:hover:bg-orange-800 font-medium transition-colors"
+            >
               <BarChart2 className="w-5 h-5" />
               <span>Analytics</span>
             </button>
             <button
               onClick={() => setComponent("Account")}
-              className="w-full flex items-center gap-3 px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold transition">
-              <span><User /></span>
+              className="w-full flex items-center gap-3 px-4 py-2 rounded-lg bg-orange-500 hover:bg-orange-600 text-white font-semibold transition"
+            >
+              <span>
+                <User />
+              </span>
               <span>Account</span>
             </button>
           </div>
         </div>
 
         {/* Middle where the content is located  */}
-        <div className="border  w-[50vw] h-[89vh] overflow-y-auto "><Main component={component} /></div>
-
+        <div className="border  w-[50vw] h-[89vh] overflow-y-auto ">
+          <Main component={component} />
+        </div>
 
         {/* Right side where preview is located */}
         <div className="border  w-[30vw] flex items-center justify-center h-[89vh]">
@@ -139,33 +148,39 @@ const Page = () => {
               <div className="h-full overflow-y-auto p-4 space-y-4">
                 {/* Replace this with your actual mobile preview content */}
                 <div className="bg-white dark:bg-zinc-700 p-4 rounded-xl shadow">
-                  <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">Preview Title</h2>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-300">This is sample content.</p>
+                  <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
+                    Preview Title
+                  </h2>
+                  <p className="text-sm text-zinc-600 dark:text-zinc-300">
+                    This is sample content.
+                  </p>
                 </div>
                 <div className="bg-orange-100 dark:bg-orange-900 p-4 rounded-xl shadow">
-                  <h2 className="text-lg font-semibold text-orange-800 dark:text-orange-100">Another Section</h2>
-                  <p className="text-sm text-orange-700 dark:text-orange-200">More mobile UI stuff here.</p>
+                  <h2 className="text-lg font-semibold text-orange-800 dark:text-orange-100">
+                    Another Section
+                  </h2>
+                  <p className="text-sm text-orange-700 dark:text-orange-200">
+                    More mobile UI stuff here.
+                  </p>
                 </div>
               </div>
             </div>
-          </div></div>
+          </div>
+        </div>
       </div>
-
 
       {/* Mobile Design */}
       <div className="lg:hidden">
-
         <div className="border w-[100vw] h-[89vh] overflow-y-auto ">
           <Main component={component} />
         </div>
 
         <div className="lg:hidden fixed bottom-5 w-full z-50">
-
           <div className="rounded-2xl items-center justify-center flex w-fit mx-auto bg-white dark:bg-zinc-900 text-black dark:text-white shadow-lg border border-gray-300">
             {/* Analytics */}
             <button
               className="w-[60px] py-4 rounded-l-2xl flex justify-center hover:bg-orange-100 dark:hover:bg-orange-900 transition"
-              onClick={() => (router.push("/Analytics"))}
+              onClick={() => router.push("/Analytics")}
             >
               <BarChart2 size={24} />
             </button>
@@ -183,31 +198,34 @@ const Page = () => {
 
               <DrawerContent className="rounded-t-2xl border-t bg-white dark:bg-black text-gray-700 dark:text-gray-300 shadow-xl">
                 <DrawerHeader>
-                  <DrawerTitle className="text-xl font-semibold">Settings</DrawerTitle>
-                  <DrawerDescription className="text-sm">Customize your preferences</DrawerDescription>
+                  <DrawerTitle className="text-xl font-semibold">
+                    Settings
+                  </DrawerTitle>
+                  <DrawerDescription className="text-sm">
+                    Customize your preferences
+                  </DrawerDescription>
                 </DrawerHeader>
 
                 <div className="p-4 space-y-3">
                   {drawerItems.map((item, index) => (
                     <button
-                      onClick={() =>
-                        HandleCompoChange(item.label)
-                      }
+                      onClick={() => HandleCompoChange(item.label)}
                       key={index}
                       className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-orange-100 dark:hover:bg-orange-900 transition text-left"
                     >
                       {item.icon}
                       <span className="text-sm font-medium">{item.label}</span>
                     </button>
-
                   ))}
-                  <button onClick={handleAccountChange} className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-orange-100 dark:hover:bg-orange-900 transition text-left">
+                  <button
+                    onClick={handleAccountChange}
+                    className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-orange-100 dark:hover:bg-orange-900 transition text-left"
+                  >
                     <Lock /> Account
                   </button>
                 </div>
               </DrawerContent>
             </Drawer>
-
 
             {/* Mobile Preview Sheet */}
             <Sheet open={previewOpen} onOpenChange={setPreviewOpen}>
@@ -220,7 +238,11 @@ const Page = () => {
                 </button>
               </SheetTrigger>
 
-              <SheetContent side="right"  {...handlers} className="w-[95vw] max-w-none p-6 bg-white dark:bg-zinc-950">
+              <SheetContent
+                side="right"
+                {...handlers}
+                className="w-[95vw] max-w-none p-6 bg-white dark:bg-zinc-950"
+              >
                 <SheetHeader>
                   <SheetTitle>
                     <span className="text-3xl font-extrabold tracking-tight text-orange-600">
@@ -236,10 +258,7 @@ const Page = () => {
                 </div>
                 {/* Swipeable area starts here */}
                 <div className="mt-1 flex justify-center">
-                  <div
-
-                    className="w-[320px] h-[640px] rounded-[2rem] shadow-xl border-8 border-zinc-950 bg-zinc-100 dark:bg-zinc-800 overflow-hidden relative"
-                  >
+                  <div className="w-[320px] h-[640px] rounded-[2rem] shadow-xl border-8 border-zinc-950 bg-zinc-100 dark:bg-zinc-800 overflow-hidden relative">
                     {/* Status bar */}
                     <div className="w-full h-5 bg-zinc-800  text-white flex justify-between px-4 items-center text-xs font-mono">
                       <span className="mt-1">9:11</span>
@@ -270,7 +289,6 @@ const Page = () => {
                 {/* Swipeable area ends */}
               </SheetContent>
             </Sheet>
-
           </div>
         </div>
       </div>
