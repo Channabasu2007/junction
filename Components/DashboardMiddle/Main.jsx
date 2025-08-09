@@ -8,12 +8,15 @@ import PageLayout from './PageLayout';
 import PaymentDetails from './PaymentDetails';
 import SEO from './SEO';
 import Thumbnail from './Thumbnail';
+import PersonalInfo from './PersonalInfo';
 import VideoEmbedding from './VideoEmbedding';
 import Loader from '@/Components/Workers/Loader';
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
 import SetPageNameCompo from '../UsersSettings/SetPageName'
+
+
 const Main = ({ component }) => {
     const { data: session, status } = useSession();
     const router = useRouter();
@@ -32,6 +35,7 @@ const Main = ({ component }) => {
         SEO,
         Thumbnail,
         VideoEmbedding,
+        PersonalInfo,
     };
 
     const formattedComponent = component.split(" ").join("");
@@ -72,8 +76,8 @@ const Main = ({ component }) => {
             setRedirecting(true);
         }
     }, [userData, router]);
-  const handleSuccess = () => {
-         setRedirecting(false);
+    const handleSuccess = () => {
+        setRedirecting(false);
         router.refresh(); // This will refresh the dashboard page
     };
 

@@ -30,12 +30,18 @@ export async function GET(req) {
 export async function POST(req) {
   await dbConnect();
 
-  const body = await req.json();
-  const email = body.email;
-  const userName = body.userName.toLowerCase();
-  if (!userName) {
-    return;
-  }
+ const { email, userName } = await req.json();
+
+if (!email) {
+  return NextResponse.json({ error: "Email is required" }, { status: 400 });
+}
+
+if (!userName) {
+  return NextResponse.json({ error: "Username is required" }, { status: 400 });
+}
+
+const loweredUserName = userName.toLowerCase();
+
   if (!email || !userName) {
     return NextResponse.json(
       { error: "Email and username are required" },
@@ -52,17 +58,11 @@ export async function POST(req) {
       );
     }
 
-    const user = await User.findOne({ email });
-    if (!user) {
-      return NextResponse.json(
-        { error: "Email not found. Please log in again." },
-        { status: 404 }
-      );
-    }
-
-    user.userName = userName;
-    await user.save();
-
+const user = await User.findOneAndUpdate(
+  { email },
+  {userName},
+  {new: true}
+)
     return NextResponse.json(
       { message: "Username successfully set", success: true },
       { status: 200 }

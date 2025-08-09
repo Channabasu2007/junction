@@ -76,12 +76,13 @@ const SetPageNameCompo = ({ user, onSuccess }) => {
     };
 
     // Use a ref for the debounced function
-    const debouncedSubmit = useRef(debounce(checkAndSubmitName, 500)).current;
+    const debouncedSubmit = useRef(debounce(checkAndSubmitName, 900)).current;
 
     const handleChange = (e) => {
         const value = e.target.value.split(" ").join("").toLowerCase();
         setInputValue(value);
-        debouncedSubmit(value);
+        if (value) debouncedSubmit(value);
+
     };
 
     // This new function now calls the onSuccess prop

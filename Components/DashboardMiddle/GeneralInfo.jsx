@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Input } from '@/Components/ui/input';
 import { Lock, UploadCloud, ImagePlus } from "lucide-react";
@@ -8,6 +8,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
+import Loader from '../Workers/Loader'
 
 const GeneralInfo = ({ user }) => {
   const profileRef = useRef();
@@ -15,64 +16,48 @@ const GeneralInfo = ({ user }) => {
   const router = useRouter();
 
   const [ChangedUserName, setChangedUserName] = useState(user.userName?.toLowerCase() || "");
-  const [firstname, setFirstname] = useState(user.firstname);
-  const [lastname, setLastname] = useState(user.lastname);
-  const [email, setEmail] = useState(user.email);
-  const [businessEmail, setBusinessEmail] = useState(user.businessEmail);
-  const [phone, setPhone] = useState(user.phone);
-  const [bio, setBio] = useState(user.bio);
-  const [bannerUrl, setBannerUrl] = useState(user.bannerUrl);
-  const [profileUrl, setProfileUrl] = useState(user.profileUrl);
+  const [firstname, setFirstname] = useState(user.firstname || "");
+  const [lastname, setLastname] = useState(user.lastname || "");
+  const [email, setEmail] = useState(user.email || "");
+  const [businessEmail, setBusinessEmail] = useState(user.businessEmail || "");
+  const [phone, setPhone] = useState(user.phone || "");
+  const [bio, setBio] = useState(user.bio || "");
+  const [bannerUrl, setBannerUrl] = useState(user.bannerUrl || "");
+  const [profileUrl, setProfileUrl] = useState(user.profileUrl || "");
   const isFirstRun = useRef(true);
+  const [pageLoading, setPageLoading] = useState(true);
 
-useEffect(() => {
-  if (isFirstRun.current) {
-    isFirstRun.current = false;
-    return;
-  }
+  useEffect(() => {
+    setTimeout(() => {
+      setPageLoading(false)
+    }, 200)
+  }, [])
 
-  // Only proceed if all fields are filled
-  if ([firstname, lastname, email, businessEmail, phone, bio].some(val => val?.trim() === "")) return;
-
-  const saveData = async () => {
+  const saveData = async (data) => {
+     // always latest values
     const res = await fetch('/api/DashboardDataChange/GeneralInfo', {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ firstname, lastname, email, businessEmail, phone, bio, profileUrl, bannerUrl }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     });
-
-    if (!res.ok) {
-      showError("Failed to save changes.");
-    }
+    if (!res.ok) showError("Failed to save changes.");
   };
 
-  saveData();
-}, [firstname, lastname, email, businessEmail, phone, bio, bannerUrl, profileUrl]);
+
+  // Memoize the debounced function using useCallback
+  const debouncedSave = useCallback(
+    debounce(saveData, 1000),
+    [] // The empty dependency array ensures this function is only created once
+  );
+
   useEffect(() => {
-    if (isFirstRun.current) {
-      isFirstRun.current = false;
+    if (pageLoading || isFirstRun.current) {
+      if (isFirstRun.current) isFirstRun.current = false;
       return;
     }
-    if (firstname === "" || lastname === "" || email === "" || businessEmail === "" || phone === "" || bio === "") {
-      return showError("Please fill in all fields");
-    }
-    const saveData = async () => {
-      const res = await fetch('/api/DashboardDataChange/GeneralInfo', {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ firstname, lastname, email, businessEmail, phone, bio, profileUrl, bannerUrl })
-        ,
-      });
-      if (!res.ok) {
-        showError("Connection failed");
-      }
-    };
-    saveData();
-  }, [firstname, lastname, email, businessEmail, phone, bio, bannerUrl, profileUrl]);
+    debouncedSave({ firstname, lastname, email, businessEmail, phone, bio });
+  }, [firstname, lastname, email, businessEmail, phone, bio, pageLoading]);
+
 
   const updateProfile = async (e) => {
     const file = e.target.files[0];
@@ -81,7 +66,7 @@ useEffect(() => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET); // ✅ REQUIRED
-
+    setPageLoading(true)
     try {
       const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`, {
         method: "POST",
@@ -90,15 +75,19 @@ useEffect(() => {
 
       const data = await res.json();
 
-      if (data.secure_url) {
-        setProfileUrl(data.secure_url);
-        showSuccess("Profile photo uploaded successfully!");
+
+      if (data.url) {
+        setProfileUrl(data.url);
+        showSuccess("Image added succesfully..")
+        saveImages(data.url, "profile");
       } else {
         showError("Failed to upload image.");
       }
     } catch (err) {
       console.error(err);
       showError("Something went wrong with image upload.");
+    } finally {
+      setPageLoading(false)
     }
   };
 
@@ -109,7 +98,7 @@ useEffect(() => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET);
-
+    setPageLoading(true)
     try {
       const res = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`, {
         method: "POST",
@@ -119,18 +108,63 @@ useEffect(() => {
       const data = await res.json();
 
       if (data.secure_url) {
-        setBannerUrl(data.secure_url);
-        showSuccess("Banner uploaded successfully!");
+        setBannerUrl(data.url);
+        saveImages(data.url, "banner");
+        showSuccess("Image added succesfully..")
       } else {
         showError("Failed to upload banner.");
       }
     } catch (err) {
       console.error(err);
       showError("Something went wrong with banner upload.");
+    } finally {
+      setPageLoading(false)
     }
   };
 
+  const saveImages = async (url, type) => {
+    setPageLoading(true);
+    try {
+      // The API endpoint should not contain invalid characters like parentheses
+      const res = await fetch(`/api/DashboardDataChange/image-upload`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          type,
+          url,
+          email
+        })
+      });
 
+      if (!res.ok) {
+        showError("Something went wrong while saving image URL.");
+      } else {
+        showSuccess("Image URL saved successfully!");
+      }
+    } catch (err) {
+      console.error(err);
+      showError("An unexpected error occurred.");
+    } finally {
+      setPageLoading(false);
+    }
+  };
+
+  function debounce(func, delay) {
+    let timeoutId; // This variable will hold the ID of the setTimeout
+
+    return function (...args) {
+      // Clear any existing timeout to reset the timer
+      clearTimeout(timeoutId);
+
+      // Set a new timeout
+      timeoutId = setTimeout(() => {
+        // Execute the original function with the correct 'this' context and arguments
+        func.apply(this, args);
+      }, delay);
+    };
+  }
 
 
   const renderInput = ({ label, id, value, setValue, disabled, tooltip }) => (
@@ -160,7 +194,9 @@ useEffect(() => {
       </div>
     </div>
   );
-
+  if (pageLoading) {
+    return <Loader />
+  }
   return (
     <div className="w-[90%] mx-auto py-6 mt-2 space-y-6 text-zinc-800 dark:text-zinc-100">
       <h1 className="text-3xl font-semibold text-orange-600">General Information</h1>
@@ -245,7 +281,7 @@ useEffect(() => {
           tooltip: "Only premium users can update phone numbers."
         })}
 
-        <div className="md:col-span-2 space-y-1">
+        <div className="md:col-span-2 space-y-1 mb-20 lg:mb-5">
           <label htmlFor="bio" className="text-sm font-medium text-zinc-700 dark:text-zinc-300">Bio</label>
           <textarea
             id="bio"

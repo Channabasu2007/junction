@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Navbar from "@/Components/Navbar/mainNavContainer";
-import { Settings, BarChart2, Smartphone } from "lucide-react";
+import { Settings, BarChart2, Smartphone, icons } from "lucide-react";
 import {
   ChartNoAxesColumnIncreasing,
   User,
@@ -13,6 +13,7 @@ import {
   Image,
   Search,
   Lock,
+  Contact,
 } from "lucide-react";
 import {
   Drawer,
@@ -65,6 +66,7 @@ const Page = () => {
 
   const drawerItems = [
     { icon: <User size={18} />, label: "General Info" },
+    {icon : <Contact size={18}/>, label: "Personal Info"},
     { icon: <Globe size={18} />, label: "Social Media" },
     { icon: <Video size={18} />, label: "Video Embedding" },
     { icon: <CreditCard size={18} />, label: "Payment Details" },
