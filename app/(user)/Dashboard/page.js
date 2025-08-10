@@ -14,6 +14,7 @@ import {
   Search,
   Lock,
   Contact,
+  GraduationCap,
 } from "lucide-react";
 import {
   Drawer,
@@ -66,7 +67,8 @@ const Page = () => {
 
   const drawerItems = [
     { icon: <User size={18} />, label: "General Info" },
-    {icon : <Contact size={18}/>, label: "Personal Info"},
+    { icon: <Contact size={18} />, label: "Personal Info" },
+    { icon: <GraduationCap size={18} />, label: "Education" },
     { icon: <Globe size={18} />, label: "Social Media" },
     { icon: <Video size={18} />, label: "Video Embedding" },
     { icon: <CreditCard size={18} />, label: "Payment Details" },
@@ -94,10 +96,10 @@ const Page = () => {
       <Navbar />
 
       {/* Desktop Layout */}
-      <div className="lg:flex hidden">
+      <div className="lg:flex hidden  ">
         <div className="flex flex-col justify-between border-r w-[20vw] h-[89vh] bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100 shadow-md">
           {/* Navigation Items */}
-          <div className="flex flex-col gap-2 mt-4 px-4">
+          <div className="flex flex-col gap-2 mt-4 px-4 overflow-auto">
             {drawerItems.map((item, index) => (
               <div
                 onClick={() => setComponent(item.label)}

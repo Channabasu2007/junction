@@ -10,6 +10,7 @@ import SEO from './SEO';
 import Thumbnail from './Thumbnail';
 import PersonalInfo from './PersonalInfo';
 import VideoEmbedding from './VideoEmbedding';
+import Education from './Education';
 import Loader from '@/Components/Workers/Loader';
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
@@ -36,6 +37,7 @@ const Main = ({ component }) => {
         Thumbnail,
         VideoEmbedding,
         PersonalInfo,
+        Education
     };
 
     const formattedComponent = component.split(" ").join("");

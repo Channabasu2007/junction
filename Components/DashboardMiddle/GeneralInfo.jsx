@@ -34,12 +34,14 @@ const GeneralInfo = ({ user }) => {
   }, [])
 
   const saveData = async (data) => {
+    
      // always latest values
     const res = await fetch('/api/DashboardDataChange/GeneralInfo', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
+    
     if (!res.ok) showError("Failed to save changes.");
   };
 

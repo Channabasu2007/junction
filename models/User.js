@@ -1,5 +1,12 @@
 import mongoose from "mongoose";
 
+const qualificationSchema = new mongoose.Schema({
+  courseName: { type: String, default: "" },
+  institution: { type: String, default: "" },
+  duration: { type: String, default: "" },
+  credential: { type: String, default: "" }
+}, { _id: false });
+
 const UserSchema = new mongoose.Schema({
   firstname: {
     type: String,
@@ -25,7 +32,7 @@ const UserSchema = new mongoose.Schema({
   },
   verificationTries: {
     type: Number,
-    default: 0
+    default: 0,
   },
   otpExpires: {
     type: Date,
@@ -33,14 +40,14 @@ const UserSchema = new mongoose.Schema({
   },
   verified: {
     type: Boolean,
-    default: false
+    default: false,
   },
   userName: {
     type: String,
   },
-  isPremium : {
-    type : Boolean,
-    default : false
+  isPremium: {
+    type: Boolean,
+    default: false,
   },
   createdAt: {
     type: Date,
@@ -48,7 +55,49 @@ const UserSchema = new mongoose.Schema({
     default: Date.now,
   },
   profileUrl: String,
-  bannerUrl: String 
+  bannerUrl: String,
+  jobs: Array,
+  nickname: String,
+  DOB: String,
+  workStatus: String,
+  hasWorkedInCompany: Boolean,
+  qualification: String,
+  location: String,
+
+  // -------------------- Added Education Fields --------------------
+  showEducation: { type: Boolean, default: true },
+
+  primarySchool: {
+    school: { type: String, default: "" },
+    year: { type: String, default: "" },
+    board: { type: String, default: "" }
+  },
+
+  secondarySchool: {
+    school: { type: String, default: "" },
+    year: { type: String, default: "" },
+    board: { type: String, default: "" },
+    percentage: { type: String, default: "" }
+  },
+
+  highSchool: {
+    school: { type: String, default: "" },
+    board: { type: String, default: "" },
+    year: { type: String, default: "" },
+    percentage: { type: String, default: "" },
+    stream: { type: String, default: "" }
+  },
+
+  college: {
+    collegeName: { type: String, default: "" },
+    year: { type: String, default: "" },
+    degree: { type: String, default: "" },
+    percentage: { type: String, default: "" },
+    field: { type: String, default: "" }
+  },
+
+  qualifications: [qualificationSchema]
+  // ---------------------------------------------------------------
 });
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);

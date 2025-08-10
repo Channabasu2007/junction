@@ -30,11 +30,12 @@ import { Checkbox } from "@/Components/ui/checkbox"
 
 
 const PersonalInfo = ({ user }) => {
+    const email = user.email
     const [nickname, setNickname] = useState(user.nickname || "");
     const [date, setDate] = React.useState(user.DOB || "")
     const [workStatus, setWorkStatus] = useState(user.workStatus || "");
-    const [hasWorkedInCompany, setHasWorkedInCompany] = useState(user?.hasWorkedInCompany || false)
     const [qualification, setQualification] = useState(user.qualification || "")
+    const [hasWorkedInCompany, setHasWorkedInCompany] = useState(user?.hasWorkedInCompany || false)
     const [jobPopUp, setJobPopUp] = useState(false)
     const [jobs, setJobs] = useState(user.jobs || [])
     const [jobEntry, setJobEntry] = useState({
@@ -45,8 +46,33 @@ const PersonalInfo = ({ user }) => {
         description: "",
         isWorking: false
     });
+    const [location, setLocation] = useState(user.location || "");
     const [open, setOpen] = React.useState(false)
+    const [firstLoad, setFirstLoad] = useState(true)
 
+    useEffect(() => {
+        if (firstLoad) {
+            setFirstLoad(false)
+            return;
+        }
+        debouncedSave({ jobs, nickname, date, workStatus, hasWorkedInCompany, qualification, location, email })
+    }, [jobs, nickname, date, workStatus, hasWorkedInCompany, qualification, location])
+
+    const saveData = async (data) => {
+        // always latest values
+        const res = await fetch('/api/DashboardDataChange/PersonalInfo', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+        });
+
+        if (!res.ok) showError("Failed to save changes.");
+    };
+
+    const debouncedSave = useCallback(
+        debounce(saveData, 1000),
+        [] // The empty dependency array ensures this function is only created once
+    );
 
     const handleJobSubmit = (e) => {
         e.preventDefault();
@@ -65,7 +91,20 @@ const PersonalInfo = ({ user }) => {
         setJobs(jobs.filter((_, i) => i !== index));
     };
 
+    function debounce(func, delay) {
+        let timeoutId; // This variable will hold the ID of the setTimeout
 
+        return function (...args) {
+            // Clear any existing timeout to reset the timer
+            clearTimeout(timeoutId);
+
+            // Set a new timeout
+            timeoutId = setTimeout(() => {
+                // Execute the original function with the correct 'this' context and arguments
+                func.apply(this, args);
+            }, delay);
+        };
+    }
 
     return (
 
@@ -92,7 +131,7 @@ const PersonalInfo = ({ user }) => {
 
                 {/* Date of Birth */}
                 <div className="flex-1 w-full md:w-1/2">
-                    <Label htmlFor="date" className="px-1 pb-1">
+                    <Label htmlFor="date" className="px-1">
                         Date of birth
                     </Label>
                     <Popover open={open} onOpenChange={setOpen}>
@@ -100,9 +139,9 @@ const PersonalInfo = ({ user }) => {
                             <Button
                                 variant="outline"
                                 id="date"
-                                className="w-full justify-between font-normal"
+                                className="w-48 justify-between font-normal"
                             >
-                                {date ? date.toLocaleDateString() : "Select date"}
+                                {date ?new Date(date).toLocaleDateString() : "Select date"}
                                 <ChevronDownIcon />
                             </Button>
                         </PopoverTrigger>
@@ -112,8 +151,8 @@ const PersonalInfo = ({ user }) => {
                                 selected={date}
                                 captionLayout="dropdown"
                                 onSelect={(date) => {
-                                    setDate(date);
-                                    setOpen(false);
+                                    setDate(date)
+                                    setOpen(false)
                                 }}
                             />
                         </PopoverContent>
@@ -123,7 +162,7 @@ const PersonalInfo = ({ user }) => {
             {/* Qualification */}
             <div>
                 <Label htmlFor="qualification" className="text-sm"> Qualification</Label>
-                <Input value={qualification} onChange={(e)=> {setQualification(e.target.value)}} id="qualification" placeholder="e.g., Completed btech in IIT BOMBAY "/>
+                <Input value={qualification} onChange={(e) => { setQualification(e.target.value) }} id="qualification" placeholder="e.g., Completed btech in IIT BOMBAY " />
             </div>
             <div>
                 <div className="flex-1">
@@ -153,6 +192,10 @@ const PersonalInfo = ({ user }) => {
                         </SelectContent>
                     </Select>
                 </div>
+            </div>
+            <div>
+                <label htmlFor='location' className='text-sm'>Your Location </label>
+                <Input id={location} value={location} onChange={(e) => setLocation(e.target.value)} placeholder='e.g., New York' />
             </div>
             <hr />
             <div>
@@ -312,8 +355,8 @@ const PersonalInfo = ({ user }) => {
                     </div>
                 )}
             </div>
-            
-            
+
+
             {jobPopUp && (
                 <div className="fixed inset-0 bg-zinc-500/80 flex justify-center items-center z-50">
                     <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-lg w-full max-w-lg p-6 relative">

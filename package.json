@@ -35,6 +35,7 @@
     "framer-motion": "^12.23.11",
     "icons-react": "^3.7.1",
     "input-otp": "^1.4.2",
+    "leaflet": "^1.9.4",
     "lucide-react": "^0.526.0",
     "mongoose": "^8.17.0",
     "next": "15.4.4",
