@@ -1,11 +1,15 @@
 import mongoose from "mongoose";
+import Feedbacks from "../Components/DashboardMiddle/Feedbacks";
 
-const qualificationSchema = new mongoose.Schema({
-  courseName: { type: String, default: "" },
-  institution: { type: String, default: "" },
-  duration: { type: String, default: "" },
-  credential: { type: String, default: "" }
-}, { _id: false });
+const qualificationSchema = new mongoose.Schema(
+  {
+    courseName: { type: String, default: "" },
+    institution: { type: String, default: "" },
+    duration: { type: String, default: "" },
+    credential: { type: String, default: "" },
+  },
+  { _id: false }
+);
 
 const UserSchema = new mongoose.Schema({
   firstname: {
@@ -70,14 +74,14 @@ const UserSchema = new mongoose.Schema({
   primarySchool: {
     school: { type: String, default: "" },
     year: { type: String, default: "" },
-    board: { type: String, default: "" }
+    board: { type: String, default: "" },
   },
 
   secondarySchool: {
     school: { type: String, default: "" },
     year: { type: String, default: "" },
     board: { type: String, default: "" },
-    percentage: { type: String, default: "" }
+    percentage: { type: String, default: "" },
   },
 
   highSchool: {
@@ -85,7 +89,7 @@ const UserSchema = new mongoose.Schema({
     board: { type: String, default: "" },
     year: { type: String, default: "" },
     percentage: { type: String, default: "" },
-    stream: { type: String, default: "" }
+    stream: { type: String, default: "" },
   },
 
   college: {
@@ -93,10 +97,17 @@ const UserSchema = new mongoose.Schema({
     year: { type: String, default: "" },
     degree: { type: String, default: "" },
     percentage: { type: String, default: "" },
-    field: { type: String, default: "" }
+    field: { type: String, default: "" },
+  },
+  sites: Array,
+  qualifications: [qualificationSchema],
+  FeedbacksCredentials: {
+    allowFeedbacks: { type: Boolean, default: false },
+    recieveEmails: { type: Boolean, default: false },
+    longMessages: { type: Boolean, default: false },
+    enhancedFeedbacks: { type: Boolean, default: false },
   },
 
-  qualifications: [qualificationSchema]
   // ---------------------------------------------------------------
 });
 

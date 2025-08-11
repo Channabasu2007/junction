@@ -174,7 +174,7 @@ const Page = () => {
       </div>
 
       {/* Mobile Design */}
-      <div className="lg:hidden">
+      <div className="lg:hidden ">
         <div className="border w-[100vw] h-[89vh] overflow-y-auto ">
           <Main component={component} />
         </div>
@@ -200,7 +200,7 @@ const Page = () => {
                 </button>
               </DrawerTrigger>
 
-              <DrawerContent className="rounded-t-2xl border-t bg-white dark:bg-black text-gray-700 dark:text-gray-300 shadow-xl">
+              <DrawerContent className="rounded-t-2xl border-t bg-white dark:bg-black text-gray-700 dark:text-gray-300 shadow-xl ">
                 <DrawerHeader>
                   <DrawerTitle className="text-xl font-semibold">
                     Settings
@@ -210,7 +210,7 @@ const Page = () => {
                   </DrawerDescription>
                 </DrawerHeader>
 
-                <div className="p-4 space-y-3">
+                <div className="p-4 space-y-3 overflow-y-auto ">
                   {drawerItems.map((item, index) => (
                     <button
                       onClick={() => HandleCompoChange(item.label)}

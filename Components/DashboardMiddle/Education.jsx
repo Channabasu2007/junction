@@ -39,14 +39,19 @@ const Education = ({ user }) => {
     field: user?.college?.field || "",
   });
 
-  const [qualifications, setQualifications] = useState([
-    {
-      courseName: "",
-      institution: "",
-      duration: "",
-      credential: "",
-    },
-  ]);
+const [qualifications, setQualifications] = useState(
+  Array.isArray(user.qualifications) && user.qualifications.length > 0
+    ? user.qualifications
+    : [
+        {
+          courseName: "",
+          institution: "",
+          duration: "",
+          credential: "",
+        },
+      ]
+);
+
 
   useEffect(() => {
     if (firstRun) {
