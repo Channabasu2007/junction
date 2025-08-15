@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Label } from "@/Components/ui/label";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/Components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/Components/ui/button";
 import { FaGoogle } from "react-icons/fa";

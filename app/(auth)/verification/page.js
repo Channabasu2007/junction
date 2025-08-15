@@ -10,7 +10,7 @@ import {
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "@/components/ui/input-otp";
+} from "@/Components/ui/input-otp";
 import { signIn } from "next-auth/react";
 import Loader from "@/Components/Workers/Loader";
 

@@ -6,7 +6,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "@/Components/ui/tooltip";
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
 import Loader from '../Workers/Loader'
 

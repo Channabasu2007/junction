@@ -14,6 +14,8 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        if (!credentials) throw new Error("No credentials provided");
+
         await dbConnect();
         const user = await User.findOne({ email: credentials.email });
 
@@ -29,6 +31,7 @@ export const authOptions = {
         return user;
       },
     }),
+
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
