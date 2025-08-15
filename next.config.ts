@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
         hostname: "www.google.com",
         pathname: "/s2/favicons/**", // Use a wildcard to match any path after /s2/favicons/
       },
+      {
+        hostname: "res.cloudinary.com"
+      }
     ],
   },
 };

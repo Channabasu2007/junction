@@ -107,6 +107,13 @@ const UserSchema = new mongoose.Schema({
     longMessages: { type: Boolean, default: false },
     enhancedFeedbacks: { type: Boolean, default: false },
   },
+  SEO: {
+    title: { type: String, default: "" },
+    description: { type: String, default: "" },
+    keywords: { type: Array, default: [] },
+    thumbnailUrl: { type: String, default: "" },
+  },
+  videoId: String,
 
   // ---------------------------------------------------------------
 });

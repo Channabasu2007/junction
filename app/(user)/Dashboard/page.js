@@ -57,6 +57,12 @@ const Page = () => {
   });
 
   useEffect(() => {
+    setPageLoading(true)
+    setTimeout(()=> {setPageLoading(false)}, 200)
+
+  },[component])
+
+  useEffect(() => {
     if (status === "loading")
       return; // wait until session is resolved
     else if (status === "unauthenticated") {
@@ -74,7 +80,6 @@ const Page = () => {
     { icon: <CreditCard size={18} />, label: "Payment Details" },
     { icon: <MessageCircle size={18} />, label: "Feedbacks" },
     { icon: <LayoutGrid size={18} />, label: "Page Layout" },
-    { icon: <Image size={18} />, label: "Thumbnail" },
     { icon: <Search size={18} />, label: "SEO" },
   ];
 

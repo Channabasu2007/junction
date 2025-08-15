@@ -45,25 +45,26 @@ export const authOptions = {
     async signIn({ user, account, profile, email }) {
       if (account.provider === "google") {
         await dbConnect();
-        
+
         const existingUser = await User.findOne({ email: user.email });
         if (!existingUser) {
           throw new Error("No user found, please signup first.");
           return false;
         }
       }
-      
+
       return true;
     },
 
     async jwt({ token, user, account }) {
-    
       if (user) {
         token.id = user._id;
         token.email = user.email;
         token.firstname = user.firstname;
         token.lastname = user.lastname;
         token.userName = user.userName;
+        token.verified = user.verified;
+        token.isPremium = user.isPremium;
       }
       return token;
     },
@@ -74,6 +75,8 @@ export const authOptions = {
         session.user.email = token.email;
         session.user.firstname = token.firstname;
         session.user.lastname = token.lastname;
+        session.user.verified = token.verified;
+        session.user.isPremium = token.isPremium;
       }
       return session;
     },

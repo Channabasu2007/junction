@@ -7,7 +7,6 @@ import Feedbacks from './Feedbacks';
 import PageLayout from './PageLayout';
 import PaymentDetails from './PaymentDetails';
 import SEO from './SEO';
-import Thumbnail from './Thumbnail';
 import PersonalInfo from './PersonalInfo';
 import VideoEmbedding from './VideoEmbedding';
 import Education from './Education';
@@ -34,7 +33,6 @@ const Main = ({ component }) => {
         PageLayout,
         PaymentDetails,
         SEO,
-        Thumbnail,
         VideoEmbedding,
         PersonalInfo,
         Education

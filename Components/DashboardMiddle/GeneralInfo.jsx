@@ -30,7 +30,7 @@ const GeneralInfo = ({ user }) => {
   useEffect(() => {
     setTimeout(() => {
       setPageLoading(false)
-    }, 200)
+    }, 10)
   }, [])
 
   const saveData = async (data) => {
