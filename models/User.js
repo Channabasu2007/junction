@@ -114,7 +114,9 @@ const UserSchema = new mongoose.Schema({
     thumbnailUrl: { type: String, default: "" },
   },
   videoId: String,
-
+  PageLayout: {
+    bgImage: { type: String, default: "" },
+  },
   // ---------------------------------------------------------------
 });
 

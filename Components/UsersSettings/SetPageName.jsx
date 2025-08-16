@@ -6,6 +6,7 @@ import { showError, showSuccess, showInfo } from "@/helpers/ToastManager";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
+
 /**
  * A component to set a unique page name for the user's public URL.
  * It now accepts an `onSuccess` prop to handle post-submission actions.
@@ -81,6 +82,13 @@ const SetPageNameCompo = ({ user, onSuccess }) => {
     const handleChange = (e) => {
         const value = e.target.value.split(" ").join("").toLowerCase();
         setInputValue(value);
+        const notAllowedNames = [
+            "dashboard", "analytics", "setpagename", "api", "login", "signUp", "verification", "error", "junction",
+        ]
+        if(notAllowedNames.includes(value)){
+            showInfo("The Name is not proper..")
+            return 
+        }
         if (value) debouncedSubmit(value);
 
     };

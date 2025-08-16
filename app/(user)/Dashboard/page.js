@@ -41,6 +41,7 @@ import Loader from "@/Components/Workers/Loader";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Main from "@/Components/DashboardMiddle/Main";
+import MobilePreview from '@/Components/DesignedPages/MobilePreview'
 
 const Page = () => {
   const router = useRouter();
@@ -77,7 +78,6 @@ const Page = () => {
     { icon: <GraduationCap size={18} />, label: "Education" },
     { icon: <Globe size={18} />, label: "Social Media" },
     { icon: <Video size={18} />, label: "Video Embedding" },
-    { icon: <CreditCard size={18} />, label: "Payment Details" },
     { icon: <MessageCircle size={18} />, label: "Feedbacks" },
     { icon: <LayoutGrid size={18} />, label: "Page Layout" },
     { icon: <Search size={18} />, label: "SEO" },
@@ -146,33 +146,8 @@ const Page = () => {
         {/* Right side where preview is located */}
         <div className="border  w-[30vw] flex items-center justify-center h-[89vh]">
           <div className=" flex justify-center">
-            <div className="w-[275px] h-[550px] rounded-[2rem] shadow-xl border-6 dark:border-zinc-400 border-zinc-950 bg-zinc-100 dark:bg-zinc-800 overflow-hidden relative">
-              {/* Status bar */}
-              <div className="w-full h-5 bg-zinc-800 text-white flex justify-between px-4 items-center text-xs font-mono">
-                <span>9:11</span>
-                <span className="tracking-widest">📶 🔋</span>
-              </div>
-
-              {/* Content area */}
-              <div className="h-full overflow-y-auto p-4 space-y-4">
-                {/* Replace this with your actual mobile preview content */}
-                <div className="bg-white dark:bg-zinc-700 p-4 rounded-xl shadow">
-                  <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-                    Preview Title
-                  </h2>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-300">
-                    This is sample content.
-                  </p>
-                </div>
-                <div className="bg-orange-100 dark:bg-orange-900 p-4 rounded-xl shadow">
-                  <h2 className="text-lg font-semibold text-orange-800 dark:text-orange-100">
-                    Another Section
-                  </h2>
-                  <p className="text-sm text-orange-700 dark:text-orange-200">
-                    More mobile UI stuff here.
-                  </p>
-                </div>
-              </div>
+            <div className="w-[275px] h-[550px] rounded-[2rem] shadow-xl border-6 dark:border-zinc-400 border-zinc-950 bg-zinc-100 dark:bg-zinc-900 overflow-hidden relative">
+<MobilePreview />
             </div>
           </div>
         </div>

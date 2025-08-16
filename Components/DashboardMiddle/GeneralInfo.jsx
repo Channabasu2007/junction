@@ -51,11 +51,11 @@ const GeneralInfo = ({ user }) => {
     debounce(saveData, 1000),
     [] // The empty dependency array ensures this function is only created once
   );
-
+  const [firstRun, setFirstRun] = useState(true)
   useEffect(() => {
-    if (pageLoading || isFirstRun.current) {
-      if (isFirstRun.current) isFirstRun.current = false;
-      return;
+    if (firstRun) {
+      setFirstRun(false)
+      return
     }
     debouncedSave({ firstname, lastname, email, businessEmail, phone, bio });
   }, [firstname, lastname, email, businessEmail, phone, bio, pageLoading]);

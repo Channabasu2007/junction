@@ -9,8 +9,8 @@ const SocialMedia = ({ user }) => {
   const email = user.email
   const [firstRun, setFirstRun] = useState(true)
   const [sites, setSites] = useState(
-    user?.socialLinks && user.socialLinks.length > 0
-      ? user.socialLinks
+    user?.sites && user.sites.length > 0
+      ? user.sites
       : [{ name: "", url: "" }]
   );
 
@@ -23,6 +23,7 @@ const SocialMedia = ({ user }) => {
   }, [sites])
 
   const saveData = async (data) => {
+    showSuccess("yes")
     try {
       const res = await fetch('/api/DashboardDataChange/SocialMediaLinks', {
         method: "POST",

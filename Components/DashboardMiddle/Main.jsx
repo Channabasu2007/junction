@@ -5,7 +5,6 @@ import SocialMedia from './SocialMedia';
 import Account from './Account';
 import Feedbacks from './Feedbacks';
 import PageLayout from './PageLayout';
-import PaymentDetails from './PaymentDetails';
 import SEO from './SEO';
 import PersonalInfo from './PersonalInfo';
 import VideoEmbedding from './VideoEmbedding';
@@ -31,7 +30,6 @@ const Main = ({ component }) => {
         Account,
         Feedbacks,
         PageLayout,
-        PaymentDetails,
         SEO,
         VideoEmbedding,
         PersonalInfo,
