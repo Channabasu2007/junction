@@ -26,7 +26,7 @@ import {
     SelectValue,
 } from "@/Components/ui/select"
 import { Checkbox } from "@/Components/ui/checkbox"
-
+import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
 
 
 const PersonalInfo = ({ user }) => {
@@ -67,6 +67,7 @@ const PersonalInfo = ({ user }) => {
         });
 
         if (!res.ok) showError("Failed to save changes.");
+        reloadPreview()
     };
 
     const debouncedSave = useCallback(

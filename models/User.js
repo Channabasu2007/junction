@@ -114,9 +114,22 @@ const UserSchema = new mongoose.Schema({
     thumbnailUrl: { type: String, default: "" },
   },
   videoId: String,
+
   PageLayout: {
-    bgImage: { type: String, default: "" },
+    bgImage: {
+      url: { type: String, default: "https://images.pexels.com/photos/1031669/pexels-photo-1031669.jpeg" },
+      opacity: { type: Number, default: 50 }, // 0–100%
+      blur: { type: Number, default: 0 }, // px
+      brightness: { type: Number, default: 100 }, // %
+      contrast: { type: Number, default: 100 }, // %
+      saturation: { type: Number, default: 100 }, // %
+      grayscale: { type: Number, default: 0 }, // %
+      sepia: { type: Number, default: 0 }, // %
+      hue: { type: Number, default: 0 }, // deg
+      overlayColor: { type: String, default: "#000000" }, // hex or rgba
+    },
   },
+
   // ---------------------------------------------------------------
 });
 

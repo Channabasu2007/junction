@@ -41,7 +41,7 @@ import Loader from "@/Components/Workers/Loader";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Main from "@/Components/DashboardMiddle/Main";
-import MobilePreview from '@/Components/DesignedPages/MobilePreview'
+import MobilePreview from "@/Components/DesignedPages/MobilePreview";
 
 const Page = () => {
   const router = useRouter();
@@ -58,10 +58,11 @@ const Page = () => {
   });
 
   useEffect(() => {
-    setPageLoading(true)
-    setTimeout(()=> {setPageLoading(false)}, 200)
-
-  },[component])
+    setPageLoading(true);
+    setTimeout(() => {
+      setPageLoading(false);
+    }, 200);
+  }, [component]);
 
   useEffect(() => {
     if (status === "loading")
@@ -147,7 +148,7 @@ const Page = () => {
         <div className="border  w-[30vw] flex items-center justify-center h-[89vh]">
           <div className=" flex justify-center">
             <div className="w-[275px] h-[550px] rounded-[2rem] shadow-xl border-6 dark:border-zinc-400 border-zinc-950 bg-zinc-100 dark:bg-zinc-900 overflow-hidden relative">
-<MobilePreview />
+              <MobilePreview />
             </div>
           </div>
         </div>
@@ -243,31 +244,7 @@ const Page = () => {
                 {/* Swipeable area starts here */}
                 <div className="mt-1 flex justify-center">
                   <div className="w-[320px] h-[640px] rounded-[2rem] shadow-xl border-8 border-zinc-950 bg-zinc-100 dark:bg-zinc-800 overflow-hidden relative">
-                    {/* Status bar */}
-                    <div className="w-full h-5 bg-zinc-800  text-white flex justify-between px-4 items-center text-xs font-mono">
-                      <span className="mt-1">9:11</span>
-                      <span className="tracking-widest mt-1">📶 🔋</span>
-                    </div>
-
-                    {/* Content area */}
-                    <div className="h-full overflow-y-auto p-4 space-y-4">
-                      <div className="bg-white dark:bg-zinc-700 p-4 rounded-xl shadow">
-                        <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">
-                          Preview Title
-                        </h2>
-                        <p className="text-sm text-zinc-600 dark:text-zinc-300">
-                          This is sample content.
-                        </p>
-                      </div>
-                      <div className="bg-orange-100 dark:bg-orange-900 p-4 rounded-xl shadow">
-                        <h2 className="text-lg font-semibold text-orange-800 dark:text-orange-100">
-                          Another Section
-                        </h2>
-                        <p className="text-sm text-orange-700 dark:text-orange-200">
-                          More mobile UI stuff here.
-                        </p>
-                      </div>
-                    </div>
+                    <MobilePreview />
                   </div>
                 </div>
                 {/* Swipeable area ends */}

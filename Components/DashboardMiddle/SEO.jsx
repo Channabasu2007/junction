@@ -7,6 +7,7 @@ import { showSuccess, showError } from "@/helpers/ToastManager";
 import { ImagePlus, X } from "lucide-react";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
+import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
 
 const SEO = ({ user }) => {
   const email = user.email
@@ -52,8 +53,7 @@ const SEO = ({ user }) => {
         showError("Database connection failed, make sure network connection is proper.")
       }
       else{
-        const result = await res.json()
-        console.log(result)
+        reloadPreview()
       }
     } catch (error) {
       showError("Error while saving the data please try again later.")

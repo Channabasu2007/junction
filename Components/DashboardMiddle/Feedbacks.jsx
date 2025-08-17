@@ -13,6 +13,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/Components/ui/alert-dialog";
+import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
 
 const Feedbacks = ({ user }) => {
   const email = user.email
@@ -93,7 +94,7 @@ const Feedbacks = ({ user }) => {
       showError("Network error, please turn on the internet")
     }
     const returned = await res.json()
-
+    reloadPreview()
   }
   const handleCheckedChange = (checked) => {
     if (checked) {

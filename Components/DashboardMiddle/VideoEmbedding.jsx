@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
-
+import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
 const VideoEmbedding = ({user}) => {
   const [url, setUrl] = useState("");
   const [videoId, setVideoId] = useState(user.videoId ||"");
@@ -43,7 +43,7 @@ const VideoEmbedding = ({user}) => {
       showError("Something went wrong");
     } else {
       showSuccess("Video added successfully.");
-      
+      reloadPreview()
     }
   };
 

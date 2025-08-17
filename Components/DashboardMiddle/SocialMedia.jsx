@@ -4,6 +4,7 @@ import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button"; // assuming you have this component
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
 import { email } from "zod";
+import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
 
 const SocialMedia = ({ user }) => {
   const email = user.email
@@ -23,7 +24,6 @@ const SocialMedia = ({ user }) => {
   }, [sites])
 
   const saveData = async (data) => {
-    showSuccess("yes")
     try {
       const res = await fetch('/api/DashboardDataChange/SocialMediaLinks', {
         method: "POST",
@@ -32,7 +32,7 @@ const SocialMedia = ({ user }) => {
       })
 
       if (!res.ok) { showError("The data is not saved, please try again later. Check if the internet connection is good or not.") }
-
+reloadPreview()
     } catch (error) {
       showError("Something went wrong, please try again later to add the links.")
     }

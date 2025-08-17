@@ -9,6 +9,7 @@ import {
 } from "@/Components/ui/tooltip";
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
 import Loader from '../Workers/Loader'
+import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
 
 const GeneralInfo = ({ user }) => {
   const profileRef = useRef();
@@ -43,6 +44,7 @@ const GeneralInfo = ({ user }) => {
     });
     
     if (!res.ok) showError("Failed to save changes.");
+    reloadPreview()
   };
 
 

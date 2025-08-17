@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
       },
       {
         hostname: "images.pexels.com"
+      },
+      {
+        hostname: "www.pexels.com"
       }
     ],
   },

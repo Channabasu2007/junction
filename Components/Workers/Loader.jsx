@@ -18,10 +18,7 @@ const Loader = () => {
           </div>
         </div>
 
-        {/* Message */}
-        <p className="text-orange-600 dark:text-orange-400 text-sm sm:text-base font-semibold tracking-wide animate-pulse">
-          Crafting your creative space...
-        </p>
+
       </div>
     </div>
   );
