@@ -179,7 +179,7 @@ const GeneralInfo = ({ user }) => {
           id={id}
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder={label}
+          placeholder={label === "Phone Number" ? `${label} with country code`: label}
           disabled={disabled}
           className={`pr-10 ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
         />
@@ -282,7 +282,7 @@ const GeneralInfo = ({ user }) => {
           value: phone,
           setValue: setPhone,
           disabled: !user.isPremium,
-          tooltip: "Only premium users can update phone numbers."
+          tooltip: "Only premium users can update phone numbers. "
         })}
 
         <div className="md:col-span-2 space-y-1 mb-20 lg:mb-5">

@@ -4,6 +4,11 @@ import { useEffect, useState } from "react";
 import Loader from "@/Components/Workers/Loader";
 import Image from "next/image";
 
+// Importing all the components for the designing 
+import LinkdinStyle from "@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/GeneralInfoDesigns/LinkdinStyle";
+
+
+
 const ProfilePage = () => {
   const router = useRouter();
   const { profile } = useParams();
@@ -75,31 +80,50 @@ const ProfilePage = () => {
   const hue = bgImage.hue ?? 0;
   const overlayColor = bgImage.overlayColor ?? "#000000";
   const bgUrl = bgImage.url ?? "https://images.pexels.com/photos/1031669/pexels-photo-1031669.jpeg"
+
+
+  const componentMap = {
+    LinkdinStyle: LinkdinStyle,
+  };
+
+  // ... inside the ProfilePage component
+  const GeneralInfoSectionName = user?.PageLayout?.GeneralInfoSection ?? "LinkdinStyle";
+  const GeneralInfoSectionComponent = componentMap[GeneralInfoSectionName];
+
   return (
-      <div
-      className="w-full h-[100dvh] bg-cover bg-center text-white relative"
+<div className="relative h-[100dvh] w-full overflow-y-auto">
+  {/* Background + Overlay Layer */}
+  <div
+    className="absolute inset-0 w-full h-[100%] bg-cover bg-center"
+    style={{
+      backgroundImage: `url(${bgUrl})`,
+      filter: `
+        brightness(${brightness})
+        contrast(${contrast})
+        blur(${blur}px)
+        saturate(${saturation})
+        grayscale(${grayscale})
+        sepia(${sepia})
+        hue-rotate(${hue}deg)
+      `,
+      zIndex: 0, // ensure background stays at bottom
+    }}
+  >
+    {/* Overlay */}
+    <div
+      className="absolute inset-0"
       style={{
-        backgroundImage: `url(${bgUrl})`,
-        filter: `
-          brightness(${brightness})
-          contrast(${contrast})
-          blur(${blur}px)
-          saturate(${saturation})
-          grayscale(${grayscale})
-          sepia(${sepia})
-          hue-rotate(${hue}deg)
-        `,
+        backgroundColor: overlayColor,
+        opacity,
       }}
-    >
-      {/* Overlay with opacity & custom color */}
-      <div
-        className="absolute w-full h-full"
-        style={{
-          backgroundColor: overlayColor,
-          opacity,
-        }}
-      />
-    </div>
+    />
+  </div>
+
+  {/* Page Content Layer */}
+  <div className="absolute h-[100dvh] w-full overflow-y-auto z-10 ">
+    <GeneralInfoSectionComponent user={user} />
+  </div>
+</div>
 
   );
 };

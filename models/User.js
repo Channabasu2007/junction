@@ -68,7 +68,6 @@ const UserSchema = new mongoose.Schema({
   qualification: String,
   location: String,
 
-  // -------------------- Added Education Fields --------------------
   showEducation: { type: Boolean, default: true },
 
   primarySchool: {
@@ -128,6 +127,11 @@ const UserSchema = new mongoose.Schema({
       hue: { type: Number, default: 0 }, // deg
       overlayColor: { type: String, default: "#000000" }, // hex or rgba
     },
+    ColorsPicker : {
+      primary : { type: String, default: "#2563eb" },
+      secondary :  { type: String, default: "#9333ea" },
+      paragraph : { type: String, default: "#374151" },
+    }
   },
 
   // ---------------------------------------------------------------

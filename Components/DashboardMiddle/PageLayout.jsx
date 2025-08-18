@@ -1,6 +1,7 @@
 import BgImageSelection from "./PageLayoutComponents/BgImageSelection"
 import BgImageEditings from "./PageLayoutComponents/BgImageEditings"
 import CompoDesignOptions from "./PageLayoutComponents/CompoDesignOptions"
+import ColorsPicker from "./PageLayoutComponents/ColorsPicker"
 const PageLayout = ({ user }) => {
   return (
     <div className="w-[90%] mx-auto py-6 mt-2 space-y-6 text-zinc-800 dark:text-zinc-100">
@@ -13,6 +14,9 @@ const PageLayout = ({ user }) => {
 
       {/* Background Image editings  */}
       <BgImageEditings user={user} />
+
+      {/* Colors shoosing section  */}
+      <ColorsPicker user={user} />
 
       {/* Design customization for the page options are here  */}
       <CompoDesignOptions user={user} />

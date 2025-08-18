@@ -6,6 +6,7 @@ import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
 const VideoEmbedding = ({user}) => {
   const [url, setUrl] = useState("");
   const [videoId, setVideoId] = useState(user.videoId ||"");
+  const [firstRun, setFirstRun] = useState(true)
 
   const extractVideoId = (link) => {
     try {
@@ -49,6 +50,10 @@ const VideoEmbedding = ({user}) => {
 
   // Debounce saving so we don't spam requests
   useEffect(() => {
+    if(firstRun){
+      setFirstRun(false)
+      return;
+    }
     if (!videoId) return;
     const timeout = setTimeout(() => saveData(videoId), 800);
     return () => clearTimeout(timeout);

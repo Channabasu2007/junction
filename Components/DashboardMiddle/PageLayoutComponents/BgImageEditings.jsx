@@ -29,7 +29,7 @@ const Control = ({ label, children, value }) => (
 const BgImageEditings = ({ user }) => {
     const email = user.email;
     const bgImageUrl = user?.PageLayout?.bgImage?.url || "https://images.pexels.com/photos/1031669/pexels-photo-1031669.jpeg"
-    
+
     const [opacity, setOpacity] = useState(user?.PageLayout?.bgImage?.opacity || 50);
     const [brightness, setBrightness] = useState(user?.PageLayout?.bgImage?.brightness || 100);
     const [contrast, setContrast] = useState(user?.PageLayout?.bgImage?.contrast || 100);
@@ -56,14 +56,24 @@ const BgImageEditings = ({ user }) => {
                 showError("Unable to save changes.");
                 return;
             }
-            showSuccess("Background updated!");
-            reloadPreview()
+            debouncedNotify()
+            debouncedReload()
         } catch (err) {
             showError("Failed to update background.");
         }
     };
 
-    const debouncedSave = useCallback(debounce(saveChanges, 300), []);
+    const Notify = () => {
+        showSuccess("Background updated!");
+    }
+    const Reload = () => {
+        reloadPreview()
+    }
+    const debouncedSave = useCallback(debounce(saveChanges, 600), []);
+    const debouncedNotify = useCallback(debounce(Notify, 2000), []);
+    const debouncedReload = useCallback(debounce(Reload, 1500), []);
+
+
 
     useEffect(() => {
         if (firstRun) {
@@ -115,14 +125,14 @@ const BgImageEditings = ({ user }) => {
                                 className="object-cover"
                                 style={{
                                     filter: `
-  brightness(${brightness}%)
-  contrast(${contrast}%)
-  blur(${blur}px)
-  saturate(${saturation}%)
-  grayscale(${grayscale}%)
-  sepia(${sepia}%)
-  hue-rotate(${hue}deg)
-`,
+                                        brightness(${brightness}%)
+                                        contrast(${contrast}%)
+                                        blur(${blur}px)
+                                        saturate(${saturation}%)
+                                        grayscale(${grayscale}%)
+                                        sepia(${sepia}%)
+                                        hue-rotate(${hue}deg)
+                                        `,
                                 }}
                             />
                         ) : (
