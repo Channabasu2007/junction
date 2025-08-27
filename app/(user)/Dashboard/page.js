@@ -243,7 +243,7 @@ const Page = () => {
                 </div>
                 {/* Swipeable area starts here */}
                 <div className="mt-1 flex justify-center">
-                  <div className="w-[320px] h-[640px] rounded-[2rem] shadow-xl border-8 border-zinc-950 bg-zinc-100 dark:bg-zinc-800 overflow-hidden relative">
+                  <div className="w-[275px] h-[550px] rounded-[2rem] shadow-xl border-6 dark:border-zinc-400 border-zinc-950 bg-zinc-100 dark:bg-zinc-900 overflow-hidden relative">
                     <MobilePreview />
                   </div>
                 </div>

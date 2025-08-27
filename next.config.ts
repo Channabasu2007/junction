@@ -16,6 +16,9 @@ const nextConfig: NextConfig = {
       },
       {
         hostname: "www.pexels.com"
+      },
+      {
+        hostname: "img.freepik.com"
       }
     ],
   },

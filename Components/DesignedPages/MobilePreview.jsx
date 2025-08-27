@@ -40,8 +40,14 @@ const MobilePreview = () => {
     return (
 
         <iframe
+
             id="mobilePreviewIframe"
-            className="h-full w-full" src={`${process.env.NEXT_PUBLIC_IP_URL}/${user.userName}`} frameBorder="0"></iframe>
+            className="h-[550px] w-[275px]"
+            src={`${process.env.NEXT_PUBLIC_IP_URL}/${user.userName}`} 
+            frameBorder="0">
+            
+        
+        </iframe>
     );
 };
 

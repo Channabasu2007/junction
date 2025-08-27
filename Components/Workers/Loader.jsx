@@ -17,8 +17,6 @@ const Loader = () => {
             <div className="w-2 h-2 bg-white dark:bg-black rounded-full shadow-md animate-ping" />
           </div>
         </div>
-
-
       </div>
     </div>
   );

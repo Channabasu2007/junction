@@ -6,7 +6,8 @@ import Image from "next/image";
 
 // Importing all the components for the designing 
 import LinkdinStyle from "@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/GeneralInfoDesigns/LinkdinStyle";
-
+import SimpleStyle from '@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/SocialMediaDesigns/SimpleStyle'
+import PointsRoadmap from '@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/EducationalInfoDesigns/PointsRoadmap'
 
 
 const ProfilePage = () => {
@@ -122,6 +123,8 @@ const ProfilePage = () => {
   {/* Page Content Layer */}
   <div className="absolute h-[100dvh] w-full overflow-y-auto z-10 ">
     <GeneralInfoSectionComponent user={user} />
+    <SimpleStyle user={user} />
+    <PointsRoadmap usre={user} />
   </div>
 </div>
 
