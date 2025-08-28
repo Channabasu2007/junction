@@ -98,7 +98,15 @@ const UserSchema = new mongoose.Schema({
     percentage: { type: String, default: "" },
     field: { type: String, default: "" },
   },
-  sites: Array,
+  sites: [
+    {
+      name: { type: String, required: true },
+      url: { type: String, required: true },
+      clickCount: { type: Number, default: 0 },
+      clickedAt: { type: Date, default: null },
+    },
+    { _id: true }, // each site will get its own _id
+  ],
   qualifications: [qualificationSchema],
   FeedbacksCredentials: {
     allowFeedbacks: { type: Boolean, default: false },
@@ -116,7 +124,11 @@ const UserSchema = new mongoose.Schema({
 
   PageLayout: {
     bgImage: {
-      url: { type: String, default: "https://images.pexels.com/photos/1031669/pexels-photo-1031669.jpeg" },
+      url: {
+        type: String,
+        default:
+          "https://images.pexels.com/photos/1031669/pexels-photo-1031669.jpeg",
+      },
       opacity: { type: Number, default: 50 }, // 0–100%
       blur: { type: Number, default: 0 }, // px
       brightness: { type: Number, default: 100 }, // %
@@ -127,11 +139,11 @@ const UserSchema = new mongoose.Schema({
       hue: { type: Number, default: 0 }, // deg
       overlayColor: { type: String, default: "#000000" }, // hex or rgba
     },
-    ColorsPicker : {
-      primary : { type: String, default: "#2563eb" },
-      secondary :  { type: String, default: "#9333ea" },
-      paragraph : { type: String, default: "#374151" },
-    }
+    ColorsPicker: {
+      primary: { type: String, default: "#2563eb" },
+      secondary: { type: String, default: "#9333ea" },
+      paragraph: { type: String, default: "#374151" },
+    },
   },
 
   // ---------------------------------------------------------------

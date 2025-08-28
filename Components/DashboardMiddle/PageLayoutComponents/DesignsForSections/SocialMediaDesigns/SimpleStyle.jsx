@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Share2 } from "lucide-react";
 import { showError } from "@/helpers/ToastManager";
+import Link from "next/link";
 
 const SimpleStyle = ({ user }) => {
   const secondaryColor = user?.PageLayout?.ColorsPicker?.secondary ?? "#9333ea";
@@ -10,6 +11,25 @@ const SimpleStyle = ({ user }) => {
     user?.PageLayout?.ColorsPicker?.paragraph ?? "#374151";
 
   const [showAll, setShowAll] = useState(false);
+
+  const handleLinkClick = async (userId, url) => {
+    // Handle link click event (e.g., track analytics)
+    if (!userId || !url) return;
+    try {
+      const response = await fech("/api/PageLayoutAnalytics/LinksClick", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, url })
+      })
+      if (!response.ok) {
+        showError("Failed to record click");
+        return;
+      }
+    } catch (error) {
+      showError("Error recording click:", error);
+    }
+
+  };
 
   const ShareFeature = async (url, name) => {
     if (navigator.share) {
@@ -45,7 +65,7 @@ const SimpleStyle = ({ user }) => {
           <div
             key={index}
             className="group relative flex items-center gap-4 rounded-2xl border p-4 shadow-md transition hover:scale-[1.02] hover:shadow-lg bg-opacity-20"
-            style={{ borderColor: primaryColor, backgroundColor: `${primaryColor}20`  }}
+            style={{ borderColor: primaryColor, backgroundColor: `${primaryColor}20` }}
           >
             {/* Favicon */}
             <div className="w-12 h-12 relative rounded-xl overflow-hidden flex-shrink-0 bg-white">
@@ -67,9 +87,11 @@ const SimpleStyle = ({ user }) => {
             </div>
 
             {/* Name + optional description */}
-            <div className="flex-1 min-w-0">
-              <a
-                href={site.url}
+            <div
+              onClick={() => { handleLinkClick(user._id, site.url) }}
+              className="flex-1 min-w-0">
+              <Link
+                href={site.url ? site.url : "/NotFound"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block"
@@ -80,15 +102,7 @@ const SimpleStyle = ({ user }) => {
                 >
                   {site.name}
                 </h2>
-                {site.description && (
-                  <p
-                    className="text-sm truncate"
-                    style={{ color: paragraphColor }}
-                  >
-                    {site.description}
-                  </p>
-                )}
-              </a>
+              </Link>
             </div>
 
             {/* Action Icon */}

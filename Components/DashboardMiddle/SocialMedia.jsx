@@ -3,7 +3,6 @@ import Image from "next/image";
 import { Input } from "@/Components/ui/input";
 import { Button } from "@/Components/ui/button"; // assuming you have this component
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
-import { email } from "zod";
 import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
 
 const SocialMedia = ({ user }) => {

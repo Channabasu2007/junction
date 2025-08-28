@@ -1,28 +1,40 @@
-import dbConnect from "@/lib/dbConnect";
-import User from "@/models/User";
-import { error } from "console";
-import { NextResponse } from "next/server";
+import dbConnect from "@/lib/dbConnect"
+import User from "@/models/User"
+import { NextResponse } from "next/server"
 
 export async function POST(req) {
-  await dbConnect();
-  const { sites, email } = await req.json();
-  if (!email) {
-    return;
-  }
   try {
+    const body = await req.json()
+    const { email, sites } = body
+
+    if (!email || !sites) {
+      return NextResponse.json(
+        { error: "Email and sites are required" },
+        { status: 400 }
+      )
+    }
+
+    await dbConnect()
+
     const user = await User.findOneAndUpdate(
       { email },
-      { sites },
+      { sites }, // directly set the sites array
       { new: true }
-    );
+    )
+
     if (!user) {
-      return NextResponse.json({ error: "User Not found" }, { status: 404 });
+      return NextResponse.json({ error: "User not found" }, { status: 404 })
     }
-    return NextResponse.json({ message: "Data stored"}, { status: 200 });
-  } catch (error) {
+
     return NextResponse.json(
-      { error: "Error while saving the data" },
+      { message: "Sites updated successfully", user },
+      { status: 200 }
+    )
+  } catch (error) {
+    console.error("Error saving sites:", error)
+    return NextResponse.json(
+      { error: "Server error while saving sites" },
       { status: 500 }
-    );
+    )
   }
 }
