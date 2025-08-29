@@ -12,24 +12,23 @@ const SimpleStyle = ({ user }) => {
 
   const [showAll, setShowAll] = useState(false);
 
-  const handleLinkClick = async (userId, url) => {
-    // Handle link click event (e.g., track analytics)
-    if (!userId || !url) return;
-    try {
-      const response = await fech("/api/PageLayoutAnalytics/LinksClick", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, url })
-      })
-      if (!response.ok) {
-        showError("Failed to record click");
-        return;
-      }
-    } catch (error) {
-      showError("Error recording click:", error);
-    }
+ const handleLinkClick = async (userId, url) => {
+  if (!userId || !url) return;
+  try {
+    const response = await fetch("/api/PageLayoutAnalytics/LinksClick", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, url }),
+    });
 
-  };
+    if (!response.ok) {
+      showError("Failed to record click");
+    }
+  } catch (error) {
+    showError("Error recording click: " + error.message);
+  }
+};
+
 
   const ShareFeature = async (url, name) => {
     if (navigator.share) {

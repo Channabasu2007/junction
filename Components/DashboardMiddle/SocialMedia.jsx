@@ -74,7 +74,7 @@ reloadPreview()
   }
 
   return (
-    <div className="w-[90%] mx-auto py-6 mt-2 space-y-10 text-zinc-800 dark:text-zinc-100">
+    <div className="w-[90%] mx-auto mb-10 py-6 mt-2 space-y-10 text-zinc-800 dark:text-zinc-100">
       <h1 className="text-3xl font-semibold text-orange-600">Social Media Links</h1>
 
       {sites.map((site, index) => (

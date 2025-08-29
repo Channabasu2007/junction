@@ -100,12 +100,14 @@ const UserSchema = new mongoose.Schema({
   },
   sites: [
     {
-      name: { type: String, required: true },
-      url: { type: String, required: true },
-      clickCount: { type: Number, default: 0 },
-      clickedAt: { type: Date, default: null },
+      name: { type: String,},
+      url: { type: String,},
+      clickHistory: [
+        {
+          clickedAt: { type: Date, default: Date.now },
+        },
+      ],
     },
-    { _id: true }, // each site will get its own _id
   ],
   qualifications: [qualificationSchema],
   FeedbacksCredentials: {

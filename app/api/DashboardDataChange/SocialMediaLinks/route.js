@@ -18,7 +18,7 @@ export async function POST(req) {
 
     const user = await User.findOneAndUpdate(
       { email },
-      { sites }, // directly set the sites array
+      { sites },
       { new: true }
     )
 
