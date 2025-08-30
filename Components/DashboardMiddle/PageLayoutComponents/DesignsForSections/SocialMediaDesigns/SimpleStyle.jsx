@@ -64,7 +64,7 @@ const SimpleStyle = ({ user }) => {
           <div
             key={index}
             className="group relative flex items-center gap-4 rounded-2xl border p-4 shadow-md transition hover:scale-[1.02] hover:shadow-lg bg-opacity-20"
-            style={{ borderColor: primaryColor, backgroundColor: `${primaryColor}20` }}
+            style={{ borderColor: primaryColor, backgroundColor: `${secondaryColor}20` }}
           >
             {/* Favicon */}
             <div className="w-12 h-12 relative rounded-xl overflow-hidden flex-shrink-0 bg-white">
@@ -106,7 +106,7 @@ const SimpleStyle = ({ user }) => {
 
             {/* Action Icon */}
             <button
-              className="flex items-center gap-2 z-10"
+              className="flex items-center cursor gap-2 z-10"
               onClick={() => ShareFeature(site.url, site.name)}
             >
               <Share2
@@ -124,7 +124,7 @@ const SimpleStyle = ({ user }) => {
         <div className="text-center">
           <button
             onClick={() => setShowAll(!showAll)}
-            className="px-4 py-2 rounded-xl  font-medium shadow-md transition"
+            className="px-4 py-2 rounded-xl cursor-pointer font-medium shadow-md transition"
             style={{ backgroundColor: secondaryColor, color: primaryColor }}
           >
             {showAll ? "Show Less" : "Show More"}

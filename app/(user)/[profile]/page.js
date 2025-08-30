@@ -124,7 +124,7 @@ const ProfilePage = () => {
   <div className="absolute h-[100dvh] w-full overflow-y-auto z-10 ">
     <GeneralInfoSectionComponent user={user} />
     <SimpleStyle user={user} />
-    <PointsRoadmap usre={user} />
+    <PointsRoadmap user={user} />
   </div>
 </div>
 
