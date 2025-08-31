@@ -234,16 +234,17 @@ const LinkdinStyle = ({ user }) => {
               href={`mailto:${personalEmail}`}
               className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-blue-500 text-blue-600 dark:text-blue-400 font-medium transition hover:bg-blue-50 dark:hover:bg-blue-950"
             >
-              ✉️ Send Mail To Personal Email
+               Send Mail To Personal Email
             </a>
 
             {/* Anonymous message link */}
-            <Link
-              href="/msgs"
+
+            { user.FeedbacksCredentials.allowFeedbacks && <Link
+              href={`/AnonymousMessage?to=${user.userName}`}
               className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-gray-400 text-gray-700 dark:text-gray-300 font-medium transition hover:bg-gray-100 dark:hover:bg-zinc-800"
             >
-              🕵️ Message Anonymously
-            </Link>
+               Message Anonymously
+            </Link>}
           </div>
         </DialogContent>
       </Dialog>

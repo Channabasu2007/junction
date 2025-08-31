@@ -1,5 +1,4 @@
 // app/[profile]/layout.tsx
-
 import { Geist, Geist_Mono } from "next/font/google";
 import Providers from "@/Components/Themes/providers";
 import dbConnect from "@/lib/dbConnect";
@@ -49,7 +48,7 @@ export async function generateMetadata({ params }) {
     title:
       user.SEO?.title ||
       `${user.firstname} ${user.lastname} - ${user.userName}`,
-    description,
+    description : description,
     keywords: user.SEO?.keywords || ["junction", "profile", user.userName],
     robots: "index, follow",
     alternates: {

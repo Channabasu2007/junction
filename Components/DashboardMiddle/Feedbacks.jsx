@@ -148,7 +148,7 @@ const Feedbacks = ({ user }) => {
       <div className="flex items-center gap-3 bg-zinc-100 dark:bg-zinc-900 p-4 rounded-lg border border-zinc-200 dark:border-zinc-800">
         <Checkbox checked={allowFeedbacks} onCheckedChange={handleCheckedChange} />
         <Label className="text-lg font-medium">
-          Allow website visitors to submit public feedback
+          Allow website visitors to submit feedback
         </Label>
       </div>
 

@@ -106,7 +106,7 @@ const SimpleStyle = ({ user }) => {
 
             {/* Action Icon */}
             <button
-              className="flex items-center cursor gap-2 z-10"
+              className="flex items-center cursor-pointer gap-2 z-10"
               onClick={() => ShareFeature(site.url, site.name)}
             >
               <Share2

@@ -3,12 +3,15 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loader from "@/Components/Workers/Loader";
 import Image from "next/image";
+import { showError, showSuccess, showInfo } from "@/helpers/ToastManager";
 
-// Importing all the components for the designing 
+// Importing all the components for the designing
 import LinkdinStyle from "@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/GeneralInfoDesigns/LinkdinStyle";
-import SimpleStyle from '@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/SocialMediaDesigns/SimpleStyle'
-import PointsRoadmap from '@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/EducationalInfoDesigns/PointsRoadmap'
-
+import SimpleStyle from "@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/SocialMediaDesigns/SimpleStyle";
+import PointsRoadmap from "@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/EducationalInfoDesigns/PointsRoadmap";
+import SimpleDesign from "@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/JobsShowcaseDesigns/SimpleDesign";
+import TwoColApproach from "@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/VideoEmbeedingDesigns/TwoColApproach";
+import UserPageFooter from "@/Components/Footer/UserPageFooter";
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -18,6 +21,31 @@ const ProfilePage = () => {
   const [connectionFailed, setConnectionFailed] = useState(false);
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const countPageVisit = async () => {
+      try {
+        const res = await fetch("/api/PageLayoutAnalytics/PageVisitCount", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ profile }),
+        });
+
+        if (!res.ok) {
+          showError("Page view tracking failed");
+          return;
+        }
+      } catch (error) {
+        console.error(error);
+        showError("Something went wrong", error);
+      }
+    };
+    setTimeout(() => {
+      countPageVisit();
+    }, 900);
+  }, [profile]);
 
   useEffect(() => {
     getData();
@@ -36,7 +64,6 @@ const ProfilePage = () => {
       }
 
       const data = await res.json();
-      console.log(data)
       setUser(data.user);
       setConnectionFailed(false);
     } catch (err) {
@@ -69,7 +96,7 @@ const ProfilePage = () => {
     return <Loader />;
   }
 
-  // bacground image filters 
+  // bacground image filters
   const bgImage = user?.PageLayout?.bgImage || {};
   const opacity = (bgImage.opacity ?? 50) / 100; // percentage → decimal
   const brightness = (bgImage.brightness ?? 100) / 100;
@@ -80,25 +107,27 @@ const ProfilePage = () => {
   const sepia = (bgImage.sepia ?? 0) / 100;
   const hue = bgImage.hue ?? 0;
   const overlayColor = bgImage.overlayColor ?? "#000000";
-  const bgUrl = bgImage.url ?? "https://images.pexels.com/photos/1031669/pexels-photo-1031669.jpeg"
-
+  const bgUrl =
+    bgImage.url ??
+    "https://images.pexels.com/photos/1031669/pexels-photo-1031669.jpeg";
 
   const componentMap = {
     LinkdinStyle: LinkdinStyle,
   };
 
   // ... inside the ProfilePage component
-  const GeneralInfoSectionName = user?.PageLayout?.GeneralInfoSection ?? "LinkdinStyle";
+  const GeneralInfoSectionName =
+    user?.PageLayout?.GeneralInfoSection ?? "LinkdinStyle";
   const GeneralInfoSectionComponent = componentMap[GeneralInfoSectionName];
 
   return (
-<div className="relative h-[100dvh] w-full overflow-y-auto">
-  {/* Background + Overlay Layer */}
-  <div
-    className="absolute inset-0 w-full h-[100%] bg-cover bg-center"
-    style={{
-      backgroundImage: `url(${bgUrl})`,
-      filter: `
+    <div className="relative h-[100dvh] w-full overflow-y-auto">
+      {/* Background + Overlay Layer */}
+      <div
+        className="absolute inset-0 w-full h-[100%] bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${bgUrl})`,
+          filter: `
         brightness(${brightness})
         contrast(${contrast})
         blur(${blur}px)
@@ -107,27 +136,29 @@ const ProfilePage = () => {
         sepia(${sepia})
         hue-rotate(${hue}deg)
       `,
-      zIndex: 0, // ensure background stays at bottom
-    }}
-  >
-    {/* Overlay */}
-    <div
-      className="absolute inset-0"
-      style={{
-        backgroundColor: overlayColor,
-        opacity,
-      }}
-    />
-  </div>
+          zIndex: 0, // ensure background stays at bottom
+        }}
+      >
+        {/* Overlay */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundColor: overlayColor,
+            opacity,
+          }}
+        />
+      </div>
 
-  {/* Page Content Layer */}
-  <div className="absolute h-[100dvh] w-full overflow-y-auto z-10 ">
-    <GeneralInfoSectionComponent user={user} />
-    <SimpleStyle user={user} />
-    <PointsRoadmap user={user} />
-  </div>
-</div>
-
+      {/* Page Content Layer */}
+      <div className="absolute h-[100dvh] w-full overflow-y-auto z-10 ">
+        <GeneralInfoSectionComponent user={user} />
+        <SimpleStyle user={user} />
+        <PointsRoadmap user={user} />
+        <SimpleDesign user={user} />
+        {user.videoId && <TwoColApproach user={user} />}
+        <UserPageFooter user={user} />
+      </div>
+    </div>
   );
 };
 

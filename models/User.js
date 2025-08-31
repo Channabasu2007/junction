@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import Feedbacks from "../Components/DashboardMiddle/Feedbacks";
+import { type } from "os";
 
 const qualificationSchema = new mongoose.Schema(
   {
@@ -100,8 +101,8 @@ const UserSchema = new mongoose.Schema({
   },
   sites: [
     {
-      name: { type: String,},
-      url: { type: String,},
+      name: { type: String },
+      url: { type: String },
       clickHistory: [
         {
           clickedAt: { type: Date, default: Date.now },
@@ -147,8 +148,19 @@ const UserSchema = new mongoose.Schema({
       paragraph: { type: String, default: "#374151" },
     },
   },
+  pageViews: [
+    {
+      clickedDate: { type: Date, default: Date.now },
+    },
+  ],
+  messages: [
+    {
+      content: { type: String },
+      createdAt: { type: Date, default: Date.now },
+      category: { type: String, default: "general" },
+    },
+  ],
 
-  // ---------------------------------------------------------------
 });
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);

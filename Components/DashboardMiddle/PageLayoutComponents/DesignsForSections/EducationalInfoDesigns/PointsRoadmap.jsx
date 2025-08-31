@@ -188,7 +188,7 @@ const PointsRoadmap = ({ user }) => {
         className="text-3xl font-bold tracking-tight mt-20 mb-8 text-center"
         style={{ color: primaryColor }}
       >
-        📜 Certifications & Qualifications
+        Certifications & Qualifications
       </h2>
       <div className="grid w-full gap-8 px-6 mb-5 md:grid-cols-2 lg:grid-cols-3 justify-center">
         {qualifications?.map((q, idx) => (
