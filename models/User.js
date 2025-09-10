@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import Feedbacks from "../Components/DashboardMiddle/Feedbacks";
 import { type } from "os";
 
 const qualificationSchema = new mongoose.Schema(

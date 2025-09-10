@@ -91,7 +91,7 @@ const Page = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Visitors graph (2/3 width) */}
           <div className="lg:col-span-2">
-            <PageViewChart user={user} />
+            <PageViewChart user={user} pageLoading={pageLoading}/>
           </div>
 
           {/* Weekly stats + diversion stacked */}
