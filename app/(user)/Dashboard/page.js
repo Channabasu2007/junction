@@ -61,7 +61,7 @@ const Page = () => {
     setPageLoading(true);
     setTimeout(() => {
       setPageLoading(false);
-    }, 200);
+    }, 50);
   }, [component]);
 
   useEffect(() => {
