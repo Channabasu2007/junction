@@ -14,6 +14,7 @@ import LinksClickedStats from "@/Components/Analytics/LinksClickedStats";
 import MessagesStats from "@/Components/Analytics/MessagesStats";
 import Loader from "@/Components/Workers/Loader";
 import { showError } from "@/helpers/ToastManager";
+import Footer from "@/Components/Footer/Footer";
 
 const Page = () => {
   const router = useRouter();
@@ -107,6 +108,7 @@ const Page = () => {
           <MessagesStats user={user} />
         </div>
       </main>
+      <Footer/>
     </>
   );
 };

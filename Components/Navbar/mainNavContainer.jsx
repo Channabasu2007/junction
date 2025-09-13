@@ -16,7 +16,6 @@ const MainNavContainer = () => {
 
   const Navs = [
     { name: "Home", link: "/" },
-    { name: "Pricing", link: "/pricing" },
     { name: "Guide", link: "/guide" },
     { name: "About", link: "/about" },
     { name: "Contact", link: "/contact" },

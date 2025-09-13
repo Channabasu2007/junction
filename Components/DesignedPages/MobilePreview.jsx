@@ -39,15 +39,29 @@ const MobilePreview = () => {
 
     return (
 
-        <iframe
+       <div
+      className="mx-auto "
+      style={{
+        width: "275px",       // mobile width
+        height: "567px",      // mobile height
+        border: "1px solid #ccc",
+        borderRadius: "20px",
+        overflow: "hidden",
+        boxShadow: "0 10px 30px rgba(0,0,0,0.15)",
+      }}
+    >
+      <iframe
+        src={`${process.env.NEXT_PUBLIC_IP_URL}/${user.userName}`} 
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+        }}
+        id="mobilePreviewIframe"
+        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+      />
+    </div>
 
-            id="mobilePreviewIframe"
-            className="h-[550px] w-[275px]"
-            src={`${process.env.NEXT_PUBLIC_IP_URL}/${user.userName}`} 
-            frameBorder="0">
-            
-        
-        </iframe>
     );
 };
 
