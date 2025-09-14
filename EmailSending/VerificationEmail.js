@@ -7,7 +7,7 @@ import {
   Section,
   Text,
   Heading,
-} from "@react-email/Components";
+} from "@react-email/components";
 import React from "react";
 
 const VerificationEmail = ({ otp, username }) => {

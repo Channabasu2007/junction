@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
-import { Input } from "@/Components/ui/input";
-import { Textarea } from "@/Components/ui/textarea";
-import { Button } from "@/Components/ui/button";
-import Navbar from "@/Components/Navbar/mainNavContainer";
-import Footer from "@/Components/Footer/Footer";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+import Navbar from "@/components/Navbar/mainNavContainer";
+import Footer from "@/components/Footer/Footer";
 
 import { CheckCircle } from "lucide-react";
 export default function ContactPage() {

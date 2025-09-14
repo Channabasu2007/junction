@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import AuthNav from "@/Components/Auth/AuthNav";
-import { Button } from "@/Components/ui/button";
+import AuthNav from "@/components/Auth/AuthNav";
+import { Button } from "@/components/ui/button";
 import { showSuccess, showError } from "@/helpers/ToastManager";
 import { OtpCodeSchema } from "@/helpers/SignUpSchema";
 import {
@@ -10,9 +10,9 @@ import {
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "@/Components/ui/input-otp";
+} from "@/components/ui/input-otp";
 import { signIn } from "next-auth/react";
-import Loader from "@/Components/Workers/Loader";
+import Loader from "@/components/Workers/Loader";
 
 const Verification = () => {
   const [otp, setOtp] = useState("");

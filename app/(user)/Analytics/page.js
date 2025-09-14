@@ -4,17 +4,17 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-import Navbar from "@/Components/Navbar/mainNavContainer";
-import AnalyticsHeader from "@/Components/Analytics/AnalyticsHeader";
-import AnalyticsSummary from "@/Components/Analytics/AnalyticsSummary";
-import PageViewChart from "@/Components/Analytics/PageViewChart";
-import WeeklyVisitorsStats from "@/Components/Analytics/WeeklyVisitorsStats";
-import VisitorDiversionPercentage from "@/Components/Analytics/VisitorDiversionPercentage";
-import LinksClickedStats from "@/Components/Analytics/LinksClickedStats";
-import MessagesStats from "@/Components/Analytics/MessagesStats";
-import Loader from "@/Components/Workers/Loader";
+import Navbar from "@/components/Navbar/mainNavContainer";
+import AnalyticsHeader from "@/components/Analytics/AnalyticsHeader";
+import AnalyticsSummary from "@/components/Analytics/AnalyticsSummary";
+import PageViewChart from "@/components/Analytics/PageViewChart";
+import WeeklyVisitorsStats from "@/components/Analytics/WeeklyVisitorsStats";
+import VisitorDiversionPercentage from "@/components/Analytics/VisitorDiversionPercentage";
+import LinksClickedStats from "@/components/Analytics/LinksClickedStats";
+import MessagesStats from "@/components/Analytics/MessagesStats";
+import Loader from "@/components/Workers/Loader";
 import { showError } from "@/helpers/ToastManager";
-import Footer from "@/Components/Footer/Footer";
+import Footer from "@/components/Footer/Footer";
 
 const Page = () => {
   const router = useRouter();

@@ -3,8 +3,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, Layout, Share2, Settings } from "lucide-react";
-import Navbar from "@/Components/Navbar/mainNavContainer"
-import Footer from "@/Components/Footer/Footer";
+import Navbar from "@/components/Navbar/mainNavContainer"
+import Footer from "@/components/Footer/Footer";
 
 export default function GuidePage() {
   const steps = [

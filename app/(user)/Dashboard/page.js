@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Navbar from "@/Components/Navbar/mainNavContainer";
+import Navbar from "@/components/Navbar/mainNavContainer";
 import { Settings, BarChart2, Smartphone, icons } from "lucide-react";
 import {
   ChartNoAxesColumnIncreasing,
@@ -25,7 +25,7 @@ import {
   DrawerDescription,
   DrawerFooter,
   DrawerClose,
-} from "@/Components/ui/drawer";
+} from "@/components/ui/drawer";
 import { useSwipeable } from "react-swipeable";
 import {
   Sheet,
@@ -34,14 +34,14 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
-} from "@/Components/ui/sheet";
-import { Button } from "@/Components/ui/button";
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
-import Loader from "@/Components/Workers/Loader";
+import Loader from "@/components/Workers/Loader";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Main from "@/Components/DashboardMiddle/Main";
-import MobilePreview from "@/Components/DesignedPages/MobilePreview";
+import Main from "@/components/DashboardMiddle/Main";
+import MobilePreview from "@/components/DesignedPages/MobilePreview";
 
 const Page = () => {
   const router = useRouter();
