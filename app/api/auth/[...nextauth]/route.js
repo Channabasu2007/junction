@@ -45,13 +45,39 @@ export const authOptions = {
   },
   callbacks: {
     async signIn({ user, account, profile, email }) {
-      if (account.provider === "google" || account.provider === "github") {
+      if (account.provider === "github") {
         await dbConnect();
 
         const existingUser = await User.findOne({ email: user.email });
         if (!existingUser) {
+          // Create new user for GitHub OAuth
+          const newUser = await User.create({
+            email: user.email,
+            firstname: user.name?.split(' ')[0] || 'GitHub',
+            lastname: user.name?.split(' ').slice(1).join(' ') || 'User',
+            password: '', // No password needed for OAuth users
+            verified: true, // GitHub users are automatically verified
+            userName: '', // Will be set later in setup flow
+            isPremium: true,
+            otp: '',
+            otpExpires: new Date(),
+          });
           
-          return false;
+          // Update the user object with the created user's data
+          user._id = newUser._id;
+          user.firstname = newUser.firstname;
+          user.lastname = newUser.lastname;
+          user.userName = newUser.userName;
+          user.verified = newUser.verified;
+          user.isPremium = newUser.isPremium;
+        } else {
+          // Update the user object with existing user's data
+          user._id = existingUser._id;
+          user.firstname = existingUser.firstname;
+          user.lastname = existingUser.lastname;
+          user.userName = existingUser.userName;
+          user.verified = existingUser.verified;
+          user.isPremium = existingUser.isPremium;
         }
       }
 

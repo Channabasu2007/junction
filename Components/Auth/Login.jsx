@@ -1,16 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Label } from "@/Components/ui/label";
 import { Input } from "@/Components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/Components/ui/button";
-import { FaGithub, FaGoogle } from "react-icons/fa";
+import { FaGoogle, FaGithub } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager'
 import { signIn } from "next-auth/react";
 import Loader from "../Workers/Loader";
-
+import { useSession } from "next-auth/react";
 
 const Login = () => {
     const router = useRouter();
@@ -18,6 +18,13 @@ const Login = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [showPassword, setShowPassword] = useState(false)
+      const { data: session, status } = useSession();
+
+      useEffect(()=>{
+        if(session){
+            router.push("/Dashboard")
+        }
+      },[session, router])
 
     const handleLoginSubmit = async (e) => {
         e.preventDefault()
@@ -38,6 +45,33 @@ const Login = () => {
             router.push("/Dashboard");
         }
     }
+    useEffect(() => {
+  if (status === "authenticated") {
+    router.push("/Dashboard");
+  }
+}, [status, router]);
+
+
+      const handleGitHubLogin = async () => {
+        setPageLoading(true);
+        try {
+          const result = await signIn("github", { redirect: false });
+          
+          if (result?.error) {
+            setPageLoading(false);
+            showError("GitHub login failed. Please try again.");
+          } else if (result?.ok) {
+            setPageLoading(false);
+            showSuccess("Login successful");
+            router.push("/Dashboard");
+          }
+        } catch (error) {
+          setPageLoading(false);
+          showError("An error occurred during GitHub login");
+        }
+      };
+
+
     if (pageLoading) {
         return <Loader />
     }
@@ -101,7 +135,7 @@ const Login = () => {
                     </div>
 
                     <Button
-                    onClick={() => signIn("github")}
+                    onClick={handleGitHubLogin}
                         variant="outline" // Corrected prop to 'variant'
                         className="w-full bg-white dark:bg-zinc-800 cursor-pointer text-orange-600 border border-orange-600 py-2 rounded-md hover:bg-orange-50 dark:hover:bg-zinc-700 transition-colors duration-300 flex items-center justify-center gap-2"
                     >

@@ -145,7 +145,7 @@ const Page = () => {
         </div>
 
         {/* Right side where preview is located */}
-        <div className="border  w-[30vw] flex items-center justify-center h-[89vh]">
+        <div className="border overflow-hidden  w-[30vw] flex items-center justify-center h-[89vh]">
           <MobilePreview/>
         </div>
       </div>

@@ -69,23 +69,24 @@ const MobilePreview = () => {
 
   return (
 
-    <div className=" flex justify-center">
-      <div className="w-[265px] h-[550px] flex justify-center items-center  relative">
+    <div className=" flex justify-center ">
+      <div className="w-[265px] h-[550px] flex justify-center  items-center  relative">
 
-        <div>
+       
           
           {/* Device selector */}
 
-
+<div>
           {/* Device frame */}
           <div
+          
             className=" bg-white scale-65 border-6 border-black dark:border-zinc-400 rounded-[2rem] shadow-xl overflow-hidden relative"
             style={{
               width: 390, height: 844,
               
               borderRadius: "20px",
               overflow: "hidden",
-              boxShadow: "0 10px 30px rgba(0,0,0,0.55)",
+              boxShadow: "0 30px 30px rgba(0,0,0,0.75)",
             }}
           >
             <iframe
@@ -99,14 +100,13 @@ const MobilePreview = () => {
               sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
             />
           </div>
-        </div>
+        </div></div>
  
 
-      </div>
+    
     </div>
 
   );
 };
 
 export default MobilePreview;
-
