@@ -1,7 +1,7 @@
 "use client";
 import { useSession } from "next-auth/react";
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/Components/ui/button";
 
 export default function CTA() {
     const { data: session, status } = useSession();

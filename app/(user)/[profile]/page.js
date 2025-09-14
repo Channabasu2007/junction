@@ -5,7 +5,7 @@ import Loader from "@/Components/Workers/Loader";
 import Image from "next/image";
 import { showError, showSuccess, showInfo } from "@/helpers/ToastManager";
 
-// Importing all the components for the designing
+// Importing all the Components for the designing
 import LinkdinStyle from "@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/GeneralInfoDesigns/LinkdinStyle";
 import SimpleStyle from "@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/SocialMediaDesigns/SimpleStyle";
 import PointsRoadmap from "@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/EducationalInfoDesigns/PointsRoadmap";

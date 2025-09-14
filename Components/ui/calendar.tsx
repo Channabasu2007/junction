@@ -18,7 +18,7 @@ function Calendar({
   captionLayout = "label",
   buttonVariant = "ghost",
   formatters,
-  components,
+  Components,
   ...props
 }: React.ComponentProps<typeof DayPicker> & {
   buttonVariant?: React.ComponentProps<typeof Button>["variant"]
@@ -124,7 +124,7 @@ function Calendar({
         hidden: cn("invisible", defaultClassNames.hidden),
         ...classNames,
       }}
-      components={{
+      Components={{
         Root: ({ className, rootRef, ...props }) => {
           return (
             <div
@@ -165,7 +165,7 @@ function Calendar({
             </td>
           )
         },
-        ...components,
+        ...Components,
       }}
       {...props}
     />

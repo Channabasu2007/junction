@@ -9,7 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/Components/ui/tooltip";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/Components/ui/dialog";
 import UserBio from "@/Components/DashboardMiddle/PageLayoutComponents/HelpersOfDesign/UserBio"
 
 const LinkdinStyle = ({ user }) => {

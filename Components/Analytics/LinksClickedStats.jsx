@@ -5,7 +5,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/Components/ui/card";
 
 const LinksClickedStats = ({ user }) => {
   const [range, setRange] = useState("total");

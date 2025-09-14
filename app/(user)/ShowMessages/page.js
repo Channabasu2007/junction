@@ -12,9 +12,9 @@ import {
   CardFooter,
 } from "@/Components/ui/card";
 import { Select } from "@/Components/ui/select";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/Components/ui/badge";
 import { Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/Components/ui/button";
 import Navbar from "@/Components/Navbar/mainNavContainer";
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
 import Footer from "@/Components/Footer/Footer";
