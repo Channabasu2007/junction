@@ -23,6 +23,10 @@ const ProfilePage = () => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("preview") === "true") {
+      return; // skip counting if preview
+    }
     const countPageVisit = async () => {
       try {
         const res = await fetch("/api/PageLayoutAnalytics/PageVisitCount", {

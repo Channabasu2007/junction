@@ -103,7 +103,7 @@ const Page = () => {
 
       {/* Desktop Layout */}
       <div className="lg:flex hidden  ">
-        <div className="flex flex-col justify-between border-r w-[20vw] h-[89vh] bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100 shadow-md">
+        <div className="flex flex-col overflow-y-hidden justify-between border-r w-[20vw] h-[89vh] bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-100 shadow-md">
           {/* Navigation Items */}
           <div className="flex flex-col gap-2 mt-4 px-4 overflow-auto">
             {drawerItems.map((item, index) => (
@@ -146,11 +146,7 @@ const Page = () => {
 
         {/* Right side where preview is located */}
         <div className="border  w-[30vw] flex items-center justify-center h-[89vh]">
-          <div className=" flex justify-center">
-            <div className="w-[275px] h-[550px] rounded-[2rem] shadow-xl border-6 dark:border-zinc-400 border-zinc-950 bg-zinc-100 dark:bg-zinc-900 overflow-hidden relative">
-              <MobilePreview />
-            </div>
-          </div>
+          <MobilePreview/>
         </div>
       </div>
 
@@ -243,9 +239,9 @@ const Page = () => {
                 </div>
                 {/* Swipeable area starts here */}
                 <div className="mt-1 flex justify-center">
-                  <div className="w-[275px] h-[550px] rounded-[2rem] shadow-xl border-6 dark:border-zinc-400 border-zinc-950 bg-zinc-100 dark:bg-zinc-900 overflow-hidden relative">
+                  
                     <MobilePreview />
-                  </div>
+                  
                 </div>
                 {/* Swipeable area ends */}
               </SheetContent>

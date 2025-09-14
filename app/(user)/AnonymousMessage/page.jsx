@@ -326,7 +326,7 @@ const handleSend = async (aiData = null) => {
                         {!loading && user?.FeedbacksCredentials?.recieveEmails && (
                             <>
                                 <input
-                                    type="text"
+                                    type="email"
                                     placeholder="Your email (user wants to get the email we are not gone use your email for our campaingns)"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}

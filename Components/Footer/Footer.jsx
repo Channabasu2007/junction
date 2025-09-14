@@ -6,14 +6,17 @@ import ModeToggle from "../Workers/ModeToggle";
 const Footer = () => {
   const Navs = [
     { name: "Home", link: "/" },
-    { name: "Pricing", link: "/pricing" },
+   
     { name: "Guide", link: "/guide" },
     { name: "About", link: "/about" },
     { name: "Contact", link: "/contact" },
+    {name:"Terms and Conditions", link:"/terms"},
+    {name:"Cookies", link:"/cookies"},
+    {name:"guide", link:"/guide"}
   ];
 
   return (
-    <footer className="bg-zinc-100 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-300 border-t border-zinc-200 dark:border-zinc-800 mt-20">
+    <footer className="bg-zinc-100 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-300 border-t border-zinc-200 dark:border-zinc-800 mt-0">
       <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
         {/* Logo & Description */}
         <div>

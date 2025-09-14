@@ -51,7 +51,7 @@ const UserSchema = new mongoose.Schema({
   },
   isPremium: {
     type: Boolean,
-    default: false,
+    default: true,
   },
   createdAt: {
     type: Date,

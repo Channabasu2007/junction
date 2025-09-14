@@ -5,7 +5,7 @@ import { Label } from "@/Components/ui/label";
 import { Input } from "@/Components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/Components/ui/button";
-import { FaGoogle } from "react-icons/fa";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager'
 import { signIn } from "next-auth/react";
@@ -101,11 +101,11 @@ const Login = () => {
                     </div>
 
                     <Button
-                    onClick={() => signIn("google")}
+                    onClick={() => signIn("github")}
                         variant="outline" // Corrected prop to 'variant'
                         className="w-full bg-white dark:bg-zinc-800 cursor-pointer text-orange-600 border border-orange-600 py-2 rounded-md hover:bg-orange-50 dark:hover:bg-zinc-700 transition-colors duration-300 flex items-center justify-center gap-2"
                     >
-                        <FaGoogle className="text-lg" /> Login with Google
+                        <FaGithub className="text-lg" /> Login with Github
                     </Button>
 
                     <div className="mt-6 text-center text-sm text-zinc-500 dark:text-zinc-400">

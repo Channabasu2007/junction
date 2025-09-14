@@ -4,7 +4,7 @@ import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
 import bcrypt from "bcryptjs";
 import GoogleProvider from "next-auth/providers/google";
-
+import GitHubProvider from "next-auth/providers/github";
 export const authOptions = {
   providers: [
     CredentialsProvider({
@@ -31,10 +31,9 @@ export const authOptions = {
         return user;
       },
     }),
-
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+ GitHubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),
   ],
   pages: {
@@ -46,12 +45,12 @@ export const authOptions = {
   },
   callbacks: {
     async signIn({ user, account, profile, email }) {
-      if (account.provider === "google") {
+      if (account.provider === "google" || account.provider === "github") {
         await dbConnect();
 
         const existingUser = await User.findOne({ email: user.email });
         if (!existingUser) {
-          throw new Error("No user found, please signup first.");
+          
           return false;
         }
       }

@@ -2,9 +2,10 @@
 import React from 'react';
 import { motion } from 'framer-motion'; // Ensure this import is correct
 import Link from 'next/link';
-
+import { useSession } from 'next-auth/react';
 const LeftSide = () => {
     // Parent container variant for stagger effect
+    const { data: session, status } = useSession();
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -78,7 +79,7 @@ const LeftSide = () => {
                 variants={buttonVariants}
             >
                 <Link href={"/signup"}>
-                Create Your Junction
+                {session ? "Open Dashboard" : "Create your page"}
                 </Link>
             </motion.button>
         </motion.div>
