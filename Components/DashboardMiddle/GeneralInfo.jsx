@@ -1,15 +1,15 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Input } from '@/Components/ui/input';
+import { Input } from '@/components/ui/input';
 import { Lock, UploadCloud, ImagePlus } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/Components/ui/tooltip";
+} from "@/components/ui/tooltip";
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
 import Loader from '../Workers/Loader'
-import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
+import { reloadPreview } from "@/components/DesignedPages/MobilePreview"
 
 const GeneralInfo = ({ user }) => {
   const profileRef = useRef();

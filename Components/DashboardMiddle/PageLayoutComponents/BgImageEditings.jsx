@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
 import React, { useState, useEffect, useCallback } from "react";
-import { Label } from "@/Components/ui/label";
-import { Slider } from "@/Components/ui/slider";
-import { Card, CardHeader, CardTitle, CardContent } from "@/Components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { showSuccess, showError } from "@/helpers/ToastManager";
-import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
+import { reloadPreview } from "@/components/DesignedPages/MobilePreview"
 
 // ⚡ debounce helper
 function debounce(func, delay) {

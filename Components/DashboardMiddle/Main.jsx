@@ -9,7 +9,7 @@ import SEO from './SEO';
 import PersonalInfo from './PersonalInfo';
 import VideoEmbedding from './VideoEmbedding';
 import Education from './Education';
-import Loader from '@/Components/Workers/Loader';
+import Loader from '@/components/Workers/Loader';
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';

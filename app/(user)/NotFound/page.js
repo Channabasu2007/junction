@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import AuthNav from "@/Components/Auth/AuthNav"
+import AuthNav from "@/components/Auth/AuthNav"
 export default function NotFound() {
   return (
     <>

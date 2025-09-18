@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Input } from "@/Components/ui/input";
-import { Label } from "@/Components/ui/label";
-import { Textarea } from "@/Components/ui/textarea";
-import { Button } from "@/Components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 import { showSuccess, showError } from "@/helpers/ToastManager";
 import { ImagePlus, X } from "lucide-react";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
-import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
+import { reloadPreview } from "@/components/DesignedPages/MobilePreview"
 
 const SEO = ({ user }) => {
   const email = user.email

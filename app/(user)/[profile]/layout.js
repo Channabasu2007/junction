@@ -1,6 +1,6 @@
 // app/[profile]/layout.tsx
 import { Geist, Geist_Mono } from "next/font/google";
-import Providers from "@/Components/Themes/providers";
+import Providers from "@/components/Themes/providers";
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
 import { notFound, redirect } from "next/navigation";

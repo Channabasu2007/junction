@@ -8,9 +8,9 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/Components/ui/tooltip";
+} from "@/components/ui/tooltip";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import UserBio from "@/Components/DashboardMiddle/PageLayoutComponents/HelpersOfDesign/UserBio"
+import UserBio from "@/components/DashboardMiddle/PageLayoutComponents/HelpersOfDesign/UserBio"
 
 const LinkdinStyle = ({ user }) => {
   const [msgPrefPopup, setMsgPrefPopup] = useState(false);

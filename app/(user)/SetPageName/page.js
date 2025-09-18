@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import Navbar from "@/Components/Navbar/mainNavContainer";
-import Loader from "@/Components/Workers/Loader";
+import Navbar from "@/components/Navbar/mainNavContainer";
+import Loader from "@/components/Workers/Loader";
 import { useRouter } from "next/navigation";
-import SetPageNameCompo from "@/Components/UsersSettings/SetPageName";
+import SetPageNameCompo from "@/components/UsersSettings/SetPageName";
 import { showError } from "@/helpers/ToastManager";
 
 const SetPageName = () => {

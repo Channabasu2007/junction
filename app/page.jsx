@@ -1,11 +1,11 @@
 
-import Navbar from "@/Components/Navbar/mainNavContainer";
-import HeroContent from "@/Components/Hero/HeroContent";
-import Allfeatures from "@/Components/Features/Allfeatures";
-import { DashboardPreview } from "@/Components/Features/dashboard-preview";
-import { PricingSection } from "@/Components/Features/pricing-section";
-import CTA from "@/Components/Features/CTA"
-import Footer from "@/Components/Footer/Footer";
+import Navbar from "@/components/Navbar/mainNavContainer";
+import HeroContent from "@/components/Hero/HeroContent";
+import Allfeatures from "@/components/Features/Allfeatures";
+import { DashboardPreview } from "@/components/Features/dashboard-preview";
+import { PricingSection } from "@/components/Features/pricing-section";
+import CTA from "@/components/Features/CTA"
+import Footer from "@/components/Footer/Footer";
 
 
 

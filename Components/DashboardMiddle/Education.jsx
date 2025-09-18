@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { Button } from "@/Components/ui/button";
-import { Label } from "@/Components/ui/label";
-import { Checkbox } from "@/Components/ui/checkbox";
-import { Input } from "@/Components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
-import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
+import { reloadPreview } from "@/components/DesignedPages/MobilePreview"
 
 const Education = ({ user }) => {
   const [firstRun, setFirstRun] = useState(true);

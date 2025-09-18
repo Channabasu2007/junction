@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
-import Loader from '@/Components/Workers/Loader';
+import Loader from '@/components/Workers/Loader';
 import Image from "next/image";
 
 const DEVICES = {

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
-import { Input } from "@/Components/ui/input";
-import { Button } from "@/Components/ui/button"; // assuming you have this component
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button"; // assuming you have this component
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
-import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
+import { reloadPreview } from "@/components/DesignedPages/MobilePreview"
 
 const SocialMedia = ({ user }) => {
   const email = user.email

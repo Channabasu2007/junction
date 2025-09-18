@@ -1,7 +1,7 @@
 'use client';
 import React, { useRef, useState } from 'react';
-import { Input } from '@/Components/ui/input';
-import { Button } from '@/Components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { showError, showSuccess, showInfo } from "@/helpers/ToastManager";
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';

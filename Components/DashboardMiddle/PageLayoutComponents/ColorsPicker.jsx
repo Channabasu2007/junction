@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
-import { Input } from "@/Components/ui/input";
+import { reloadPreview } from "@/components/DesignedPages/MobilePreview"
+import { Input } from "@/components/ui/input";
 
 export default function ColorsPicker({ user }) {
     const email = user.email

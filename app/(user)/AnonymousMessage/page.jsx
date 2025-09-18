@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { showError, showSuccess, showInfo } from "@/helpers/ToastManager";
 import { se } from "date-fns/locale/se";
 import { set } from "mongoose";
-import UserPageFooter from "@/Components/Footer/UserPageFooter";
+import UserPageFooter from "@/components/Footer/UserPageFooter";
 import Link from "next/link";
 import { Dot, Loader2 } from "lucide-react";
 

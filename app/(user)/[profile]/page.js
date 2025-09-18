@@ -1,17 +1,17 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Loader from "@/Components/Workers/Loader";
+import Loader from "@/components/Workers/Loader";
 import Image from "next/image";
 import { showError, showSuccess, showInfo } from "@/helpers/ToastManager";
 
 // Importing all the components for the designing
-import LinkdinStyle from "@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/GeneralInfoDesigns/LinkdinStyle";
-import SimpleStyle from "@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/SocialMediaDesigns/SimpleStyle";
-import PointsRoadmap from "@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/EducationalInfoDesigns/PointsRoadmap";
-import SimpleDesign from "@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/JobsShowcaseDesigns/SimpleDesign";
-import TwoColApproach from "@/Components/DashboardMiddle/PageLayoutComponents/DesignsForSections/VideoEmbeedingDesigns/TwoColApproach";
-import UserPageFooter from "@/Components/Footer/UserPageFooter";
+import LinkdinStyle from "@/components/DashboardMiddle/PageLayoutComponents/DesignsForSections/GeneralInfoDesigns/LinkdinStyle";
+import SimpleStyle from "@/components/DashboardMiddle/PageLayoutComponents/DesignsForSections/SocialMediaDesigns/SimpleStyle";
+import PointsRoadmap from "@/components/DashboardMiddle/PageLayoutComponents/DesignsForSections/EducationalInfoDesigns/PointsRoadmap";
+import SimpleDesign from "@/components/DashboardMiddle/PageLayoutComponents/DesignsForSections/JobsShowcaseDesigns/SimpleDesign";
+import TwoColApproach from "@/components/DashboardMiddle/PageLayoutComponents/DesignsForSections/VideoEmbeedingDesigns/TwoColApproach";
+import UserPageFooter from "@/components/Footer/UserPageFooter";
 
 const ProfilePage = () => {
   const router = useRouter();

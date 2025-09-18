@@ -1,6 +1,6 @@
 "use client"
 
-import { ThemeProvider } from "@/Components/Themes/theme-provider";
+import { ThemeProvider } from "@/components/Themes/theme-provider";
 import { ToastContainer } from 'react-toastify';
 import { SessionProvider } from "next-auth/react"; // Correct import for App Router
 

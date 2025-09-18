@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Input } from '@/Components/ui/input';
-import { Label } from '@/Components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
-import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
+import { reloadPreview } from "@/components/DesignedPages/MobilePreview"
 const VideoEmbedding = ({user}) => {
   const [url, setUrl] = useState("");
   const [videoId, setVideoId] = useState(user.videoId ||"");

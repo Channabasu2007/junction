@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import Loader from "@/Components/Workers/Loader";
+import Loader from "@/components/Workers/Loader";
 import {
   Card,
   CardHeader,
@@ -10,15 +10,15 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from "@/Components/ui/card";
-import { Select } from "@/Components/ui/select";
+} from "@/components/ui/card";
+import { Select } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Navbar from "@/Components/Navbar/mainNavContainer";
+import Navbar from "@/components/Navbar/mainNavContainer";
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
-import Footer from "@/Components/Footer/Footer";
-import { ToggleGroup, ToggleGroupItem } from "@/Components/ui/toggle-group";
+import Footer from "@/components/Footer/Footer";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 const MessagesPage = () => {
   const searchParams = useSearchParams();
