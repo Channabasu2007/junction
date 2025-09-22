@@ -3,8 +3,10 @@ import Image from "next/image";
 import { Share2 } from "lucide-react";
 import { showError } from "@/helpers/ToastManager";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const SimpleStyle = ({ user }) => {
+  const { data: session, status } = useSession();
   const secondaryColor = user?.PageLayout?.ColorsPicker?.secondary ?? "#9333ea";
   const primaryColor = user?.PageLayout?.ColorsPicker?.primary ?? "#2563eb";
   const paragraphColor =
@@ -13,6 +15,9 @@ const SimpleStyle = ({ user }) => {
   const [showAll, setShowAll] = useState(false);
 
  const handleLinkClick = async (userId, url) => {
+  if(session.user.userName === user.userName){
+    return;
+  }
   if (!userId || !url) return;
   try {
     const response = await fetch("/api/PageLayoutAnalytics/LinksClick", {
