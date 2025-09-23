@@ -1,5 +1,5 @@
 "use client";
-import React, { use, useEffect, useState } from "react";
+import React, { Suspense, use, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { showError, showSuccess, showInfo } from "@/helpers/ToastManager";
 import { se } from "date-fns/locale/se";
@@ -8,7 +8,7 @@ import UserPageFooter from "@/components/Footer/UserPageFooter";
 import Link from "next/link";
 import { Dot, Loader2 } from "lucide-react";
 
-const page = () => {
+const PageInner = () => {
     const params = useSearchParams();
     const userName = params.get("to");
 
@@ -360,4 +360,10 @@ const handleSend = async (aiData = null) => {
     );
 };
 
-export default page;
+export default function Page() {
+    return (
+        <Suspense fallback={<div />}> 
+            <PageInner />
+        </Suspense>
+    );
+}

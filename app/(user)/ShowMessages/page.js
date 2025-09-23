@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { Suspense, useState, useEffect, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Loader from "@/components/Workers/Loader";
@@ -20,7 +20,7 @@ import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
 import Footer from "@/components/Footer/Footer";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
-const MessagesPage = () => {
+const MessagesPageInner = () => {
   const searchParams = useSearchParams();
   const defaultCategory = searchParams.get("category") || "all";
   const { data: session, status } = useSession();
@@ -216,4 +216,10 @@ const MessagesPage = () => {
   );
 };
 
-export default MessagesPage;
+export default function MessagesPage() {
+  return (
+    <Suspense fallback={<Loader />}> 
+      <MessagesPageInner />
+    </Suspense>
+  );
+}

@@ -1,17 +1,14 @@
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
+import { NextResponse } from "next/server";
 
-export default async function handler(req, res) {
-  if (req.method !== "DELETE") {
-    return res.status(405).json({ message: "Method not allowed" });
-  }
-
-  const { email, msgId } = req.body;
-  if (!email || !msgId) {
-    return res.status(400).json({ message: "Missing email or msgId" });
-  }
-
+export async function DELETE(req) {
   try {
+    const { email, msgId } = await req.json();
+    if (!email || !msgId) {
+      return NextResponse.json({ message: "Missing email or msgId" }, { status: 400 });
+    }
+
     await dbConnect();
     const user = await User.findOneAndUpdate(
       { email },
@@ -20,12 +17,12 @@ export default async function handler(req, res) {
     );
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    return res.status(200).json({ success: true, user });
+    return NextResponse.json({ success: true, user }, { status: 200 });
   } catch (error) {
     console.error("Delete message error:", error);
-    return res.status(500).json({ message: "Server error" });
+    return NextResponse.json({ message: "Server error" }, { status: 500 });
   }
 }

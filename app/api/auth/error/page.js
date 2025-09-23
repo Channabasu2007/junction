@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { AlertTriangle } from "lucide-react";
@@ -11,7 +12,7 @@ const errorMessages = {
   Default: "An unexpected error occurred. Please try again shortly.",
 };
 
-export default function AuthErrorPage() {
+function AuthErrorInner() {
   const searchParams = useSearchParams();
   const error = searchParams.get("error") || "Default";
   const errorMessage = errorMessages[error] || errorMessages["Default"];
@@ -46,5 +47,13 @@ export default function AuthErrorPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function AuthErrorPage() {
+  return (
+    <Suspense fallback={<div />}> 
+      <AuthErrorInner />
+    </Suspense>
   );
 }
