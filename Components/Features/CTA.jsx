@@ -2,6 +2,7 @@
 import { useSession } from "next-auth/react";
 import React from "react";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function CTA() {
     const { data: session, status } = useSession();
@@ -13,9 +14,9 @@ export default function CTA() {
       <p className="text-lg md:text-xl mb-8 text-orange-100 max-w-2xl mx-auto">
         Join JUNCTION today and create your fully customized page in minutes.
       </p>
-      <Button className="bg-white text-orange-600 hover:bg-orange-100 font-semibold px-8 py-6 rounded-xl text-lg shadow-md">
+      <Link href={session? "/Dashboard": "/login"} className="bg-white text-orange-600 hover:bg-orange-100 font-semibold px-8 py-6 rounded-xl text-lg shadow-md">
         {session ? "Open Dashboard" : "Get Started"}
-      </Button>
+      </Link>
     </section>
   );
 }

@@ -13,8 +13,10 @@ import {
 } from "@/components/ui/input-otp";
 import { signIn } from "next-auth/react";
 import Loader from "@/components/Workers/Loader";
+import { useSession } from "next-auth/react";
 
 const Verification = () => {
+  const { data: session, status } = useSession();
   const [otp, setOtp] = useState("");
   const [verifyingData, setVerifyingData] = useState(null);
   const router = useRouter();
@@ -35,57 +37,99 @@ const Verification = () => {
     }
   }, [router]);
 
-  const handleOtpSubmit = async () => {
-    const result = await OtpCodeSchema.safeParse({ otp });
-    if (!result.success) {
-      showError(result.error.issues[0].message);
-      return;
+  // Changing to direct login 
+  useEffect(() => {
+    if (session) {
+      router.push("/Dashboard")
     }
-    setPageLoading(true);
-    try {
-      const response = await fetch("/api/verifyOtp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          otp,
-          verifyingName: verifyingData.firstname,
-          verifyingEmail: verifyingData.email,
-        }),
-      });
+  }, [session, router])
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        showError(data.error || "Signup failed");
-        setPageLoading(false);
-        return;
-      }
-
-      showSuccess("Verification successful");
+  useEffect(() => {
+    if (!verifyingData) return;
+    let cancelled = false;
+    const login = async () => {
+      setPageLoading(true);
       const res = await signIn("credentials", {
         redirect: false,
         email: verifyingData.email,
         password: verifyingData.password,
       });
-
-      if (res.error) {
+      if (cancelled) return;
+      if (res?.error) {
         setPageLoading(false);
         showError(res.error);
       } else {
-        sessionStorage.clear();
         setPageLoading(false);
-        showSuccess("Login successful");
-        if(!data.userName){
-          router.push("/SetPageName");
-        }else{
-          router.push("/Dashboard");
-        }
+        
+        router.push("/Dashboard");
       }
-    } catch (error) {
-      setPageLoading(false);
-      showError("Failed to verify your account. Please try again.");
+    };
+    login();
+    return () => {
+      cancelled = true;
+    };
+  }, [verifyingData, router]);
+
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/Dashboard");
     }
-  };
+  }, [status, router]);
+
+
+
+  // const handleOtpSubmit = async () => {
+  //   const result = await OtpCodeSchema.safeParse({ otp });
+  //   if (!result.success) {
+  //     showError(result.error.issues[0].message);
+  //     return;
+  //   }
+  //   setPageLoading(true);
+  //   try {
+  //     const response = await fetch("/api/verifyOtp", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         otp,
+  //         verifyingName: verifyingData.firstname,
+  //         verifyingEmail: verifyingData.email,
+  //       }),
+  //     });
+
+  //     const data = await response.json();
+
+  //     if (!response.ok) {
+  //       showError(data.error || "Signup failed");
+  //       setPageLoading(false);
+  //       return;
+  //     }
+
+  //     showSuccess("Verification successful");
+  //     const res = await signIn("credentials", {
+  //       redirect: false,
+  //       email: verifyingData.email,
+  //       password: verifyingData.password,
+  //     });
+
+  //     if (res.error) {
+  //       setPageLoading(false);
+  //       showError(res.error);
+  //     } else {
+  //       sessionStorage.clear();
+  //       setPageLoading(false);
+  //       showSuccess("Login successful");
+  //       if (!data.userName) {
+  //         router.push("/SetPageName");
+  //       } else {
+  //         router.push("/Dashboard");
+  //       }
+  //     }
+  //   } catch (error) {
+  //     setPageLoading(false);
+  //     showError("Failed to verify your account. Please try again.");
+  //   }
+  // };
 
   if (!verifyingData)
     return (
@@ -93,6 +137,8 @@ const Verification = () => {
         Please complete the signup form before verification.
       </div>
     );
+
+    
   if (pageLoading) {
     return <Loader />;
   }
@@ -100,7 +146,7 @@ const Verification = () => {
   return (
     <>
       <AuthNav />
-      <div className="min-h-[89vh] flex items-center justify-center bg-gray-50 dark:bg-zinc-950 px-4 py-8">
+      {/* <div className="min-h-[89vh] flex items-center justify-center bg-gray-50 dark:bg-zinc-950 px-4 py-8">
         <div className="m-auto p-10 rounded-lg bg-zinc-100 dark:bg-zinc-900 flex flex-col justify-center items-center gap-3">
           <h2 className="text-4xl font-bold text-orange-600">Verification</h2>
           <p className="mb-4 text-zinc-700 dark:text-zinc-300 text-center">
@@ -131,7 +177,7 @@ const Verification = () => {
             Verify
           </Button>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

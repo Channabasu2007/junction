@@ -40,7 +40,7 @@ const UserSchema = new mongoose.Schema({
   },
   otpExpires: {
     type: Date,
-    required: [true, "OTP expiration time is required"],
+    // Optional when email verification is disabled
   },
   verified: {
     type: Boolean,

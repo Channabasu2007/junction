@@ -12,7 +12,7 @@ const Footer = () => {
     { name: "Contact", link: "/contact" },
     {name:"Terms and Conditions", link:"/terms"},
     {name:"Cookies", link:"/cookies"},
-    {name:"guide", link:"/guide"}
+    // {name:"guide", link:"/guide"}
   ];
 
   return (

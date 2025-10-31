@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X } from "lucide-react";
+import { Link2, Link2Off, Menu, X } from "lucide-react";
 import ModeToggle from "../Workers/ModeToggle";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSession, signOut } from "next-auth/react";
@@ -27,12 +27,12 @@ const MainNavContainer = () => {
     <header className="w-full bg-zinc-50 dark:bg-zinc-950">
       <nav className="flex justify-between items-center px-6 py-4 max-w-7xl mx-auto text-zinc-900 dark:text-zinc-100">
         {/* Logo */}
-        <Link href={"/"} className="text-3xl font-extrabold tracking-tight text-orange-600 select-none">
+        <Link href={"/"} className="text-3xl font-extrabold tracking-tight text-orange-600 select-none md:flex-none">
           JUNCTION
         </Link>
 
         {/* Desktop Nav */}
-        <ul className="hidden md:flex gap-8 text-sm font-medium tracking-wide">
+        <ul className="hidden md:flex flex-1 justify-center gap-8 text-sm font-medium tracking-wide">
           {Navs.map((nav, index) => {
             const isActive = pathname === nav.link;
             return (
@@ -55,7 +55,7 @@ const MainNavContainer = () => {
         </ul>
 
         {/* Desktop Actions */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-4 md:flex-none">
           {!session ? (
             <>
               <Link href="/login" className="text-sm font-medium border border-orange-500 text-orange-500 px-4 py-1.5 rounded-md hover:bg-orange-500 hover:text-white transition-colors">Login</Link>
@@ -63,6 +63,15 @@ const MainNavContainer = () => {
             </>
           ) : (
             <div className="hidden md:flex items-center gap-4">
+              {session?.user?.userName && (
+                <Link
+                  href={`/${session.user.userName}?preview=true`}
+                  className="border border-orange-500 text-orange-500 px-4 py-1.5 text-sm font-medium rounded-md hover:bg-orange-500 hover:text-white transition-colors"
+                >
+                  My Page
+                </Link>
+              )}
+              
               {pathname !== "/Dashboard" ? (
                 <Link href="/Dashboard" className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-1.5 text-sm font-medium rounded-md shadow-md transition-all">
                   Dashboard
@@ -83,14 +92,26 @@ const MainNavContainer = () => {
           <ModeToggle />
 
         </div>
-
-        {/* Hamburger */}
-        <button
-          className="md:hidden text-orange-500 z-50"
-          onClick={toggleMenu}
-        >
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+        <div className="flex items-center gap-3 md:hidden">
+          {/* Link to public page (icon) */}
+          {session?.user?.userName && (
+            <Link
+              href={`/${session.user.userName}?preview=true`}
+              aria-label="My public page"
+              className="text-orange-500"
+            >
+              <Link2 size={24} />
+            </Link>
+          )}
+          {/* Hamburger / Close */}
+          <button
+            className="md:hidden text-orange-500 z-50"
+            onClick={toggleMenu}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+          >
+            {isOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Menu with Framer Motion */}
@@ -129,6 +150,15 @@ const MainNavContainer = () => {
                   </div>
                 ) : (
                   <div className="flex md:hidden items-center gap-4">
+                    {session?.user?.userName && (
+                      <Link
+                        href={`/${session.user.userName}`}
+                        onClick={() => setIsOpen(false)}
+                        className="border border-orange-500 text-orange-500 px-4 py-2 text-md font-medium rounded-md hover:bg-orange-500 hover:text-white transition"
+                      >
+                        My Page
+                      </Link>
+                    )}
                     {pathname !== "/Dashboard" ? (
                       <Link href="/Dashboard" className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 text-md font-medium rounded-md shadow-md transition-all">
                         Dashboard

@@ -13,7 +13,6 @@ import VisitorDiversionPercentage from "@/components/Analytics/VisitorDiversionP
 import LinksClickedStats from "@/components/Analytics/LinksClickedStats";
 import MessagesStats from "@/components/Analytics/MessagesStats";
 import Loader from "@/components/Workers/Loader";
-import { showError } from "@/helpers/ToastManager";
 import Footer from "@/components/Footer/Footer";
 
 const Page = () => {
@@ -21,50 +20,46 @@ const Page = () => {
   const { data: session, status } = useSession();
   const [pageLoading, setPageLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const [errorPage, setErrorPage] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(
-    "Something went wrong reload page to try again."
-  );
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (status === "loading") return;
     if (status === "unauthenticated") {
       router.push("/login");
+      return;
     }
 
-    setTimeout(() => setPageLoading(false), 200);
-    getUserData(session?.user?.email);
+    if (session?.user?.email) {
+      fetchUserData(session.user.email);
+    }
   }, [status, session]);
 
-  const getUserData = async (email) => {
+  const fetchUserData = async (email) => {
     try {
       setPageLoading(true);
-      const res = await fetch(`/api/fetchDataForDashboard?email=${session.user.email}`);
-      if (!res.ok) {
-        setErrorPage(true);
-        setErrorMessage(
-          "Server side data error, reload page and also check your internet speed."
-        );
-      }
+      const res = await fetch(`/api/fetchDataForDashboard?email=${email}`);
+      if (!res.ok) throw new Error("Failed to fetch dashboard data");
       const data = await res.json();
-      setErrorPage(false);
       setUser(data.user);
-      setTimeout(() => setPageLoading(false), 200);
-    } catch (error) {
-      setErrorPage(true);
-      setErrorMessage("Failed to fetch user data.");
+      setError("");
+    } catch (err) {
+      console.error(err);
+      setError(
+        "Something went wrong while loading your dashboard. Please reload."
+      );
+    } finally {
       setPageLoading(false);
     }
   };
 
   if (pageLoading) return <Loader />;
 
-  if (errorPage) {
+  if (error)
     return (
-      <div className="w-[100dvw] h-[100dvh] flex flex-col items-center justify-center bg-gradient-to-b from-orange-500 to-orange-800 px-3 md:px-0">
-        <div className="bg-white p-6 w-full max-w-md rounded-2xl shadow-lg flex flex-col items-center text-center">
+      <div className="w-full h-screen flex items-center justify-center bg-gradient-to-b from-orange-500 to-orange-800 px-3 md:px-0">
+        <div className="bg-white p-6 w-full max-w-md rounded-2xl shadow-lg text-center">
           <h1 className="text-2xl md:text-3xl font-bold text-orange-500 mb-4">
-            {errorMessage}
+            {error}
           </h1>
           <a
             href="/Analytics"
@@ -75,40 +70,28 @@ const Page = () => {
         </div>
       </div>
     );
-  }
 
   return (
     <>
       <Navbar />
-
       <main className="max-w-7xl mx-auto px-4 md:px-6 py-6 space-y-8">
-        {/* Header */}
         <AnalyticsHeader user={user} />
-
-        {/* Summary section */}
         <AnalyticsSummary user={user} />
-
-        {/* Charts + Stats grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Visitors graph (2/3 width) */}
           <div className="lg:col-span-2">
-            <PageViewChart user={user} pageLoading={pageLoading}/>
+            <PageViewChart user={user} pageLoading={pageLoading} />
           </div>
-
-          {/* Weekly stats + diversion stacked */}
           <div className="flex flex-col gap-6">
             <WeeklyVisitorsStats user={user} />
             <VisitorDiversionPercentage user={user} />
           </div>
         </div>
-
-        {/* Links + Messages */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <LinksClickedStats user={user} />
           <MessagesStats user={user} />
         </div>
       </main>
-      <Footer/>
+      <Footer />
     </>
   );
 };

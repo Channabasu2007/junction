@@ -123,8 +123,8 @@ const LinkdinStyle = ({ user }) => {
               alt={`${firstName}'s profile photo/logo`}
               fill
               priority
-              className="object-cover object-center border-t-6 border-l-6 border-r-6  rounded-full hover:scale-110 transition-transform duration-500"
-              style={{ borderColor: secondaryColor }}
+              className="object-cover object-center   rounded-full hover:scale-110 transition-transform duration-500"
+              // style={{ borderColor: secondaryColor }}
             />
           </div>
           <div className="absolute mt-2 md:mt-3 right-3 flex items-center gap-1">

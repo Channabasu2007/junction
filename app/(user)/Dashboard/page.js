@@ -15,6 +15,7 @@ import {
   Lock,
   Contact,
   GraduationCap,
+  MessageCircleMore,
 } from "lucide-react";
 import {
   Drawer,
@@ -42,6 +43,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Main from "@/components/DashboardMiddle/Main";
 import MobilePreview from "@/components/DesignedPages/MobilePreview";
+import Link from "next/link";
 
 const Page = () => {
   const router = useRouter();
@@ -120,6 +122,12 @@ const Page = () => {
 
           {/* Account & Analytics Button at Bottom */}
           <div className="px-4 py-4 border-t dark:border-zinc-700">
+            <Link
+                    href={"/ShowMessages"}
+                     className="w-full mb-4 flex items-center gap-3 px-4 py-2 rounded-md bg-orange-100 text-orange-700 hover:bg-orange-200 dark:bg-orange-900 dark:text-orange-200 dark:hover:bg-orange-800 font-medium transition-colors"
+                  >
+                    <MessageCircleMore /> Messages
+                  </Link>
             <button
               onClick={() => router.push("/Analytics")}
               className="w-full mb-4 flex items-center gap-3 px-4 py-2 rounded-md bg-orange-100 text-orange-700 hover:bg-orange-200 dark:bg-orange-900 dark:text-orange-200 dark:hover:bg-orange-800 font-medium transition-colors"
@@ -198,6 +206,12 @@ const Page = () => {
                       <span className="text-sm font-medium">{item.label}</span>
                     </button>
                   ))}
+                  <Link
+                    href={"/ShowMessages"}
+                     className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-orange-100 dark:hover:bg-orange-900 transition text-left"
+                  >
+                    <MessageCircleMore /> Messages
+                  </Link>
                   <button
                     onClick={handleAccountChange}
                     className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-orange-100 dark:hover:bg-orange-900 transition text-left"

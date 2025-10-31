@@ -47,7 +47,12 @@ const SetPageName = () => {
   return (
     <div>
       <Navbar />
-      {user && <SetPageNameCompo user={user} />}
+      {user && (
+        <SetPageNameCompo
+          user={user}
+          onSuccess={() => router.push("/Dashboard")}
+        />
+      )}
     </div>
   );
 };

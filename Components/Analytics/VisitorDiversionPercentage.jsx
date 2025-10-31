@@ -30,7 +30,7 @@ const ChartTooltipContent = ({ payload }) => {
 const COLORS = ['#f97316', '#fb923c'];
 
 export default function VisitorDiversionPercentage({ user }) {
-  const pageViews = user?.pageViews?.length + 1 || 0;
+  const pageViews = user?.pageViews?.length  || 0;
   const allClicks = user?.sites?.flatMap(site => site.clickHistory) || [];
   const totalClicks = allClicks.length;
   const data = [

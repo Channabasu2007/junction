@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useMemo } from "react";
 
 const AnalyticsSummary = ({ user }) => {
   const [range, setRange] = useState("total");
@@ -11,69 +11,49 @@ const AnalyticsSummary = ({ user }) => {
 
   const filters = ["week", "month", "year", "total"];
 
-  const pageViews = user?.pageViews?.length + 1 || 0;
-  const messages = user?.messages?.length || 0;
-  const allClicks = user?.sites?.flatMap(site => site.clickHistory) || [];
+  // Memoize all derived stats to avoid unnecessary calculations
+  const { pageViewStats, messageStats, linkOpenStats, stats } = useMemo(() => {
+    if (!user) return { pageViewStats: {}, messageStats: {}, linkOpenStats: {}, stats: { pageViews: 0, linksClicked: 0, messages: 0 } };
 
-  const pageViewStats = {
-    week: user?.pageViews?.filter(view =>
-      new Date(view.clickedDate) >= daysAgo(7)
-    ) || [],
+    const pageViews = user.pageViews || [];
+    const messages = user.messages || [];
+    const allClicks = user.sites?.flatMap(site => site.clickHistory) || [];
 
-    month: user?.pageViews?.filter(view =>
-      new Date(view.clickedDate) >= daysAgo(30)
-    ) || [],
+    const pageViewStats = {
+      week: pageViews.filter(v => new Date(v.clickedDate) >= daysAgo(7)),
+      month: pageViews.filter(v => new Date(v.clickedDate) >= daysAgo(30)),
+      year: pageViews.filter(v => new Date(v.clickedDate) >= daysAgo(365)),
+      total: pageViews
+    };
 
-    year: user?.pageViews?.filter(view =>
-      new Date(view.clickedDate) >= daysAgo(365)
-    ) || [],
+    const messageStats = {
+      week: messages.filter(m => new Date(m.createdAt) >= daysAgo(7)),
+      month: messages.filter(m => new Date(m.createdAt) >= daysAgo(30)),
+      year: messages.filter(m => new Date(m.createdAt) >= daysAgo(365)),
+      total: messages
+    };
 
-    total: user?.pageViews || []
-  };
+    const linkOpenStats = {
+      week: allClicks.filter(c => new Date(c.clickedAt) >= daysAgo(7)),
+      month: allClicks.filter(c => new Date(c.clickedAt) >= daysAgo(30)),
+      year: allClicks.filter(c => new Date(c.clickedAt) >= daysAgo(365)),
+      total: allClicks
+    };
 
-  const messageStats = {
-    week: user?.messages?.filter(view =>
-      new Date(view.createdAt) >= daysAgo(7)
-    ) || [],
+    const stats = {
+      pageViews: pageViewStats[range]?.length || 0,
+      linksClicked: linkOpenStats[range]?.length || 0,
+      messages: messageStats[range]?.length || 0
+    };
 
-    month: user?.messages?.filter(view =>
-      new Date(view.createdAt) >= daysAgo(30)
-    ) || [],
-
-    year: user?.messages?.filter(view =>
-      new Date(view.createdAt) >= daysAgo(365)
-    ) || [],
-
-    total: user?.messages || []
-  };
-
-  const linkOpenStats = {
-    week: allClicks?.filter(view =>
-      new Date(view.clickedAt) >= daysAgo(7)
-    ) || [],
-
-    month: allClicks?.filter(view =>
-      new Date(view.clickedAt) >= daysAgo(30)
-    ) || [],
-
-    year: allClicks?.filter(view =>
-      new Date(view.clickedAt) >= daysAgo(365)
-    ) || [],
-
-    total: allClicks || []
-  };
-
-  let stats = {
-    pageViews: pageViewStats[range]?.length || 0,
-    linksClicked: linkOpenStats[range]?.length || 0,
-    messages: messageStats[range]?.length || 0,
-  };
+    return { pageViewStats, messageStats, linkOpenStats, stats };
+  }, [user, range]);
 
   return (
     <section className="w-full space-y-6">
       {/* Filter Toggle */}
       <div className="flex items-center justify-center md:justify-end gap-2 flex-wrap">
-        {filters.map((f) => (
+        {filters.map(f => (
           <button
             key={f}
             onClick={() => setRange(f)}
@@ -90,27 +70,18 @@ const AnalyticsSummary = ({ user }) => {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        {/* Page Views */}
         <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 shadow-sm flex flex-col items-center text-center">
-          <h3 className="text-lg font-semibold text-neutral-700 dark:text-neutral-200">
-            Total Page Views
-          </h3>
+          <h3 className="text-lg font-semibold text-neutral-700 dark:text-neutral-200">Total Page Views</h3>
           <p className="text-3xl font-bold text-orange-600 mt-2">{stats.pageViews}</p>
         </div>
 
-        {/* Links Clicked */}
         <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 shadow-sm flex flex-col items-center text-center">
-          <h3 className="text-lg font-semibold text-neutral-700 dark:text-neutral-200">
-            Total Links Clicked
-          </h3>
+          <h3 className="text-lg font-semibold text-neutral-700 dark:text-neutral-200">Total Links Clicked</h3>
           <p className="text-3xl font-bold text-orange-600 mt-2">{stats.linksClicked}</p>
         </div>
 
-        {/* Messages */}
         <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl p-6 shadow-sm flex flex-col items-center text-center">
-          <h3 className="text-lg font-semibold text-neutral-700 dark:text-neutral-200">
-            Total Messages
-          </h3>
+          <h3 className="text-lg font-semibold text-neutral-700 dark:text-neutral-200">Total Messages</h3>
           <p className="text-3xl font-bold text-orange-600 mt-2">{stats.messages}</p>
         </div>
       </div>

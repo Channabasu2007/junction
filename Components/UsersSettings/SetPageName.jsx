@@ -146,7 +146,7 @@ const SetPageNameCompo = ({ user, onSuccess }) => {
                         <br />
                         <span className="font-semibold text-sm">
                             {process.env.NEXT_PUBLIC_URL || 'https://example.com/'}
-                            <span className="text-orange-500">{inputValue || 'your-page'}</span>
+                            <span className="text-orange-500">/{inputValue || 'your-page'}</span>
                         </span>
                     </p>
                 </div>

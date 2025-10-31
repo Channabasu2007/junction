@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export function DashboardPreview() {
   return (
@@ -18,9 +19,9 @@ export function DashboardPreview() {
             Track your clicks, monitor engagement, and understand your audience better.  
             JUNCTION’s analytics give you the insights you need to improve and grow your online presence.
           </p>
-          <Button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-6 rounded-xl text-lg shadow-md">
+          <Link href={"/Analytics"}  className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-6 rounded-xl text-lg shadow-md">
             View Analytics
-          </Button>
+          </Link>
         </div>
 
         {/* Right Image */}

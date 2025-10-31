@@ -50,7 +50,7 @@ const loweredUserName = userName.toLowerCase();
   }
 
   try {
-    const existingUserName = await User.findOne({ userName });
+    const existingUserName = await User.findOne({ userName: loweredUserName });
     if (existingUserName) {
       return NextResponse.json(
         { message: "Username already exists", exists: true },
@@ -60,7 +60,7 @@ const loweredUserName = userName.toLowerCase();
 
 const user = await User.findOneAndUpdate(
   { email },
-  {userName},
+  { userName: loweredUserName },
   {new: true}
 )
     return NextResponse.json(
