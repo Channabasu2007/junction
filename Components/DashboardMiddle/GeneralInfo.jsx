@@ -210,26 +210,37 @@ const GeneralInfo = ({ user }) => {
       <Input hidden id="banner" type="file" ref={bannerRef} onChange={updateBanner} />
 
       {/* Upload Buttons */}
-      <div className="flex flex-col gap-4">
-        <div className="flex items-center gap-4 flex-wrap">
-          <button
-            onClick={() => profileRef.current.click()}
-            className="flex items-center gap-2 px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition"
-          >
-            <ImagePlus size={18} /> Upload Profile / Logo
-          </button>
+    <div className="flex flex-col gap-4">
+  <div className="flex items-center gap-3 flex-wrap">
 
-          <button
-            onClick={() => bannerRef.current.click()}
-            className="flex items-center gap-2 px-4 py-2 bg-orange-600 text-white rounded-md hover:bg-orange-700 transition"
-          >
-            <UploadCloud size={18} /> Upload Banner
-          </button>
-        </div>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">
-          Profile photo will show on your page. Banner image is used as background.
-        </p>
-      </div>
+    {/* Upload Profile */}
+    <button
+      onClick={() => profileRef.current.click()}
+      className="flex items-center gap-2 px-5 py-2.5 bg-orange-600 text-white rounded-xl 
+        shadow-sm hover:bg-orange-700 hover:shadow-md active:scale-95 
+        transition-all border border-orange-500/50 backdrop-blur-sm"
+    >
+      <ImagePlus size={18} className="opacity-90" />
+      <span className="font-medium tracking-wide">Upload Profile / Logo</span>
+    </button>
+
+    {/* Upload Banner */}
+    <button
+      onClick={() => bannerRef.current.click()}
+      className="flex items-center gap-2 px-5 py-2.5 bg-white text-zinc-800 rounded-xl 
+        shadow-sm hover:bg-zinc-100 hover:shadow-md active:scale-95 
+        transition-all border border-zinc-300 dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
+    >
+      <UploadCloud size={18} className="opacity-90" />
+      <span className="font-medium tracking-wide">Upload Banner</span>
+    </button>
+  </div>
+
+  <p className="text-sm text-zinc-500 dark:text-zinc-400">
+    Profile photo will show on your page. Banner image is used as background.
+  </p>
+</div>
+
 
       {/* Form Inputs */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

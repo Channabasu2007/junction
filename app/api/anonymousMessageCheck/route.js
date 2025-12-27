@@ -1,87 +1,83 @@
 import { NextResponse } from "next/server";
 
+export const runtime = "edge";
+
 export async function POST(req) {
-    const { message } = await req.json();
+  const { message } = await req.json();
 
-    if (!process.env.GEMINI_API_KEY) {
-        return NextResponse.json({ error: "AI API key not configured" }, { status: 500 });
-    }
-    try {
-        const response = await fetch(
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" +
-            process.env.GEMINI_API_KEY,
-            {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    contents: [
-                        {
-                            role: "user",
-                            parts: [
-                                {
-                                    text: `You are a content moderator and classifier.
-Return JSON ONLY in this structure:
+  if (!process.env.GROQ_API_KEY) {
+    return NextResponse.json({
+      error: "API key missing"
+    }, { status: 500 });
+  }
+
+  const systemPrompt = `You are a content moderator.
+Return ONLY JSON in this format:
 {
-  "proceed": "yes" | "no",
-  "msgType": "normal" | "abusive" | "defaming" | "spam" | "nsfw" | "other",
-  "category": 
-  "feedback" 
-| "happy" 
-| "question" 
-| "regarding" 
-| "story" 
-| "support" 
-| "complaint" 
-| "joke" 
-| "spam" 
-| "other"
-| "suggestion"
-| "appreciation"
-| "criticism"
-| "update"
-| "announcement"
-| "greetings"
-
-  "note": "short reason"
+"proceed":"yes" | "no",
+"msgType":"normal" | "abusive" | "defaming" | "spam" | "nsfw" | "other",
+"category":"feedback" | "happy" | "question" | "regarding" | "story" | "support" | "complaint" | "joke" | "spam" | "other" | "suggestion" | "appreciation" | "criticism" | "update" | "announcement" | "greetings",
+"note":"short reason"
 }
+If unsure → proceed="no"
+No extra text. Only JSON.`;
 
-Rules:
-- Use exactly ONE category from the list, no new categories.
-- If message is harmful → proceed = "no".
-- If fine → proceed = "yes".
-- Output ONLY valid JSON, nothing else.`
-                                }
-                            ]
-                        },
-                        {
-                            role: "user",
-                            parts: [{ text: message }]
-                        }
-                    ],
-                    generationConfig: { temperature: 0 }
-                })
-            }
-        );
+  async function callGroq(model) {
+    const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
+      },
+      body: JSON.stringify({
+        model: model,
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: message }
+        ],
+        temperature: 0,
+        response_format: { type: "json_object" }
+      })
+    });
 
-        const data = await response.json();
-        console.log(data)
-        console.log("Gemini raw:", JSON.stringify(data, null, 2));
-
-        const content = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
-
-        if (!content) {
-            return NextResponse.json({ error: "No content from Gemini" }, { status: 500 });
-        }
-
-        // Clean possible ```json fences
-        const clean = content.replace(/```json|```/g, "");
-
-        return NextResponse.json(JSON.parse(clean));
-    } catch (error) {
-        console.error("Moderation API Error:", error);
-        return NextResponse.json(
-            { error: "Failed to analyze message" },
-            { status: 500 }
-        );
+    if (!res.ok) {
+      const errorText = await res.text();
+      throw new Error(`Groq API error: ${res.status} ${res.statusText} - ${errorText}`);
     }
+
+    return res.json();
+  }
+
+  let data;
+  try {
+    data = await callGroq("llama-3.3-70b-versatile");
+  } catch (err) {
+    console.warn("Primary model failed, trying fallback:", err);
+    try {
+      // Fallback model
+      data = await callGroq("llama3-70b-8192");
+    } catch (fallbackErr) {
+      console.error("All models failed:", fallbackErr);
+      throw fallbackErr; // Handled in outer catch
+    }
+  }
+
+  try {
+    const content = data?.choices?.[0]?.message?.content;
+    if (!content) throw new Error("No output from Groq");
+
+    const jsonString = content.match(/\{[\s\S]*\}/)?.[0] || content;
+    const result = JSON.parse(jsonString);
+
+    return NextResponse.json(result);
+  } catch (err) {
+    console.error("Moderation parse error:", err);
+    return NextResponse.json({
+      proceed: "no",
+      msgType: "other",
+      category: "other",
+      note: "AI failed - blocked"
+    });
+  }
 }
+

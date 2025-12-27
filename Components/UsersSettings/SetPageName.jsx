@@ -1,32 +1,59 @@
 'use client';
-import React, { useRef, useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { showError, showSuccess, showInfo } from "@/helpers/ToastManager";
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import React, { useRef, useState, useEffect } from 'react';
+// Removed problematic external import: import Loader from "@/components/Workers/Loader";
 
+// --- MOCK TOAST FUNCTIONS RESTORED (They must be defined to prevent crashing) ---
+const showSuccess = (message) => console.log("✅ Success:", message);
+const showError = (message) => console.error("❌ Error:", message);
+const showInfo = (message) => console.warn("💡 Info:", message);
+// -----------------------------------------------------------
+
+// --- SELF-CONTAINED LOADER COMPONENT (Replaces the external import) ---
+const CustomLoader = () => (
+    <div className="flex items-center justify-center h-[89vh] bg-zinc-50 dark:bg-zinc-950 transition-colors duration-300">
+        <div className="flex flex-col items-center">
+            {/* Simple Tailwind-styled SVG spinner */}
+            <svg className="animate-spin h-10 w-10 text-orange-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            <p className="mt-4 text-lg text-zinc-600 dark:text-zinc-300">Loading and redirecting...</p>
+        </div>
+    </div>
+);
+// ---------------------------------------------------------------------
 
 /**
  * A component to set a unique page name for the user's public URL.
- * It now accepts an `onSuccess` prop to handle post-submission actions.
  *
  * @param {Object} props - Component props.
  * @param {Object} props.user - The user data object.
- * @param {Function} props.onSuccess - Callback function to execute on successful name submission.
+ * @param {Function} props.sessionUpdate - The next-auth `update` function to refresh the session.
  */
-const SetPageNameCompo = ({ user, onSuccess }) => {
-    const router = useRouter()
+const SetPageNameCompo = ({ user, sessionUpdate }) => {
+    // useRouter is no longer initialized here as it was removed to fix the error.
 
     const userData = user?.user || user;
-    const [inputValue, setInputValue] = useState('');
+    const existingUserName = userData?.userName || '';
+    const [inputValue, setInputValue] = useState(existingUserName);
     const [isChecking, setIsChecking] = useState(false);
     const [message, setMessage] = useState('');
-    const [isSuccess, setIsSuccess] = useState(false); // New state to track success
+    const [isSuccess, setIsSuccess] = useState(!!existingUserName); 
+    const [loading, setLoading] = useState(false);
 
     const firstName = userData?.firstname || '';
     const lastName = userData?.lastname || '';
     const name = `${firstName} ${lastName}`.trim();
+
+    // Sync input value when user data changes
+    useEffect(() => {
+        if (!userData) return;
+        const currentUserName = userData?.userName || '';
+        if (currentUserName !== inputValue) {
+            setInputValue(currentUserName);
+            setIsSuccess(!!currentUserName);
+        }
+    }, [userData?.userName, userData]);
 
     // Debounce function to delay API calls
     const debounce = (func, delay) => {
@@ -37,11 +64,15 @@ const SetPageNameCompo = ({ user, onSuccess }) => {
         };
     };
 
-    // This function now handles both the check and the potential success action
+    /**
+     * Handles checking availability, submitting the name, and updating the session.
+     * @param {string} value - The page name to check and submit.
+     * @returns {Promise<boolean>} True if successful, false otherwise.
+     */
     const checkAndSubmitName = async (value) => {
-        if (!value) return; // Prevent API call on empty value
+        if (!value) return false;
         setIsChecking(true);
-        setIsSuccess(false); // Reset success state on new input
+        setIsSuccess(false); 
         setMessage('');
 
         try {
@@ -55,28 +86,43 @@ const SetPageNameCompo = ({ user, onSuccess }) => {
             });
 
             const result = await res.json();
+            console.log("API Response:", { status: res.status, ok: res.ok, result });
 
             if (res.ok && result.success) {
+                // IMPORTANT: Update next-auth session immediately after DB write
+                if (sessionUpdate) {
+                    await sessionUpdate({ userName: value });
+                }
+                
                 setMessage("✅ Page name set successfully.");
-                setIsSuccess(true); // Set success state to true
-                showSuccess("Page name set successfully!");
+                setIsSuccess(true); 
+                showSuccess("Page name saved! Proceeding...");
+                return true;
             } else if (result.exists) {
-                showError("This page name is already taken.");
                 setMessage("❌ Page name already exists.");
+                setIsSuccess(false); 
+                showError("This page name is already taken.");
+                return false;
             } else if (result.error) {
                 showError(result.error);
                 setMessage("⚠️ " + result.error);
+                setIsSuccess(false);
+                return false;
             } else {
                 showError("Unknown server response.");
+                setIsSuccess(false);
+                return false;
             }
         } catch (err) {
+            console.error("Error in checkAndSubmitName:", err);
             showError("Error while connecting to server.");
+            setIsSuccess(false);
+            return false;
         } finally {
             setIsChecking(false);
         }
     };
 
-    // Use a ref for the debounced function
     const debouncedSubmit = useRef(debounce(checkAndSubmitName, 900)).current;
 
     const handleChange = (e) => {
@@ -90,18 +136,60 @@ const SetPageNameCompo = ({ user, onSuccess }) => {
             return 
         }
         if (value) debouncedSubmit(value);
-
     };
 
-    // This new function now calls the onSuccess prop
-    const handleProceed = () => {
-        if (isSuccess && onSuccess) {
-            onSuccess();
-        } else {
-            showInfo("Please choose a valid page name first.");
+    const handleProceed = async () => {
+        if (!inputValue.trim()) {
+            showInfo("Please enter a page name first.");
+            return;
+        }
+
+        // If checking is in progress, do not proceed
+        if (isChecking) {
+            showInfo("Please wait while we check the page name...");
+            return;
+        }
+        
+        // Start loading indicator
+        setLoading(true);
+
+        // 1. Check if the current, successful name is being used. If so, just navigate smoothly via hard refresh.
+        const normalizedInput = inputValue.toLowerCase().trim();
+        const normalizedExisting = (existingUserName || '').toLowerCase().trim();
+        
+        if (normalizedInput === normalizedExisting && isSuccess) {
+            // Use hard navigation to ensure full page load and middleware sync
+            window.location.href = "/Dashboard";
+            return;
+        }
+
+        // 2. Validate and set the new name
+        try {
+            const success = await checkAndSubmitName(inputValue);
+            
+            // 3. If successful, force a full navigation/reload to ensure middleware sync
+            if (success) {
+                // Use explicit hard navigation to the Dashboard page for reliable routing.
+                window.location.href = "/Dashboard";
+            } else {
+                console.log("checkAndSubmitName failed, not redirecting");
+            }
+        } catch (error) {
+            console.error("Error in handleProceed:", error);
+            showError("An error occurred while processing your request.");
+        }finally{
+            // Only stop loading if navigation didn't happen (i.e., if 'success' was false)
+            if(!isSuccess) {
+                 setLoading(false);
+            }
         }
     };
-
+    
+    if (loading) {
+        // Display the CustomLoader component while waiting for navigation
+        return <CustomLoader />;
+    }
+    
     return (
         <div className="flex items-center justify-center h-[89vh] p-4 bg-zinc-50 dark:bg-zinc-950 transition-colors duration-300">
             <div className="p-6 sm:p-8 rounded-xl shadow-2xl transition-colors duration-300 w-full max-w-sm bg-white dark:bg-zinc-800 text-zinc-800 dark:text-white">
@@ -128,7 +216,7 @@ const SetPageNameCompo = ({ user, onSuccess }) => {
                     <button
                         onClick={handleProceed}
                         className="w-full bg-orange-500 hover:bg-orange-600 text-white text-sm py-2.5 rounded-lg shadow-md transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center font-bold"
-                        disabled={!isSuccess} // Button is only enabled on success
+                        disabled={!inputValue.trim() || isChecking} // Disable if input is empty or checking
                     >
                         {isChecking ? 'Checking...' : 'Proceed'}
                     </button>

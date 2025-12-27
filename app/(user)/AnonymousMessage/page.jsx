@@ -1,6 +1,6 @@
 "use client";
-import React, { Suspense, use, useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import React, { Suspense, use, useEffect, useState, useRef } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { showError, showSuccess, showInfo } from "@/helpers/ToastManager";
 import { se } from "date-fns/locale/se";
 import { set } from "mongoose";
@@ -10,6 +10,7 @@ import { Dot, Loader2 } from "lucide-react";
 
 const PageInner = () => {
     const params = useSearchParams();
+    const router = useRouter();
     const userName = params.get("to");
 
     const [user, setUser] = useState(null);
@@ -24,9 +25,17 @@ const PageInner = () => {
     const [wrongMsgWarning, setWrongMsgWarning] = useState(false);
     const [aiMsgReview, setAiMsgReview] = useState(null);
     const [successfullySent, setSuccessfullySent] = useState(false);
+    const redirectTimeoutRef = useRef(null);
 
     useEffect(() => {
         if (userName) getUserData();
+        
+        // Cleanup timeout on unmount
+        return () => {
+            if (redirectTimeoutRef.current) {
+                clearTimeout(redirectTimeoutRef.current);
+            }
+        };
     }, [userName]);
 
     useEffect(() => {
@@ -172,6 +181,14 @@ const handleSend = async (aiData = null) => {
 
         setSending(false);
         setSuccessfullySent(true);
+        showSuccess("Message sent successfully!");
+        
+        // Automatically redirect after 2 seconds
+        redirectTimeoutRef.current = setTimeout(() => {
+            if (userName) {
+                router.push(`/${userName}`);
+            }
+        }, 2000);
     } catch (err) {
         setSending(false);
         showError("Network error. Try again later.");
@@ -278,13 +295,19 @@ const handleSend = async (aiData = null) => {
                     </p>
 
                     {/* Action Button */}
-                    <Link
-                        href={`/${userName}`}
-                        onClick={() => setSuccessfullySent(false)}
+                    <button
+                        onClick={() => {
+                            if (userName) {
+                                router.push(`/${userName}`);
+                            }
+                        }}
                         className="w-full px-2 bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition"
                     >
                         Back to {userName}'s Page
-                    </Link>
+                    </button>
+                    <p className="text-gray-500 text-sm mt-3">
+                        Redirecting automatically...
+                    </p>
                 </div>
             </div>
         );
@@ -327,7 +350,7 @@ const handleSend = async (aiData = null) => {
                             <>
                                 <input
                                     type="email"
-                                    placeholder="Your email (user wants to get the email we are not gone use your email for our campaingns)"
+                                    placeholder="Your email (user wants to get the email)"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="w-full p-4 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 text-gray-800"
