@@ -1,10 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-   eslint: {
-    // Ignored bcoz file name clashes
-    ignoreDuringBuilds: true,
-  },
+  
   images: {
     remotePatterns: [
       {
