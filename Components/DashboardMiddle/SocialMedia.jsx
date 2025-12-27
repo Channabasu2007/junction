@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import Image from "next/image";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button"; // assuming you have this component
+import { Input } from "@/Components/ui/input";
+import { Button } from "@/Components/ui/button"; // assuming you have this component
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
-import { reloadPreview } from "@/components/DesignedPages/MobilePreview"
+import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
 
 const SocialMedia = ({ user }) => {
   const email = user.email
@@ -31,7 +31,7 @@ const SocialMedia = ({ user }) => {
       })
 
       if (!res.ok) { showError("The data is not saved, please try again later. Check if the internet connection is good or not.") }
-reloadPreview()
+      reloadPreview()
     } catch (error) {
       showError("Something went wrong, please try again later to add the links.")
     }

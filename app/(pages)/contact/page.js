@@ -1,63 +1,63 @@
 "use client";
 
 import React, { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import Navbar from "@/components/Navbar/mainNavContainer";
-import Footer from "@/components/Footer/Footer";
+import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card";
+import { Input } from "@/Components/ui/input";
+import { Textarea } from "@/Components/ui/textarea";
+import { Button } from "@/Components/ui/button";
+import Navbar from "@/Components/Navbar/mainNavContainer";
+import Footer from "@/Components/Footer/Footer";
 
 import { CheckCircle } from "lucide-react";
 export default function ContactPage() {
   const [sent, setSent] = useState(false)
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const formData = new FormData(e.currentTarget);
+    const formData = new FormData(e.currentTarget);
 
-  await fetch(
-    "https://docs.google.com/forms/d/e/1FAIpQLSfRu-jENJm6HwWrAkNAfJ5eqPpZRgu6gxOCg8bGcXoj1yymTg/formResponse",
-    {
-      method: "POST",
-      body: formData,
-      mode: "no-cors", // Google ignores CORS
-    }
-  );
-setSent(true)
- 
-};
-if(sent){
-  return(
-    <>
-      <Navbar />
-      <main className="min-h-screen bg-white dark:bg-black flex items-center justify-center px-6 md:px-20 py-16">
-        <Card className="w-full max-w-lg shadow-lg border border-gray-200 dark:border-gray-800 rounded-2xl text-center">
-          <CardHeader>
-            <div className="flex justify-center mb-4">
-              <CheckCircle className="w-16 h-16 text-orange-500" />
-            </div>
-            <CardTitle className="text-3xl font-bold text-orange-500">
-              Message Sent!
-            </CardTitle>
-            <p className="mt-2 text-gray-600 dark:text-gray-400">
-              Thank you for contacting us. Our team will get back to you soon.
-            </p>
-          </CardHeader>
-          <CardContent>
-            <Button
-              onClick={() => {setSent(false)}}
-              className="mt-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl px-6"
-            >
-              Back to Contact Page
-            </Button>
-          </CardContent>
-        </Card>
-      </main>
-      <Footer />
-    </>
-  )
-}
+    await fetch(
+      "https://docs.google.com/forms/d/e/1FAIpQLSfRu-jENJm6HwWrAkNAfJ5eqPpZRgu6gxOCg8bGcXoj1yymTg/formResponse",
+      {
+        method: "POST",
+        body: formData,
+        mode: "no-cors", // Google ignores CORS
+      }
+    );
+    setSent(true)
+
+  };
+  if (sent) {
+    return (
+      <>
+        <Navbar />
+        <main className="min-h-screen bg-white dark:bg-black flex items-center justify-center px-6 md:px-20 py-16">
+          <Card className="w-full max-w-lg shadow-lg border border-gray-200 dark:border-gray-800 rounded-2xl text-center">
+            <CardHeader>
+              <div className="flex justify-center mb-4">
+                <CheckCircle className="w-16 h-16 text-orange-500" />
+              </div>
+              <CardTitle className="text-3xl font-bold text-orange-500">
+                Message Sent!
+              </CardTitle>
+              <p className="mt-2 text-gray-600 dark:text-gray-400">
+                Thank you for contacting us. Our team will get back to you soon.
+              </p>
+            </CardHeader>
+            <CardContent>
+              <Button
+                onClick={() => { setSent(false) }}
+                className="mt-6 bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl px-6"
+              >
+                Back to Contact Page
+              </Button>
+            </CardContent>
+          </Card>
+        </main>
+        <Footer />
+      </>
+    )
+  }
   return (
     <>
       <Navbar />
@@ -73,7 +73,7 @@ if(sent){
           </CardHeader>
           <CardContent>
             <form
-              onSubmit={handleSubmit} 
+              onSubmit={handleSubmit}
               target="_blank"
               className="space-y-6"
             >
@@ -124,7 +124,7 @@ if(sent){
                 type="submit"
                 className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-xl"
               >
-                Send Message 
+                Send Message
               </Button>
             </form>
           </CardContent>

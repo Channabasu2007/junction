@@ -5,7 +5,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/Components/ui/card";
 
 const LinksClickedStats = ({ user }) => {
   const [range, setRange] = useState("total");
@@ -57,10 +57,9 @@ const LinksClickedStats = ({ user }) => {
               key={f}
               onClick={() => setRange(f)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all 
-                ${
-                  range === f
-                    ? "bg-orange-500 text-white shadow"
-                    : "bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700"
+                ${range === f
+                  ? "bg-orange-500 text-white shadow"
+                  : "bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700"
                 }`}
             >
               {f.charAt(0).toUpperCase() + f.slice(1)}

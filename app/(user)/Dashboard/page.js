@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Navbar from "@/components/Navbar/mainNavContainer";
+import Navbar from "@/Components/Navbar/mainNavContainer";
 import { Settings, BarChart2, Smartphone, icons } from "lucide-react";
 import {
   ChartNoAxesColumnIncreasing,
@@ -26,7 +26,7 @@ import {
   DrawerDescription,
   DrawerFooter,
   DrawerClose,
-} from "@/components/ui/drawer";
+} from "@/Components/ui/drawer";
 import { useSwipeable } from "react-swipeable";
 import {
   Sheet,
@@ -35,14 +35,14 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
+} from "@/Components/ui/sheet";
+import { Button } from "@/Components/ui/button";
 import { useSession } from "next-auth/react";
-import Loader from "@/components/Workers/Loader";
+import Loader from "@/Components/Workers/Loader";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Main from "@/components/DashboardMiddle/Main";
-import MobilePreview from "@/components/DesignedPages/MobilePreview";
+import Main from "@/Components/DashboardMiddle/Main";
+import MobilePreview from "@/Components/DesignedPages/MobilePreview";
 import Link from "next/link";
 
 const Page = () => {
@@ -123,11 +123,11 @@ const Page = () => {
           {/* Account & Analytics Button at Bottom */}
           <div className="px-4 py-4 border-t dark:border-zinc-700">
             <Link
-                    href={"/ShowMessages"}
-                     className="w-full mb-4 flex items-center gap-3 px-4 py-2 rounded-md bg-orange-100 text-orange-700 hover:bg-orange-200 dark:bg-orange-900 dark:text-orange-200 dark:hover:bg-orange-800 font-medium transition-colors"
-                  >
-                    <MessageCircleMore /> Messages
-                  </Link>
+              href={"/ShowMessages"}
+              className="w-full mb-4 flex items-center gap-3 px-4 py-2 rounded-md bg-orange-100 text-orange-700 hover:bg-orange-200 dark:bg-orange-900 dark:text-orange-200 dark:hover:bg-orange-800 font-medium transition-colors"
+            >
+              <MessageCircleMore /> Messages
+            </Link>
             <button
               onClick={() => router.push("/Analytics")}
               className="w-full mb-4 flex items-center gap-3 px-4 py-2 rounded-md bg-orange-100 text-orange-700 hover:bg-orange-200 dark:bg-orange-900 dark:text-orange-200 dark:hover:bg-orange-800 font-medium transition-colors"
@@ -154,7 +154,7 @@ const Page = () => {
 
         {/* Right side where preview is located */}
         <div className="border overflow-hidden  w-[30vw] flex items-center justify-center h-[89vh]">
-          <MobilePreview/>
+          <MobilePreview />
         </div>
       </div>
 
@@ -208,7 +208,7 @@ const Page = () => {
                   ))}
                   <Link
                     href={"/ShowMessages"}
-                     className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-orange-100 dark:hover:bg-orange-900 transition text-left"
+                    className="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-orange-100 dark:hover:bg-orange-900 transition text-left"
                   >
                     <MessageCircleMore /> Messages
                   </Link>
@@ -253,9 +253,9 @@ const Page = () => {
                 </div>
                 {/* Swipeable area starts here */}
                 <div className="mt-1 flex justify-center">
-                  
-                    <MobilePreview />
-                  
+
+                  <MobilePreview />
+
                 </div>
                 {/* Swipeable area ends */}
               </SheetContent>

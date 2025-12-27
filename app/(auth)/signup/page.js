@@ -1,11 +1,11 @@
 import React from 'react'
-import AuthNav from '@/components/Auth/AuthNav'
-import SignUp from '@/components/Auth/SignUp'
+import AuthNav from '@/Components/Auth/AuthNav'
+import SignUp from '@/Components/Auth/SignUp'
 const signUp = () => {
   return (
     <>
-    <AuthNav />
-    <SignUp />
+      <AuthNav />
+      <SignUp />
     </>
   )
 }

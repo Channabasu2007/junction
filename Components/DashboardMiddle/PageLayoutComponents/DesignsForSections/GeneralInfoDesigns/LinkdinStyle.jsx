@@ -8,9 +8,9 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import UserBio from "@/components/DashboardMiddle/PageLayoutComponents/HelpersOfDesign/UserBio"
+} from "@/Components/ui/tooltip";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/Components/ui/dialog";
+import UserBio from "@/Components/DashboardMiddle/PageLayoutComponents/HelpersOfDesign/UserBio"
 
 const LinkdinStyle = ({ user }) => {
   const [msgPrefPopup, setMsgPrefPopup] = useState(false);
@@ -124,7 +124,7 @@ const LinkdinStyle = ({ user }) => {
               fill
               priority
               className="object-cover object-center   rounded-full hover:scale-110 transition-transform duration-500"
-              // style={{ borderColor: secondaryColor }}
+            // style={{ borderColor: secondaryColor }}
             />
           </div>
           <div className="absolute mt-2 md:mt-3 right-3 flex items-center gap-1">
@@ -191,65 +191,65 @@ const LinkdinStyle = ({ user }) => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                <Link
-                  href={mailUrl}
-                  target="_blank"
-                  style={{ backgroundColor: secondaryColor }}
-                  className="inline-flex items-center justify-center rounded-full shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:shadow-lg
+                  <Link
+                    href={mailUrl}
+                    target="_blank"
+                    style={{ backgroundColor: secondaryColor }}
+                    className="inline-flex items-center justify-center rounded-full shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:shadow-lg
                w-9 h-9 sm:w-10 sm:h-10"
-                >
-                  <Mail
-                    style={{ color: primaryColor, width: "1.1rem", height: "1.1rem" }}
-                  />
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent>{mail}</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+                  >
+                    <Mail
+                      style={{ color: primaryColor, width: "1.1rem", height: "1.1rem" }}
+                    />
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>{mail}</TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
 
-          <div
-            className="inline-flex items-center justify-center rounded-full shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:shadow-lg
+            <div
+              className="inline-flex items-center justify-center rounded-full shadow-md backdrop-blur-sm transition-all duration-200 hover:scale-105 hover:shadow-lg
                w-9 h-9 sm:w-10 sm:h-10"
-            style={{ backgroundColor: secondaryColor }}
-            onClick={() => setMsgPrefPopup(true)}
-          >
-            <MessageCircle
-              style={{ color: primaryColor, width: "1.1rem", height: "1.1rem" }}
-            />
+              style={{ backgroundColor: secondaryColor }}
+              onClick={() => setMsgPrefPopup(true)}
+            >
+              <MessageCircle
+                style={{ color: primaryColor, width: "1.1rem", height: "1.1rem" }}
+              />
+            </div>
           </div>
         </div>
-      </div>
-      {/* Popup */}
-      <Dialog open={msgPrefPopup} onOpenChange={setMsgPrefPopup}>
-        <DialogContent className="sm:max-w-md rounded-2xl shadow-xl p-6 bg-white dark:bg-zinc-900">
-          <DialogHeader>
-            <DialogTitle className="text-lg font-semibold text-center text-zinc-800 dark:text-zinc-100">
-              Choose how to contact
-            </DialogTitle>
-          </DialogHeader>
+        {/* Popup */}
+        <Dialog open={msgPrefPopup} onOpenChange={setMsgPrefPopup}>
+          <DialogContent className="sm:max-w-md rounded-2xl shadow-xl p-6 bg-white dark:bg-zinc-900">
+            <DialogHeader>
+              <DialogTitle className="text-lg font-semibold text-center text-zinc-800 dark:text-zinc-100">
+                Choose how to contact
+              </DialogTitle>
+            </DialogHeader>
 
-          <div className="flex flex-col gap-4 mt-6">
-            {/* Mail link */}
-            <a
-              href={`mailto:${personalEmail}`}
-              className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-blue-500 text-blue-600 dark:text-blue-400 font-medium transition hover:bg-blue-50 dark:hover:bg-blue-950"
-            >
-               Send Mail To Personal Email
-            </a>
+            <div className="flex flex-col gap-4 mt-6">
+              {/* Mail link */}
+              <a
+                href={`mailto:${personalEmail}`}
+                className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-blue-500 text-blue-600 dark:text-blue-400 font-medium transition hover:bg-blue-50 dark:hover:bg-blue-950"
+              >
+                Send Mail To Personal Email
+              </a>
 
-            {/* Anonymous message link */}
+              {/* Anonymous message link */}
 
-            { user.FeedbacksCredentials.allowFeedbacks && <Link
-              href={`/AnonymousMessage?to=${user.userName}`}
-              className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-gray-400 text-gray-700 dark:text-gray-300 font-medium transition hover:bg-gray-100 dark:hover:bg-zinc-800"
-            >
-               Message Anonymously
-            </Link>}
-          </div>
-        </DialogContent>
-      </Dialog>
+              {user.FeedbacksCredentials.allowFeedbacks && <Link
+                href={`/AnonymousMessage?to=${user.userName}`}
+                className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-gray-400 text-gray-700 dark:text-gray-300 font-medium transition hover:bg-gray-100 dark:hover:bg-zinc-800"
+              >
+                Message Anonymously
+              </Link>}
+            </div>
+          </DialogContent>
+        </Dialog>
 
-    </div >
+      </div >
       <div className="mt-22 px-6 ">
         {/* Name */}
         <h1
@@ -281,7 +281,7 @@ const LinkdinStyle = ({ user }) => {
         {/* Bio */}
         <UserBio bio={bio} paragraphColor={paragraphColor} />
 
-      
+
       </div>
 
     </>

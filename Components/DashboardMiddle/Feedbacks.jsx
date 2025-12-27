@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState, useCallback } from "react";
 import { showSuccess, showError, showInfo } from "@/helpers/ToastManager";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/Components/ui/checkbox";
+import { Label } from "@/Components/ui/label";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -12,8 +12,8 @@ import {
   AlertDialogFooter,
   AlertDialogCancel,
   AlertDialogAction,
-} from "@/components/ui/alert-dialog";
-import { reloadPreview } from "@/components/DesignedPages/MobilePreview"
+} from "@/Components/ui/alert-dialog";
+import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
 
 const Feedbacks = ({ user }) => {
   const email = user.email

@@ -3,8 +3,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { CheckCircle, Layout, Share2, Settings } from "lucide-react";
-import Navbar from "@/components/Navbar/mainNavContainer"
-import Footer from "@/components/Footer/Footer";
+import Navbar from "@/Components/Navbar/mainNavContainer"
+import Footer from "@/Components/Footer/Footer";
 
 export default function GuidePage() {
   const steps = [
@@ -36,65 +36,65 @@ export default function GuidePage() {
 
   return (
     <>
-    <Navbar />
-    <main className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-gray-100 px-6 md:px-20 py-16">
-      
-      <div className="max-w-4xl mx-auto text-center">
-        {/* Title */}
-        <motion.h1
-          className="text-4xl md:text-5xl font-extrabold text-orange-600 mb-6"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          Getting Started with JUNCTION
-        </motion.h1>
+      <Navbar />
+      <main className="min-h-screen bg-white dark:bg-black text-gray-900 dark:text-gray-100 px-6 md:px-20 py-16">
 
-        <motion.p
-          className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-12"
+        <div className="max-w-4xl mx-auto text-center">
+          {/* Title */}
+          <motion.h1
+            className="text-4xl md:text-5xl font-extrabold text-orange-600 mb-6"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            Getting Started with JUNCTION
+          </motion.h1>
+
+          <motion.p
+            className="text-lg md:text-xl text-gray-700 dark:text-gray-300 mb-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            Follow these simple steps to create your perfect online presence.
+            It only takes a few minutes!
+          </motion.p>
+        </div>
+
+        {/* Steps */}
+        <div className="grid gap-10 md:grid-cols-2 max-w-5xl mx-auto">
+          {steps.map((step, index) => (
+            <motion.div
+              key={index}
+              className="bg-gray-50 dark:bg-gray-900 rounded-2xl shadow-sm p-8 text-center"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.2 }}
+            >
+              <div className="flex justify-center mb-4">{step.icon}</div>
+              <h2 className="text-xl font-semibold text-orange-500 mb-2">
+                {step.title}
+              </h2>
+              <p className="text-gray-700 dark:text-gray-300">{step.description}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <motion.div
+          className="text-center mt-16"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 1 }}
         >
-          Follow these simple steps to create your perfect online presence.  
-          It only takes a few minutes!
-        </motion.p>
-      </div>
-
-      {/* Steps */}
-      <div className="grid gap-10 md:grid-cols-2 max-w-5xl mx-auto">
-        {steps.map((step, index) => (
-          <motion.div
-            key={index}
-            className="bg-gray-50 dark:bg-gray-900 rounded-2xl shadow-sm p-8 text-center"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.2 }}
+          <a
+            href="/signup"
+            className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-3 rounded-2xl shadow-md transition"
           >
-            <div className="flex justify-center mb-4">{step.icon}</div>
-            <h2 className="text-xl font-semibold text-orange-500 mb-2">
-              {step.title}
-            </h2>
-            <p className="text-gray-700 dark:text-gray-300">{step.description}</p>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* CTA */}
-      <motion.div
-        className="text-center mt-16"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1 }}
-      >
-        <a
-          href="/signup"
-          className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-semibold px-8 py-3 rounded-2xl shadow-md transition"
-        >
-          Start Your Journey 🚀
-        </a>
-      </motion.div>
-    </main>
-    <Footer/>
+            Start Your Journey 🚀
+          </a>
+        </motion.div>
+      </main>
+      <Footer />
     </>
   );
 }

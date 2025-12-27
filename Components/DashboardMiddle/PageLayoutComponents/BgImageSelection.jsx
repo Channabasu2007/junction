@@ -1,19 +1,19 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Slider } from "@/components/ui/slider"
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
+import { Textarea } from "@/Components/ui/textarea";
+import { Button } from "@/Components/ui/button";
+import { Slider } from "@/Components/ui/slider"
 import { showSuccess, showError } from "@/helpers/ToastManager";
 import { ImagePlus, X } from "lucide-react";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
-import { reloadPreview } from "@/components/DesignedPages/MobilePreview"
+import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
 
 const BgImageSelection = ({ user }) => {
-const [bgImageUrl, setBgImageUrl] = useState(
-  user?.PageLayout?.bgImage?.url || "https://images.pexels.com/photos/169677/pexels-photo-169677.jpeg"
-);
+    const [bgImageUrl, setBgImageUrl] = useState(
+        user?.PageLayout?.bgImage?.url || "https://images.pexels.com/photos/169677/pexels-photo-169677.jpeg"
+    );
 
     const email = user.email
     const [queryImages, setQueryImages] = useState(null)

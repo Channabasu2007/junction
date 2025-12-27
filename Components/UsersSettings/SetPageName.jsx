@@ -1,6 +1,6 @@
 'use client';
 import React, { useRef, useState, useEffect } from 'react';
-// Removed problematic external import: import Loader from "@/components/Workers/Loader";
+// Removed problematic external import: import Loader from "@/Components/Workers/Loader";
 
 // --- MOCK TOAST FUNCTIONS RESTORED (They must be defined to prevent crashing) ---
 const showSuccess = (message) => console.log("✅ Success:", message);
@@ -38,7 +38,7 @@ const SetPageNameCompo = ({ user, sessionUpdate }) => {
     const [inputValue, setInputValue] = useState(existingUserName);
     const [isChecking, setIsChecking] = useState(false);
     const [message, setMessage] = useState('');
-    const [isSuccess, setIsSuccess] = useState(!!existingUserName); 
+    const [isSuccess, setIsSuccess] = useState(!!existingUserName);
     const [loading, setLoading] = useState(false);
 
     const firstName = userData?.firstname || '';
@@ -72,7 +72,7 @@ const SetPageNameCompo = ({ user, sessionUpdate }) => {
     const checkAndSubmitName = async (value) => {
         if (!value) return false;
         setIsChecking(true);
-        setIsSuccess(false); 
+        setIsSuccess(false);
         setMessage('');
 
         try {
@@ -93,14 +93,14 @@ const SetPageNameCompo = ({ user, sessionUpdate }) => {
                 if (sessionUpdate) {
                     await sessionUpdate({ userName: value });
                 }
-                
+
                 setMessage("✅ Page name set successfully.");
-                setIsSuccess(true); 
+                setIsSuccess(true);
                 showSuccess("Page name saved! Proceeding...");
                 return true;
             } else if (result.exists) {
                 setMessage("❌ Page name already exists.");
-                setIsSuccess(false); 
+                setIsSuccess(false);
                 showError("This page name is already taken.");
                 return false;
             } else if (result.error) {
@@ -131,9 +131,9 @@ const SetPageNameCompo = ({ user, sessionUpdate }) => {
         const notAllowedNames = [
             "dashboard", "analytics", "setpagename", "api", "login", "signUp", "verification", "error", "junction",
         ]
-        if(notAllowedNames.includes(value)){
+        if (notAllowedNames.includes(value)) {
             showInfo("The Name is not proper..")
-            return 
+            return
         }
         if (value) debouncedSubmit(value);
     };
@@ -149,14 +149,14 @@ const SetPageNameCompo = ({ user, sessionUpdate }) => {
             showInfo("Please wait while we check the page name...");
             return;
         }
-        
+
         // Start loading indicator
         setLoading(true);
 
         // 1. Check if the current, successful name is being used. If so, just navigate smoothly via hard refresh.
         const normalizedInput = inputValue.toLowerCase().trim();
         const normalizedExisting = (existingUserName || '').toLowerCase().trim();
-        
+
         if (normalizedInput === normalizedExisting && isSuccess) {
             // Use hard navigation to ensure full page load and middleware sync
             window.location.href = "/Dashboard";
@@ -166,7 +166,7 @@ const SetPageNameCompo = ({ user, sessionUpdate }) => {
         // 2. Validate and set the new name
         try {
             const success = await checkAndSubmitName(inputValue);
-            
+
             // 3. If successful, force a full navigation/reload to ensure middleware sync
             if (success) {
                 // Use explicit hard navigation to the Dashboard page for reliable routing.
@@ -177,19 +177,19 @@ const SetPageNameCompo = ({ user, sessionUpdate }) => {
         } catch (error) {
             console.error("Error in handleProceed:", error);
             showError("An error occurred while processing your request.");
-        }finally{
+        } finally {
             // Only stop loading if navigation didn't happen (i.e., if 'success' was false)
-            if(!isSuccess) {
-                 setLoading(false);
+            if (!isSuccess) {
+                setLoading(false);
             }
         }
     };
-    
+
     if (loading) {
         // Display the CustomLoader component while waiting for navigation
         return <CustomLoader />;
     }
-    
+
     return (
         <div className="flex items-center justify-center h-[89vh] p-4 bg-zinc-50 dark:bg-zinc-950 transition-colors duration-300">
             <div className="p-6 sm:p-8 rounded-xl shadow-2xl transition-colors duration-300 w-full max-w-sm bg-white dark:bg-zinc-800 text-zinc-800 dark:text-white">

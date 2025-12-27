@@ -1,15 +1,15 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Input } from '@/components/ui/input';
+import { Input } from '@/Components/ui/input';
 import { Lock, UploadCloud, ImagePlus } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "@/Components/ui/tooltip";
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
 import Loader from '../Workers/Loader'
-import { reloadPreview } from "@/components/DesignedPages/MobilePreview"
+import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
 
 const GeneralInfo = ({ user }) => {
   const profileRef = useRef();
@@ -35,14 +35,14 @@ const GeneralInfo = ({ user }) => {
   }, [])
 
   const saveData = async (data) => {
-    
-     // always latest values
+
+    // always latest values
     const res = await fetch('/api/DashboardDataChange/GeneralInfo', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    
+
     if (!res.ok) showError("Failed to save changes.");
     reloadPreview()
   };
@@ -179,7 +179,7 @@ const GeneralInfo = ({ user }) => {
           id={id}
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder={label === "Phone Number" ? `${label} with country code`: label}
+          placeholder={label === "Phone Number" ? `${label} with country code` : label}
           disabled={disabled}
           className={`pr-10 ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
         />
@@ -210,36 +210,36 @@ const GeneralInfo = ({ user }) => {
       <Input hidden id="banner" type="file" ref={bannerRef} onChange={updateBanner} />
 
       {/* Upload Buttons */}
-    <div className="flex flex-col gap-4">
-  <div className="flex items-center gap-3 flex-wrap">
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center gap-3 flex-wrap">
 
-    {/* Upload Profile */}
-    <button
-      onClick={() => profileRef.current.click()}
-      className="flex items-center gap-2 px-5 py-2.5 bg-orange-600 text-white rounded-xl 
+          {/* Upload Profile */}
+          <button
+            onClick={() => profileRef.current.click()}
+            className="flex items-center gap-2 px-5 py-2.5 bg-orange-600 text-white rounded-xl 
         shadow-sm hover:bg-orange-700 hover:shadow-md active:scale-95 
         transition-all border border-orange-500/50 backdrop-blur-sm"
-    >
-      <ImagePlus size={18} className="opacity-90" />
-      <span className="font-medium tracking-wide">Upload Profile / Logo</span>
-    </button>
+          >
+            <ImagePlus size={18} className="opacity-90" />
+            <span className="font-medium tracking-wide">Upload Profile / Logo</span>
+          </button>
 
-    {/* Upload Banner */}
-    <button
-      onClick={() => bannerRef.current.click()}
-      className="flex items-center gap-2 px-5 py-2.5 bg-white text-zinc-800 rounded-xl 
+          {/* Upload Banner */}
+          <button
+            onClick={() => bannerRef.current.click()}
+            className="flex items-center gap-2 px-5 py-2.5 bg-white text-zinc-800 rounded-xl 
         shadow-sm hover:bg-zinc-100 hover:shadow-md active:scale-95 
         transition-all border border-zinc-300 dark:bg-zinc-900 dark:text-white dark:border-zinc-700"
-    >
-      <UploadCloud size={18} className="opacity-90" />
-      <span className="font-medium tracking-wide">Upload Banner</span>
-    </button>
-  </div>
+          >
+            <UploadCloud size={18} className="opacity-90" />
+            <span className="font-medium tracking-wide">Upload Banner</span>
+          </button>
+        </div>
 
-  <p className="text-sm text-zinc-500 dark:text-zinc-400">
-    Profile photo will show on your page. Banner image is used as background.
-  </p>
-</div>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400">
+          Profile photo will show on your page. Banner image is used as background.
+        </p>
+      </div>
 
 
       {/* Form Inputs */}

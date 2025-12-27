@@ -1,6 +1,6 @@
 // app/[profile]/layout.tsx
 import { Geist, Geist_Mono } from "next/font/google";
-import Providers from "@/components/Themes/providers";
+import Providers from "@/Components/Themes/providers";
 import dbConnect from "@/lib/dbConnect";
 import User from "@/models/User";
 import { notFound, redirect } from "next/navigation";
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }) {
     title:
       user.SEO?.title ||
       `${user.firstname} ${user.lastname} - ${user.userName}`,
-    description : description,
+    description: description,
     keywords: user.SEO?.keywords || ["junction", "profile", user.userName],
     robots: "index, follow",
     alternates: {
@@ -96,7 +96,7 @@ export default async function UserLayout({ children, params }) {
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <script
           type="application/ld+json"

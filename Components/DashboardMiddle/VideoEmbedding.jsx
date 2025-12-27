@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
-import { reloadPreview } from "@/components/DesignedPages/MobilePreview"
-const VideoEmbedding = ({user}) => {
+import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
+const VideoEmbedding = ({ user }) => {
   const [url, setUrl] = useState("");
-  const [videoId, setVideoId] = useState(user.videoId ||"");
+  const [videoId, setVideoId] = useState(user.videoId || "");
   const [firstRun, setFirstRun] = useState(true)
 
   const extractVideoId = (link) => {
@@ -30,7 +30,7 @@ const VideoEmbedding = ({user}) => {
   };
 
   const saveData = async (Id) => {
-    
+
     const res = await fetch('/api/DashboardDataChange/VideoIdInfo', {
       method: "POST",
       headers: {
@@ -50,7 +50,7 @@ const VideoEmbedding = ({user}) => {
 
   // Debounce saving so we don't spam requests
   useEffect(() => {
-    if(firstRun){
+    if (firstRun) {
       setFirstRun(false)
       return;
     }

@@ -1,12 +1,12 @@
 import React from 'react'
-import AuthNav from '@/components/Auth/AuthNav'
-import Login from '@/components/Auth/Login'
+import AuthNav from '@/Components/Auth/AuthNav'
+import Login from '@/Components/Auth/Login'
 
 const login = () => {
   return (
     <>
-      <AuthNav/>
-      <Login/>
+      <AuthNav />
+      <Login />
     </>
   )
 }

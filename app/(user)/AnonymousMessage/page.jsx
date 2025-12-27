@@ -4,7 +4,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { showError, showSuccess, showInfo } from "@/helpers/ToastManager";
 import { se } from "date-fns/locale/se";
 import { set } from "mongoose";
-import UserPageFooter from "@/components/Footer/UserPageFooter";
+import UserPageFooter from "@/Components/Footer/UserPageFooter";
 import Link from "next/link";
 import { Dot, Loader2 } from "lucide-react";
 
@@ -29,7 +29,7 @@ const PageInner = () => {
 
     useEffect(() => {
         if (userName) getUserData();
-        
+
         // Cleanup timeout on unmount
         return () => {
             if (redirectTimeoutRef.current) {
@@ -83,117 +83,117 @@ const PageInner = () => {
         }
     };
 
-const handleCheck = async () => {
-    if (!user) return;
+    const handleCheck = async () => {
+        if (!user) return;
 
-    if (!user?.FeedbacksCredentials) {
-        showInfo("User has not given permission to receive messages.");
-        return;
-    }
-
-    if (!user?.FeedbacksCredentials?.enhancedFeedbacks) {
-        // skip AI check → send directly
-        handleSend();
-        return;
-    }
-
-    if (!message || message.trim() === "") {
-        setLongMessage(true);
-        setMsgErrorText("Message cannot be empty");
-        return;
-    }
-
-    if (
-        !loading &&
-        user?.FeedbacksCredentials?.recieveEmails &&
-        !validateEmail(email)
-    ) {
-        setInvalidEmail(true);
-        return;
-    }
-
-    setSending(true);
-    try {
-        const res = await fetch("/api/anonymousMessageCheck", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message }),
-        });
-
-        const data = await res.json();
-        setSending(false);
-
-
-        if (!res.ok) {
-            showError(data.error || "AI Response was not appropriate.");
+        if (!user?.FeedbacksCredentials) {
+            showInfo("User has not given permission to receive messages.");
             return;
         }
 
-        if (data.proceed === "yes") {
-            setAiMsgReview(data);    // keep UI in sync
-            handleSend(data);        // pass directly
+        if (!user?.FeedbacksCredentials?.enhancedFeedbacks) {
+            // skip AI check → send directly
+            handleSend();
             return;
         }
 
-        if (data.proceed === "no") {
-            setAiMsgReview(data);
-            setWrongMsgWarning(true);
+        if (!message || message.trim() === "") {
+            setLongMessage(true);
+            setMsgErrorText("Message cannot be empty");
             return;
         }
-    } catch (error) {
-        setSending(false);
-        showError("Something went wrong, try again later.");
-    }
-};
 
+        if (
+            !loading &&
+            user?.FeedbacksCredentials?.recieveEmails &&
+            !validateEmail(email)
+        ) {
+            setInvalidEmail(true);
+            return;
+        }
 
-const handleSend = async (aiData = null) => {
-    if (!user) return;
+        setSending(true);
+        try {
+            const res = await fetch("/api/anonymousMessageCheck", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ message }),
+            });
 
-    setSending(true);
-
-    // Prefer aiData if passed, fallback to aiMsgReview
-    const category = aiData?.category || aiMsgReview?.category || "other";
-
-
-    try {
-        const res = await fetch("/api/anonymousMessage", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                userName,
-                message,
-                category,
-            }),
-        });
-
-        if (!res.ok) {
-            showError("Failed to send message. Please try again later.");
+            const data = await res.json();
             setSending(false);
-            return;
-        }
 
-        const data = await res.json();
-        if (!data) {
-            setError(true);
-            return;
-        }
 
-        setSending(false);
-        setSuccessfullySent(true);
-        showSuccess("Message sent successfully!");
-        
-        // Automatically redirect after 2 seconds
-        redirectTimeoutRef.current = setTimeout(() => {
-            if (userName) {
-                router.push(`/${userName}`);
+            if (!res.ok) {
+                showError(data.error || "AI Response was not appropriate.");
+                return;
             }
-        }, 2000);
-    } catch (err) {
-        setSending(false);
-        showError("Network error. Try again later.");
-    }
-};
+
+            if (data.proceed === "yes") {
+                setAiMsgReview(data);    // keep UI in sync
+                handleSend(data);        // pass directly
+                return;
+            }
+
+            if (data.proceed === "no") {
+                setAiMsgReview(data);
+                setWrongMsgWarning(true);
+                return;
+            }
+        } catch (error) {
+            setSending(false);
+            showError("Something went wrong, try again later.");
+        }
+    };
+
+
+    const handleSend = async (aiData = null) => {
+        if (!user) return;
+
+        setSending(true);
+
+        // Prefer aiData if passed, fallback to aiMsgReview
+        const category = aiData?.category || aiMsgReview?.category || "other";
+
+
+        try {
+            const res = await fetch("/api/anonymousMessage", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    userName,
+                    message,
+                    category,
+                }),
+            });
+
+            if (!res.ok) {
+                showError("Failed to send message. Please try again later.");
+                setSending(false);
+                return;
+            }
+
+            const data = await res.json();
+            if (!data) {
+                setError(true);
+                return;
+            }
+
+            setSending(false);
+            setSuccessfullySent(true);
+            showSuccess("Message sent successfully!");
+
+            // Automatically redirect after 2 seconds
+            redirectTimeoutRef.current = setTimeout(() => {
+                if (userName) {
+                    router.push(`/${userName}`);
+                }
+            }, 2000);
+        } catch (err) {
+            setSending(false);
+            showError("Network error. Try again later.");
+        }
+    };
 
 
     if (error) {
@@ -251,7 +251,7 @@ const handleSend = async (aiData = null) => {
 
                         {/* Action Button */}
                         <button
-                            onClick={() => {setWrongMsgWarning(false); setAiMsgReview(null);setMessage("")}}
+                            onClick={() => { setWrongMsgWarning(false); setAiMsgReview(null); setMessage("") }}
                             className="w-full bg-red-600 text-white py-3 rounded-xl font-semibold hover:bg-red-700 transition"
                         >
                             Go Back & Edit
@@ -385,7 +385,7 @@ const handleSend = async (aiData = null) => {
 
 export default function Page() {
     return (
-        <Suspense fallback={<div />}> 
+        <Suspense fallback={<div />}>
             <PageInner />
         </Suspense>
     );

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
-import Loader from '@/components/Workers/Loader';
+import Loader from '@/Components/Workers/Loader';
 import Image from "next/image";
 
 const DEVICES = {
@@ -72,18 +72,18 @@ const MobilePreview = () => {
     <div className=" flex justify-center ">
       <div className="w-[265px] h-[550px] flex justify-center  items-center  relative">
 
-       
-          
-          {/* Device selector */}
 
-<div>
+
+        {/* Device selector */}
+
+        <div>
           {/* Device frame */}
           <div
-          
+
             className=" bg-white scale-65 border-6 border-black dark:border-zinc-400 rounded-[2rem] shadow-xl overflow-hidden relative"
             style={{
               width: 390, height: 844,
-              
+
               borderRadius: "20px",
               overflow: "hidden",
               boxShadow: "0 30px 30px rgba(0,0,0,0.75)",
@@ -101,9 +101,9 @@ const MobilePreview = () => {
             />
           </div>
         </div></div>
- 
 
-    
+
+
     </div>
 
   );

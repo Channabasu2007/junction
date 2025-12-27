@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
+import { Input } from "@/Components/ui/input";
+import { Label } from "@/Components/ui/label";
+import { Textarea } from "@/Components/ui/textarea";
+import { Button } from "@/Components/ui/button";
 import { showSuccess, showError } from "@/helpers/ToastManager";
 import { ImagePlus, X } from "lucide-react";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
-import { reloadPreview } from "@/components/DesignedPages/MobilePreview"
+import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
 
 const SEO = ({ user }) => {
   const email = user.email
@@ -37,22 +37,22 @@ const SEO = ({ user }) => {
   }, [title, description, keywords, thumbnailUrl])
 
   const saveData = async (data) => {
-    const  NewDataSending = {
+    const NewDataSending = {
       email: email,
-      SEO : data
+      SEO: data
     }
     try {
-      const res = await fetch('/api/DashboardDataChange/seoData',{
+      const res = await fetch('/api/DashboardDataChange/seoData', {
         method: 'POST',
         headers: {
-          'Content-Type' : 'application/json'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(NewDataSending)
       })
-      if(!res.ok){
+      if (!res.ok) {
         showError("Database connection failed, make sure network connection is proper.")
       }
-      else{
+      else {
         reloadPreview()
       }
     } catch (error) {

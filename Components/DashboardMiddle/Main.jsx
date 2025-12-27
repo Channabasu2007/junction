@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSession } from "next-auth/react";
 import { useRouter } from 'next/navigation';
-import Loader from '@/components/Workers/Loader';
+import Loader from '@/Components/Workers/Loader';
 import SetPageNameCompo from '../UsersSettings/SetPageName';
 import { showError } from '@/helpers/ToastManager';
 

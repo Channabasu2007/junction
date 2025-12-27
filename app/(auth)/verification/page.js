@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import AuthNav from "@/components/Auth/AuthNav";
-import { Button } from "@/components/ui/button";
+import AuthNav from "@/Components/Auth/AuthNav";
+import { Button } from "@/Components/ui/button";
 import { showSuccess, showError } from "@/helpers/ToastManager";
 import { OtpCodeSchema } from "@/helpers/SignUpSchema";
 import {
@@ -10,9 +10,9 @@ import {
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "@/components/ui/input-otp";
+} from "@/Components/ui/input-otp";
 import { signIn } from "next-auth/react";
-import Loader from "@/components/Workers/Loader";
+import Loader from "@/Components/Workers/Loader";
 import { useSession } from "next-auth/react";
 
 const Verification = () => {
@@ -60,7 +60,7 @@ const Verification = () => {
         showError(res.error);
       } else {
         setPageLoading(false);
-        
+
         router.push("/Dashboard");
       }
     };
@@ -138,7 +138,7 @@ const Verification = () => {
       </div>
     );
 
-    
+
   if (pageLoading) {
     return <Loader />;
   }

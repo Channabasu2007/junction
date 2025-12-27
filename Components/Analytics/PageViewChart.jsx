@@ -9,23 +9,23 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/Components/ui/card";
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "@/Components/ui/chart";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from "@/Components/ui/select";
 import {
   ToggleGroup,
   ToggleGroupItem,
-} from "@/components/ui/toggle-group";
+} from "@/Components/ui/toggle-group";
 import { motion } from "framer-motion";
 
 /* ---------- helpers ---------- */
@@ -145,14 +145,14 @@ export default function PageViewChart({ user, pageLoading }) {
   const days = timeRange === "90d" ? 90 : timeRange === "30d" ? 30 : 7;
 
   // set fillMissing to true if you want continuous day series with zeros.
- const chartData = React.useMemo(() => {
-  if (!user?.pageViews) return [];
-  return buildDailySeries(user.pageViews, days, false);
-}, [user?.pageViews, days]);
+  const chartData = React.useMemo(() => {
+    if (!user?.pageViews) return [];
+    return buildDailySeries(user.pageViews, days, false);
+  }, [user?.pageViews, days]);
 
   return (
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.28 }}>
-      
+
       <Card className="@container/card shadow-xl rounded-2xl">
         <CardHeader className="pb-2">
           <CardTitle className="text-xl font-semibold tracking-tight">Total Visitors</CardTitle>
@@ -214,23 +214,23 @@ export default function PageViewChart({ user, pageLoading }) {
 
                 <YAxis tickLine={false} axisLine={false} width={40} />
 
-               <ChartTooltip
-  cursor={{ strokeDasharray: "6 3" }}
-  content={({ active, payload, label }) => {
-    if (!active || !payload?.length) return null;
-    const ts = label;
-    const dateStr = formatTimestampToDDMMYYYY(ts);
+                <ChartTooltip
+                  cursor={{ strokeDasharray: "6 3" }}
+                  content={({ active, payload, label }) => {
+                    if (!active || !payload?.length) return null;
+                    const ts = label;
+                    const dateStr = formatTimestampToDDMMYYYY(ts);
 
-    return (
-      <div className="rounded-lg border bg-white px-3 py-2 shadow-md text-sm">
-        <div className="font-medium">{dateStr}</div>
-        <div className="text-orange-600">
-          Visitors: {payload[0].value}
-        </div>
-      </div>
-    );
-  }}
-/>
+                    return (
+                      <div className="rounded-lg border bg-white px-3 py-2 shadow-md text-sm">
+                        <div className="font-medium">{dateStr}</div>
+                        <div className="text-orange-600">
+                          Visitors: {payload[0].value}
+                        </div>
+                      </div>
+                    );
+                  }}
+                />
 
                 {/* linear to avoid spline overshoot; set dot:true to show actual points */}
                 <Area

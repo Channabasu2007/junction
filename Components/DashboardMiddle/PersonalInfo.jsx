@@ -1,21 +1,21 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Input } from '@/components/ui/input';
-import { Calendar } from "@/components/ui/calendar"
-import { Textarea } from "@/components/ui/textarea"
+import { Input } from '@/Components/ui/input';
+import { Calendar } from "@/Components/ui/calendar"
+import { Textarea } from "@/Components/ui/textarea"
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/Components/ui/popover"
 import { ChevronDownIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Label } from "@/components/ui/label"
+import { Button } from "@/Components/ui/button"
+import { Label } from "@/Components/ui/label"
 import {
     Tooltip,
     TooltipContent,
     TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "@/Components/ui/tooltip";
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
 import Loader from '../Workers/Loader'
 import {
@@ -24,9 +24,9 @@ import {
     SelectItem,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select"
-import { Checkbox } from "@/components/ui/checkbox"
-import { reloadPreview } from "@/components/DesignedPages/MobilePreview"
+} from "@/Components/ui/select"
+import { Checkbox } from "@/Components/ui/checkbox"
+import { reloadPreview } from "@/Components/DesignedPages/MobilePreview"
 
 
 const PersonalInfo = ({ user }) => {
@@ -142,7 +142,7 @@ const PersonalInfo = ({ user }) => {
                                 id="date"
                                 className="w-48 justify-between font-normal"
                             >
-                                {date ?new Date(date).toLocaleDateString() : "Select date"}
+                                {date ? new Date(date).toLocaleDateString() : "Select date"}
                                 <ChevronDownIcon />
                             </Button>
                         </PopoverTrigger>

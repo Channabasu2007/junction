@@ -1,9 +1,9 @@
 import React from 'react'
-import Navbar from '@/components/Navbar/mainNavContainer';
+import Navbar from '@/Components/Navbar/mainNavContainer';
 const page = () => {
   return (
     <>
-    <Navbar/>
+      <Navbar />
     </>
   )
 }

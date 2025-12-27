@@ -2,7 +2,7 @@
 import React, { Suspense, useState, useEffect, useMemo } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import Loader from "@/components/Workers/Loader";
+import Loader from "@/Components/Workers/Loader";
 import {
   Card,
   CardHeader,
@@ -10,15 +10,15 @@ import {
   CardDescription,
   CardContent,
   CardFooter,
-} from "@/components/ui/card";
-import { Select } from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
+} from "@/Components/ui/card";
+import { Select } from "@/Components/ui/select";
+import { Badge } from "@/Components/ui/badge";
 import { Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Navbar from "@/components/Navbar/mainNavContainer";
+import { Button } from "@/Components/ui/button";
+import Navbar from "@/Components/Navbar/mainNavContainer";
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager';
-import Footer from "@/components/Footer/Footer";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import Footer from "@/Components/Footer/Footer";
+import { ToggleGroup, ToggleGroupItem } from "@/Components/ui/toggle-group";
 
 const MessagesPageInner = () => {
   const searchParams = useSearchParams();
@@ -138,10 +138,10 @@ const MessagesPageInner = () => {
   }
 
   return (<>
-  <Navbar />
+    <Navbar />
     <div className="p-6 max-w-5xl mx-auto space-y-6">
       {/* Filters */}
-      
+
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex gap-2 flex-wrap">
           {categories.map((cat) => (
@@ -149,35 +149,34 @@ const MessagesPageInner = () => {
               key={cat}
               onClick={() => setCategory(cat)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all
-                ${
-                  category === cat
-                    ? "bg-orange-500 text-white shadow"
-                    : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
+                ${category === cat
+                  ? "bg-orange-500 text-white shadow"
+                  : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
                 }`}
             >
               {cat.charAt(0).toUpperCase() + cat.slice(1)}
             </button>
           ))}
         </div>
-<ToggleGroup
-  type="single"
-  value={sortBy}
-  onValueChange={(val) => val && setSortBy(val)}
-  className="border rounded-md p-1"
->
-  <ToggleGroupItem
-    value="newest"
-    className="px-3 py-1 text-sm rounded-md data-[state=on]:bg-orange-500 data-[state=on]:text-white"
-  >
-    Newest
-  </ToggleGroupItem>
-  <ToggleGroupItem
-    value="oldest"
-    className="px-3 py-1 text-sm rounded-md data-[state=on]:bg-orange-500 data-[state=on]:text-white"
-  >
-    Oldest
-  </ToggleGroupItem>
-</ToggleGroup>
+        <ToggleGroup
+          type="single"
+          value={sortBy}
+          onValueChange={(val) => val && setSortBy(val)}
+          className="border rounded-md p-1"
+        >
+          <ToggleGroupItem
+            value="newest"
+            className="px-3 py-1 text-sm rounded-md data-[state=on]:bg-orange-500 data-[state=on]:text-white"
+          >
+            Newest
+          </ToggleGroupItem>
+          <ToggleGroupItem
+            value="oldest"
+            className="px-3 py-1 text-sm rounded-md data-[state=on]:bg-orange-500 data-[state=on]:text-white"
+          >
+            Oldest
+          </ToggleGroupItem>
+        </ToggleGroup>
       </div>
 
       {/* Messages List */}
@@ -212,13 +211,13 @@ const MessagesPageInner = () => {
         </div>
       )}
     </div>
-    <Footer/></>
+    <Footer /></>
   );
 };
 
 export default function MessagesPage() {
   return (
-    <Suspense fallback={<Loader />}> 
+    <Suspense fallback={<Loader />}>
       <MessagesPageInner />
     </Suspense>
   );

@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import { Label } from "@/Components/ui/label";
+import { Input } from "@/Components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/Components/ui/button";
 import { FaGoogle } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { showSuccess, showError, showInfo } from '@/helpers/ToastManager'
@@ -77,7 +77,7 @@ const SignUp = () => {
         return;
 
       } else {
-        
+
         sessionStorage.setItem("signupData", JSON.stringify({
           email: email,
           firstname: firstname,
@@ -93,9 +93,9 @@ const SignUp = () => {
     }
   };
 
-if(pageLoading){
-  return <Loader/>
-}
+  if (pageLoading) {
+    return <Loader />
+  }
 
   return (
     <div className="min-h-fit flex items-center justify-center bg-gray-50 dark:bg-zinc-950 px-4 py-8">
